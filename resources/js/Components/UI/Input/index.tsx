@@ -42,7 +42,9 @@ const InputLabel = ({
             {...props}
         >
             {children}
-            {required && <span className="font-semibold text-red-600">*</span>}
+            {required && (
+                <span className="pl-1 font-semibold text-red-600">*</span>
+            )}
         </FormLabel>
     );
 };
