@@ -28,7 +28,7 @@ export default function Login() {
                         </p>
                     </div>
                     <Button asChild variant="secondary" className="w-fit">
-                        <Link href="/register">
+                        <Link href={route('register')}>
                             Belum punya akun mitra?&nbsp;
                             <span className="text-brand">
                                 Registrasi di sini
