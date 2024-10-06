@@ -71,7 +71,7 @@ const RegisterForm = ({ className }: { className?: string }) => {
                 </div>
                 <Input
                     type="password"
-                    placeholder="Konfirmasi kata sandi"
+                    placeholder="Masukan kata sandi Anda"
                     autoComplete="new-password"
                     required
                     value={data.password}
