@@ -1,5 +1,6 @@
 import { Link } from '@inertiajs/react';
 import { HTMLAttributes } from 'react';
+import Button from '../Button';
 
 const Footer = ({
     className = '',
@@ -19,7 +20,13 @@ const Footer = ({
                     Kabupaten Cirebon.
                 </p>
             </div>
-            <Link href="">Kembali ke Halaman Utama</Link>
+            <Button
+                variant="secondary"
+                asChild
+                className="bg-transparent text-white hover:bg-white hover:text-dark"
+            >
+                <Link href={route('dashboard')}>Kembali Ke Halaman Utama</Link>
+            </Button>
         </footer>
     );
 };
