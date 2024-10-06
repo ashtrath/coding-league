@@ -47,7 +47,7 @@ const LoginForm = ({ className }: { className?: string }) => {
                 <div className="flex items-baseline justify-between">
                     <InputLabel required>Kata Sandi</InputLabel>
                     <InputMessage match="valueMissing">
-                        Password tidak boleh kosong.
+                        Kata Sandi tidak boleh kosong.
                     </InputMessage>
                     <InputMessage>{errors.password}</InputMessage>
                 </div>
