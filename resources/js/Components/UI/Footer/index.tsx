@@ -25,7 +25,7 @@ const Footer = ({
                 asChild
                 className="bg-transparent text-white hover:bg-white hover:text-dark"
             >
-                <Link href={route('dashboard')}>Kembali Ke Halaman Utama</Link>
+                <Link href="/">Kembali Ke Halaman Utama</Link>
             </Button>
         </footer>
     );
