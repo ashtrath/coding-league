@@ -5,6 +5,7 @@ import { FormEventHandler } from 'react';
 import Button from '../UI/Button';
 import { Input, InputLabel, InputMessage } from '../UI/Input';
 import Checkbox from '../UI/Input/Checkbox';
+import PasswordInput from './PasswordInput';
 
 const LoginForm = ({ className }: { className?: string }) => {
     const { data, setData, post, processing, errors, reset } = useForm({
@@ -51,8 +52,7 @@ const LoginForm = ({ className }: { className?: string }) => {
                     </InputMessage>
                     <InputMessage>{errors.password}</InputMessage>
                 </div>
-                <Input
-                    type="password"
+                <PasswordInput
                     placeholder="Masukan kata sandi Anda"
                     autoComplete="current-password"
                     required

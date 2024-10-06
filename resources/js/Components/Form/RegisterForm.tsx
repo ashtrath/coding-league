@@ -4,6 +4,7 @@ import { Form, FormField, FormSubmit } from '@radix-ui/react-form';
 import { FormEventHandler } from 'react';
 import Button from '../UI/Button';
 import { Input, InputLabel, InputMessage } from '../UI/Input';
+import PasswordInput from './PasswordInput';
 
 const RegisterForm = ({ className }: { className?: string }) => {
     const { data, setData, post, processing, errors, reset } = useForm({
@@ -69,8 +70,7 @@ const RegisterForm = ({ className }: { className?: string }) => {
                     </InputMessage>
                     <InputMessage>{errors.password}</InputMessage>
                 </div>
-                <Input
-                    type="password"
+                <PasswordInput
                     placeholder="Masukan kata sandi Anda"
                     autoComplete="new-password"
                     required
@@ -86,8 +86,7 @@ const RegisterForm = ({ className }: { className?: string }) => {
                     </InputMessage>
                     <InputMessage>{errors.password_confirmation}</InputMessage>
                 </div>
-                <Input
-                    type="password"
+                <PasswordInput
                     placeholder="Konfirmasi kata sandi Anda"
                     autoComplete="new-password"
                     required
