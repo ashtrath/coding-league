@@ -11,7 +11,7 @@ export default function Guest({ children }: PropsWithChildren) {
                     <ApplicationLogo className="h-10" />
                 </Link>
             </nav>
-            <main className="flex min-h-[calc(100vh-76px-114px)] items-center bg-gray-200 px-24">
+            <main className="flex min-h-[calc(100vh-76px-114px)] items-center bg-gray-200 px-24 py-12">
                 <section className="min-w-full overflow-hidden rounded-xl border border-gray-300 bg-white">
                     {children}
                 </section>
