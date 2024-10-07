@@ -9,5 +9,5 @@ class Kegiatan extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['title', 'description', 'image', 'status'];
+    protected $fillable = ['title', 'content', 'description', 'image', 'status'];
 }
