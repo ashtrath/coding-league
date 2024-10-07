@@ -12,7 +12,7 @@ const RegisterForm = ({ className }: { className?: string }) => {
     const recaptchaRef = useRef<ReCAPTCHA | null>(null);
 
     const { data, setData, post, processing, errors, reset } = useForm({
-        name: '',
+        name_company: '',
         email: '',
         password: '',
         password_confirmation: '',
@@ -62,22 +62,21 @@ const RegisterForm = ({ className }: { className?: string }) => {
                     onChange={(e) => setData('email', e.target.value)}
                 />
             </FormField>
-            {/* TODO: change name to company_name when backend is ready */}
-            <FormField name="name" className="space-y-2">
+            <FormField name="name_company" className="space-y-2">
                 <div className="flex items-baseline justify-between">
                     <InputLabel required>Nama Perusahaan</InputLabel>
                     <InputMessage match="valueMissing">
                         Nama Perusahaan tidak boleh kosong.
                     </InputMessage>
-                    <InputMessage>{errors.name}</InputMessage>
+                    <InputMessage>{errors.name_company}</InputMessage>
                 </div>
                 <Input
                     type="text"
                     placeholder="Masukan nama perusahaan Anda"
                     autoComplete="name"
                     required
-                    value={data.name}
-                    onChange={(e) => setData('name', e.target.value)}
+                    value={data.name_company}
+                    onChange={(e) => setData('name_company', e.target.value)}
                 />
             </FormField>
             <FormField name="password" className="space-y-2">
