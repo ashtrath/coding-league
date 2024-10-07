@@ -5,6 +5,7 @@ import { FormEventHandler } from 'react';
 import Button from '../UI/Button';
 import { Input, InputLabel, InputMessage } from '../UI/Input';
 import Checkbox from '../UI/Input/Checkbox';
+import { showToast } from '../UI/Toast';
 import PasswordInput from './PasswordInput';
 
 const LoginForm = ({ className }: { className?: string }) => {
@@ -19,6 +20,14 @@ const LoginForm = ({ className }: { className?: string }) => {
 
         post(route('login'), {
             onFinish: () => reset('password'),
+            onSuccess: () => showToast('Berhasil Login!', 'success'),
+            onError: (error) => {
+                showToast(
+                    'Terjadi kesalahan, silakan coba lagi.',
+                    'destructive',
+                );
+                console.error(error);
+            },
         });
     };
 

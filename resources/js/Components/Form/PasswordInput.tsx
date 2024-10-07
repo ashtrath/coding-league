@@ -25,6 +25,7 @@ const PasswordInput = ({
             />
             <button
                 className="flex items-center justify-around"
+                type="button"
                 onClick={handleToggle}
             >
                 <Icon className="absolute mr-12 size-6 text-gray-400" />
