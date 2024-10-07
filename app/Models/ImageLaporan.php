@@ -9,7 +9,5 @@ class ImageLaporan extends Model
 {
     use HasFactory;
 
-    protected $table = 'image_laporans';
-
     protected $fillable = ['image'];
 }
