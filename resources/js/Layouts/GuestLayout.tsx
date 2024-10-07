@@ -1,19 +1,22 @@
-import ApplicationLogo from '@/Components/ApplicationLogo';
+import ApplicationLogo from '@/Components/Misc/ApplicationLogo';
+import Footer from '@/Components/UI/Footer';
 import { Link } from '@inertiajs/react';
 import { PropsWithChildren } from 'react';
 
 export default function Guest({ children }: PropsWithChildren) {
     return (
-        <div className="flex min-h-screen flex-col items-center bg-gray-100 pt-6 sm:justify-center sm:pt-0 dark:bg-gray-900">
-            <div>
+        <>
+            <header className="flex w-full items-center justify-center border-b border-b-gray-300 bg-white py-[18px]">
                 <Link href="/">
-                    <ApplicationLogo className="h-20 w-20 fill-current text-gray-500" />
+                    <ApplicationLogo className="h-10" />
                 </Link>
-            </div>
-
-            <div className="mt-6 w-full overflow-hidden bg-white px-6 py-4 shadow-md sm:max-w-md sm:rounded-lg dark:bg-gray-800">
-                {children}
-            </div>
-        </div>
+            </header>
+            <main className="flex min-h-[calc(100vh_-_76px)] items-center bg-gray-200 px-24 py-12">
+                <section className="min-w-full overflow-hidden rounded-xl border border-gray-300 bg-white">
+                    {children}
+                </section>
+            </main>
+            <Footer />
+        </>
     );
 }
