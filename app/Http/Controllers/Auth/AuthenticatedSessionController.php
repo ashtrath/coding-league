@@ -39,13 +39,14 @@ class AuthenticatedSessionController extends Controller
             return redirect()->route('admin.dashboard');
         }
 
-        if ($user->role === 'Mitra') {
-            if ($user->first_time_user === 1) {
-                return redirect()->route('profile.edit');
-            }
-
-            return redirect()->route('mitra.dashboard');
+        // Redirect first login user to Edit Profile page.
+        if ($user->role === 'Mitra' && $user->first_time_user) {
+            $user->first_time_user = false;
+            $user->save();
+            return redirect()->route('profile.edit');
         }
+
+        return redirect()->route('mitra.dashboard');
     }
 
     /**
