@@ -1,11 +1,16 @@
 import { cn } from '@/lib/utils';
 import { useForm } from '@inertiajs/react';
 import { Form, FormField, FormSubmit } from '@radix-ui/react-form';
-import { FormEventHandler } from 'react';
+import { FormEventHandler, useRef } from 'react';
+import ReCAPTCHA from 'react-google-recaptcha';
 import Button from '../UI/Button';
 import { Input, InputLabel, InputMessage } from '../UI/Input';
+import { showToast } from '../UI/Toast';
+import PasswordInput from './PasswordInput';
 
 const RegisterForm = ({ className }: { className?: string }) => {
+    const recaptchaRef = useRef<ReCAPTCHA | null>(null);
+
     const { data, setData, post, processing, errors, reset } = useForm({
         name: '',
         email: '',
@@ -16,8 +21,22 @@ const RegisterForm = ({ className }: { className?: string }) => {
     const handleSubmit: FormEventHandler = (e) => {
         e.preventDefault();
 
+        if (!recaptchaRef.current || !recaptchaRef.current.getValue()) {
+            showToast('Captcha harus diisi!', 'destructive');
+            return reset('password', 'password_confirmation');
+        }
+
         post(route('register'), {
             onFinish: () => reset('password', 'password_confirmation'),
+            onSuccess: () =>
+                showToast('Berhasil membuat akun mitra!', 'success'),
+            onError: (error) => {
+                showToast(
+                    'Terjadi kesalahan, silakan coba lagi.',
+                    'destructive',
+                );
+                console.error(error);
+            },
         });
     };
 
@@ -69,9 +88,8 @@ const RegisterForm = ({ className }: { className?: string }) => {
                     </InputMessage>
                     <InputMessage>{errors.password}</InputMessage>
                 </div>
-                <Input
-                    type="password"
-                    placeholder="Konfirmasi kata sandi"
+                <PasswordInput
+                    placeholder="Masukan kata sandi Anda"
                     autoComplete="new-password"
                     required
                     value={data.password}
@@ -86,8 +104,7 @@ const RegisterForm = ({ className }: { className?: string }) => {
                     </InputMessage>
                     <InputMessage>{errors.password_confirmation}</InputMessage>
                 </div>
-                <Input
-                    type="password"
+                <PasswordInput
                     placeholder="Konfirmasi kata sandi Anda"
                     autoComplete="new-password"
                     required
@@ -97,6 +114,10 @@ const RegisterForm = ({ className }: { className?: string }) => {
                     }
                 />
             </FormField>
+            <ReCAPTCHA
+                sitekey={import.meta.env.VITE_RECAPTCHA_SITE_KEY}
+                ref={recaptchaRef}
+            />
             <FormSubmit asChild>
                 <Button
                     variant="secondary"

@@ -62,7 +62,10 @@ const InputMessage = ({
         <FormMessage
             name={name}
             match={match}
-            className={cn('text-sm font-medium text-red-600', className)}
+            className={cn(
+                'text-sm font-medium leading-none text-red-600',
+                className,
+            )}
             {...props}
         >
             {children}

@@ -5,6 +5,8 @@ import { FormEventHandler } from 'react';
 import Button from '../UI/Button';
 import { Input, InputLabel, InputMessage } from '../UI/Input';
 import Checkbox from '../UI/Input/Checkbox';
+import { showToast } from '../UI/Toast';
+import PasswordInput from './PasswordInput';
 
 const LoginForm = ({ className }: { className?: string }) => {
     const { data, setData, post, processing, errors, reset } = useForm({
@@ -18,6 +20,14 @@ const LoginForm = ({ className }: { className?: string }) => {
 
         post(route('login'), {
             onFinish: () => reset('password'),
+            onSuccess: () => showToast('Berhasil Login!', 'success'),
+            onError: (error) => {
+                showToast(
+                    'Terjadi kesalahan, silakan coba lagi.',
+                    'destructive',
+                );
+                console.error(error);
+            },
         });
     };
 
@@ -51,8 +61,7 @@ const LoginForm = ({ className }: { className?: string }) => {
                     </InputMessage>
                     <InputMessage>{errors.password}</InputMessage>
                 </div>
-                <Input
-                    type="password"
+                <PasswordInput
                     placeholder="Masukan kata sandi Anda"
                     autoComplete="current-password"
                     required

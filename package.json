@@ -13,6 +13,7 @@
         "@types/node": "^18.13.0",
         "@types/react": "^18.0.28",
         "@types/react-dom": "^18.0.10",
+        "@types/react-google-recaptcha": "^2.1.9",
         "@typescript-eslint/eslint-plugin": "^7.16.0",
         "@typescript-eslint/parser": "^7.16.0",
         "@vitejs/plugin-react": "^4.2.0",
@@ -42,6 +43,8 @@
         "@remixicon/react": "^4.2.0",
         "class-variance-authority": "^0.7.0",
         "clsx": "^2.1.1",
+        "react-google-recaptcha": "^3.1.0",
+        "react-hot-toast": "^2.4.1",
         "tailwind-merge": "^2.5.3"
     }
 }
