@@ -4,11 +4,14 @@ namespace App\Http\Controllers;
 
 use App\Enums\MitraStatus;
 use App\Models\Mitra;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
 
 class MitraController extends Controller
 {
+
     public function index()
     {
         $mitras = Mitra::all();
@@ -20,7 +23,7 @@ class MitraController extends Controller
         return Inertia::render('Mitra/Create');
     }
 
-    public function store(Request $request)
+    public function store(Request $request, User $user)
     {
         $validate = $request->validate([
             'name_company' => 'required|string|max:255',
@@ -32,7 +35,15 @@ class MitraController extends Controller
 
         Mitra::create($validate);
 
-        return redirect()->route('mitra.index')->with('success', 'Mitra Berhasil Dibuat.');
+        if (Auth::check()) {
+            if ($user && $user->first_time_user === 1) {
+                $user->update(['first_time_user' => 0]);
+            }
+
+            return redirect()->route('profile.edit');
+        } else {
+            return redirect()->route('mitra.index')->with('success', 'Mitra Berhasil Dibuat.');
+        }
     }
 
     public function edit(Mitra $mitra)

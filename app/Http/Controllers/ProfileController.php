@@ -8,6 +8,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
 use Inertia\Response;
 
@@ -19,8 +20,7 @@ class ProfileController extends Controller
     public function edit(Request $request): Response
     {
         return Inertia::render('Profile/Edit', [
-            'mustVerifyEmail' => $request->user() instanceof MustVerifyEmail,
-            'status' => session('status'),
+            'user' => $request->user()->only(['name', 'email', 'description', 'image']),
         ]);
     }
 
@@ -29,15 +29,32 @@ class ProfileController extends Controller
      */
     public function update(ProfileUpdateRequest $request): RedirectResponse
     {
-        $request->user()->fill($request->validated());
+        $user = $request->user();
 
-        if ($request->user()->isDirty('email')) {
-            $request->user()->email_verified_at = null;
+        $validated = $request->validated();
+
+        if (!file_exists(public_path('profile_image'))) {
+            mkdir(public_path('profile_image'), 0755, true);
         }
 
-        $request->user()->save();
+        if ($request->hasFile('image')) {
+            if ($user->image) {
+                Storage::disk('public')->delete('profile_image/', $user->image);
+            }
 
-        return Redirect::route('profile.edit');
+            $imagePath = $request->file('image')->store('profile_image', 'public');
+            $validated['image'] = $imagePath;
+        }
+
+        $user->fill($validated);
+
+        if ($user->isDirty('email')) {
+            $user->email_verified_at = null;
+        }
+
+        $user->save();
+
+        return Redirect::route('profile.edit')->with('status', 'profile-updated');
     }
 
     /**
@@ -52,6 +69,10 @@ class ProfileController extends Controller
         $user = $request->user();
 
         Auth::logout();
+
+        if($user->image) {
+            Storage::disk('public')->delete('profile_image/', $user->image);
+        }
 
         $user->delete();
 
