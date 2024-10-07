@@ -6,6 +6,7 @@ use App\Enums\LaporanStatus;
 use App\Models\Laporan;
 
 use App\Models\Project;
+use App\Models\Sektor;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Response;
