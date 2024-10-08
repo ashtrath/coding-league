@@ -1,4 +1,5 @@
 import forms from '@tailwindcss/forms';
+import animate from 'tailwindcss-animate';
 import defaultTheme from 'tailwindcss/defaultTheme';
 
 /** @type {import('tailwindcss').Config} */
@@ -18,10 +19,6 @@ export default {
             colors: {
                 brand: '#98100A',
                 dark: '#101828',
-            },
-            animation: {
-                'toast-enter': 'toast-enter 200ms ease-out',
-                'toast-leave': 'toast-leave 150ms ease-in forwards',
             },
             keyframes: {
                 'toast-enter': {
@@ -48,5 +45,5 @@ export default {
         },
     },
 
-    plugins: [forms],
+    plugins: [animate, forms],
 };

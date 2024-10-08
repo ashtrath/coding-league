@@ -16,7 +16,7 @@ interface ToastProps {
 const Toast = ({ type = 'info', message, t }: ToastProps) => {
     return (
         <div
-            className={`flex w-full max-w-sm items-center gap-2 rounded-md border border-gray-300 bg-white p-4 text-gray-900 shadow-lg ${t.visible ? 'animate-toast-enter' : 'animate-toast-leave'}`}
+            className={`flex w-full max-w-sm items-center gap-2 rounded-md border border-gray-300 bg-white p-4 text-gray-900 shadow-lg ${t.visible ? 'animate-in zoom-in-95 slide-in-from-top-2 fade-in-5' : 'animate-out fill-mode-forwards slide-out-to-top-2 fade-out-0'}`}
         >
             {type === 'success' && (
                 <RiCheckboxCircleFill className="h-6 w-6 text-green-500" />
