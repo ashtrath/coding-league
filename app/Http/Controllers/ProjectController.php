@@ -7,6 +7,9 @@ use App\Models\Sektor;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
+use App\Exports\DataExport;
+use App\Exports\ProjectExport;
+use Maatwebsite\Excel\Facades\Excel;
 
 class ProjectController extends Controller
 {
@@ -29,7 +32,7 @@ class ProjectController extends Controller
             'description' => 'required|string',
             'image' => 'required|string|max:255',
             'tanggal_awal' => 'required|date',
-            'tanggal_akhir' => 'required|date|after:tangal_awal',
+            'tanggal_akhir' => 'required|date|after:tanggal_awal',
             'sektor_id' => 'required|exists:sektors.id',
         ]);
 
@@ -72,7 +75,7 @@ class ProjectController extends Controller
             'description' => 'required|string',
             'image' => 'required|string|max:255',
             'tanggal_awal' => 'required|date',
-            'tanggal_akhir' => 'required|date|after:tangal_awal',
+            'tanggal_akhir' => 'required|date|after:tanggal_awal',
             'sektor_id' => 'required|exists:sektors.id',
         ]);
 
@@ -95,5 +98,11 @@ class ProjectController extends Controller
         $project->delete();
 
         return redirect()->route('project.index')->with('success', 'Project Berhasil Dihapus');
+    }
+
+    public function exportCSV()
+    {
+        $project = Project::select('id', 'title', 'description', 'image', 'lokasi_kecamatan', 'tanggal_awal', 'tanggal_akhir', 'tanggal_diterbitkan', 'status')->get();
+        return Excel::download(new ProjectExport($project), 'project.csv');
     }
 }
