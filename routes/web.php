@@ -1,12 +1,12 @@
 <?php
 
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\KegiatanController;
 use App\Http\Controllers\LaporanController;
 use App\Http\Controllers\MitraController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\SektorController;
-use App\Http\Controllers\TagController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -20,9 +20,10 @@ Route::get('/', function () {
     ]);
 });
 
-Route::get('/dashboard', function () {
-    return Inertia::render('Dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+Route::controller(DashboardController::class)->prefix('dashboard')->name('dashboard.')->middleware(['auth', 'role:Admin,Mitra'])->group(function () {
+    Route::get('/', 'index')->name('index');
+    Route::get('/export-all', 'exportAllData')->name('export.all');
+});
 
 
 // === Sektor Routes Public ===
@@ -90,6 +91,7 @@ Route::controller(LaporanController::class)->prefix('laporan')->name('laporan.')
     Route::get('/{laporan}/edit', 'edit')->name('edit');
     Route::put('/{laporan}', 'update')->name('update');
     Route::delete('/{laporan}', 'delete')->name('delete');
+    Route::get('/export-csv', 'exportCSV')->name('export.csv');
 });
 
 // === Projects Routes ===
@@ -99,6 +101,8 @@ Route::controller(ProjectController::class)->prefix('project')->name('project.')
     Route::get('/{project}/edit', 'edit')->name('edit');
     Route::put('/{project}', 'update')->name('update');
     Route::delete('/{project}', 'delete')->name('delete');
+    Route::get('/export-csv', 'exportCSV')->name('export.csv');
+
 });
 
 require __DIR__ . '/auth.php';

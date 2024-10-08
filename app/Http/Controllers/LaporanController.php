@@ -15,6 +15,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Response;
 use Inertia\Inertia;
+use App\Models\Sektor;
+use App\Exports\LaporanExport;
+use Maatwebsite\Excel\Facades\Excel;
 
 class LaporanController extends Controller
 {
@@ -122,29 +125,35 @@ class LaporanController extends Controller
         return redirect()->route('laporan.index')->with('success', 'Laporan Berhasil Dihapus');
     }
 
+    public function exportCSV()
+    {
+        $laporan = Laporan::select('id', 'title', 'status', 'description', 'anggaran_realisasi', 'tanggal_realisasi')->get();
+        return Excel::download(new LaporanExport($laporan), 'laporan.csv');
+    }
+
     public function updateStatus(Request $request, Laporan $laporan)
     {
         $request->validate([
             'status' => 'required|in:' . implode(',', array_column(LaporanStatus::cases(), 'value')),
         ]);
-
+    
         $status = LaporanStatus::from($request->status);
-
+    
         $laporan->status =$status->value;
         $laporan->save();
-
+    
         if ($status !== LaporanStatus::Draft) {
             $admins = User::where('role', UserRole::Admin->value)->get();
             foreach ($admins as $admin) {
                 $this->sendNotification($status, $admin, 'Status laporan telah diperbaharui.', $laporan);
             }
-
+    
             $mitra = User::find($laporan->user_id);
             if ($mitra) {
                 $this->sendNotification($status, $mitra, 'Status laporan anda telah diperbaharui.', $laporan);
             }
         }
-
+    
         return redirect()->route('laporan.index')->with('success', 'Status laporan berhasil diperbaharui');
     }
 }
