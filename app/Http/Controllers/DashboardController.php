@@ -8,7 +8,6 @@ use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Illuminate\Support\Facades\DB;
 
-
 class DashboardController extends Controller
 {
     public function index() {
@@ -21,7 +20,7 @@ class DashboardController extends Controller
         $totalAnggaranRealisasi = Laporan::sum('anggaran_realisasi');
 
         $laporanData = Laporan::select('id', 'title', 'status', 'anggaran_realisasi', 'tanggal_realisasi')
-                               ->with(['mitra:id,nama', 'sektor:id,nama', 'proyek:id,nama'])
+                               ->with(['mitra:id,nama', 'sektor:id,nama', 'project:id,nama'])
                                ->get();
 
         $totalProjectCount = Project::count();
