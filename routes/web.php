@@ -94,6 +94,11 @@ Route::controller(LaporanController::class)->prefix('laporan')->name('laporan.')
     Route::get('/export-csv', 'exportCSV')->name('export.csv');
 });
 
+// === Laporan Update Status Routes ===
+Route::controller(LaporanController::class)->prefix('laporan')->name('laporan.')->middleware('auth', 'verified', 'role:Admin')->group(function () {
+    Route::post('/{laporan}/status', [LaporanController::class, 'updateStatus'])->name('laporan.updateStatus');
+});
+
 // === Projects Routes ===
 Route::controller(ProjectController::class)->prefix('project')->name('project.')->middleware('auth', 'verified', 'role:Admin')->group(function () {
     Route::get('/create', 'create')->name('create');

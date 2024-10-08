@@ -15,7 +15,6 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Response;
 use Inertia\Inertia;
-use App\Models\Sektor;
 use App\Exports\LaporanExport;
 use Maatwebsite\Excel\Facades\Excel;
 
