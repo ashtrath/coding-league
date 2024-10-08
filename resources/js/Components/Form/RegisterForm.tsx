@@ -62,7 +62,6 @@ const RegisterForm = ({ className }: { className?: string }) => {
                     onChange={(e) => setData('email', e.target.value)}
                 />
             </FormField>
-            {/* TODO: change name to company_name when backend is ready */}
             <FormField name="name_company" className="space-y-2">
                 <div className="flex items-baseline justify-between">
                     <InputLabel required>Nama Perusahaan</InputLabel>
