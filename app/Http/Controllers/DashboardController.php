@@ -4,9 +4,7 @@ namespace App\Http\Controllers;
 use App\Models\Mitra;
 use App\Models\Laporan;
 use App\Models\Project;
-use Illuminate\Http\Request;
 use Inertia\Inertia;
-use App\Exports\DataExport;
 use Illuminate\Support\Facades\DB;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Exports\DashboardExport;
@@ -20,12 +18,12 @@ class DashboardController extends Controller
         $totalAnggaranRealisasi = Laporan::sum('anggaran_realisasi');
 
         $laporanData = Laporan::select('id', 'title', 'status', 'anggaran_realisasi', 'tanggal_realisasi')
-                               ->with(['mitra:id,nama', 'sektor:id,nama', 'project:id,nama'])
+                               ->with(['mitra:id,name_mitra', 'sektor:id,name', 'project:id,title'])
                                ->get();
 
         $totalProjectCount = Project::count();
         
-        return Inertia::render('Dashboard/Index', [
+        return Inertia::render('Dashboard', [
             'mitra' => Mitra::all(),
             'laporans' => $laporanData,
             'mitraCount' => Mitra::count(),
