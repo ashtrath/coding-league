@@ -11,10 +11,8 @@ const buttonVariants = cva(
             variant: {
                 default: 'bg-brand text-white hover:bg-brand/90',
                 secondary:
-                    'border border-gray-300 bg-white text-gray-700 hover:bg-slate-200',
-                tertiary: '',
-                desctructive: '',
-                link: '',
+                    'border border-gray-300 bg-white text-gray-900 hover:bg-slate-200',
+                link: 'text-gray-900 underline-offset-4 hover:underline',
             },
             size: {
                 default: 'h-[44px] px-4 py-2.5',
@@ -38,7 +36,7 @@ interface ButtonProps
 }
 
 const Button = forwardRef<HTMLButtonElement, ButtonProps>(
-    ({ className, variant , size, asChild = false, ...props }, ref) => {
+    ({ className, variant, size, asChild = false, ...props }, ref) => {
         const Comp = asChild ? Slot : 'button';
         return (
             <Comp
