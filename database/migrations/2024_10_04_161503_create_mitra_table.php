@@ -15,6 +15,7 @@ return new class extends Migration
         Schema::create('mitras', function (Blueprint $table) {
             $table->ulid('id')->primary();
             $table->foreignUlid('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->string('name_mitra')->nullable();
             $table->string('name_company');
             $table->string('phone_number', 20)->nullable();
             $table->string('address')->nullable();

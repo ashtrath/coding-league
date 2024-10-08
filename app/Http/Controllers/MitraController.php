@@ -26,6 +26,7 @@ class MitraController extends Controller
     public function store(Request $request, User $user)
     {
         $validate = $request->validate([
+            'name_mitra' => 'required|string|max:255',
             'name_company' => 'required|string|max:255',
             'phone_number' => 'required|string|max:50',
             'address' => 'required|string',
@@ -59,6 +60,7 @@ class MitraController extends Controller
     public function update(Request $request, Mitra $mitra)
     {
         $validate = $request->validate([
+            'name_mitra' => 'required|string|max:255',
             'name_company' => 'required|string|max:255',
             'phone_number' => 'required|string|max:50',
             'address' => 'required|string',
