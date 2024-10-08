@@ -10,6 +10,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Response;
 use Inertia\Inertia;
+use App\Models\Sektor;
+use App\Exports\LaporanExport;
+use Maatwebsite\Excel\Facades\Excel;
 
 class LaporanController extends Controller
 {
@@ -87,5 +90,11 @@ class LaporanController extends Controller
     {
         $laporan->delete();
         return redirect()->route('laporan.index')->with('success', 'Laporan Berhasil Dihapus');
+    }
+
+    public function exportCSV()
+    {
+        $laporan = Laporan::select('id', 'title', 'status', 'description', 'anggaran_realisasi', 'tanggal_realisasi')->get();
+        return Excel::download(new LaporanExport($laporan), 'laporan.csv');
     }
 }
