@@ -6,16 +6,16 @@ use App\Models\Laporan;
 use App\Models\Project;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
+use App\Exports\DataExport;
 use Illuminate\Support\Facades\DB;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Exports\DashboardExport;
 
 class DashboardController extends Controller
 {
+    // Data Statistik
     public function index() {
-        $projectsWithLaporan = Project::whereExists(function ($query) {
-            $query->select(DB::raw(1))
-                  ->from('laporans')
-                  ->whereColumn('laporans.project_id', 'projects.id');
-        })->with('laporans')->get();
+        $projectsWithLaporan = Project::whereHas('laporans')->with('laporans')->get();
 
         $totalAnggaranRealisasi = Laporan::sum('anggaran_realisasi');
 
@@ -28,12 +28,29 @@ class DashboardController extends Controller
         return Inertia::render('Dashboard/Index', [
             'mitra' => Mitra::all(),
             'laporans' => $laporanData,
-            'projects' => $projectsWithLaporan,
             'mitraCount' => Mitra::count(),
             'laporanCount' => Laporan::count(),
             'projectCount' => $projectsWithLaporan->count(),
             'totalProjectCount' => $totalProjectCount,
-            'totalAnggaranRealisasi' => $$totalAnggaranRealisasi,
+            'totalAnggaranRealisasi' => $totalAnggaranRealisasi,
         ]);
+    }
+
+    public function exportAllData()
+    {
+        $totalProjectCount = Project::count();
+        $projectTerealisasiCount = Laporan::distinct('project_id')->count();
+        $totalRealisasi = Laporan::sum('anggaran_realisasi');
+
+        $sektorRealisasi = Laporan::select('sektor_id', DB::raw('SUM(anggaran_realisasi) as total_realisasi'))
+            ->groupBy('sektor_id')
+            ->with('sektor:id,name')
+            ->get();
+
+        $realisasiLokasi = Laporan::select('lokasi_kecamatan', DB::raw('SUM(anggaran_realisasi) as total_realisasi'))
+            ->groupBy('lokasi_kecamatan')
+            ->get();
+
+        return Excel::download(new DashboardExport($totalProjectCount, $projectTerealisasiCount, $totalRealisasi, $sektorRealisasi, $realisasiLokasi), 'dashboard_data.xlsx');
     }
 }
