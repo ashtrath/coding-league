@@ -15,13 +15,14 @@ class Laporan extends Model
         'description',
         'anggaran_realisasi',
         'tanggal_realisasi',
+        'mitra_id',
         'sektor_id',
         'project_id',
     ];
 
-    public function user()
+    public function mitra()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(Mitra::class);
     }
 
     public function sektor()
