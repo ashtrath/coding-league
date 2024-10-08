@@ -1,5 +1,6 @@
 <?php
 
+use App\Enums\ProjectStatus;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -20,6 +21,7 @@ return new class extends Migration
             $table->timestamp('tanggal_awal');
             $table->timestamp('tanggal_akhir');
             $table->timestamp('tanggal_diterbitkan');
+            $table->enum('status', array_column(ProjectStatus::cases(), 'value'))->default(ProjectStatus::Draft->value);
             $table->foreignUlid('sektor_id')->constrained('sektors')->onDelete('cascade');
             $table->timestamps();
         });
@@ -33,4 +35,3 @@ return new class extends Migration
         Schema::dropIfExists('projects');
     }
 };
-
