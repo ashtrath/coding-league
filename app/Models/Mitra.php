@@ -2,24 +2,26 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Concerns\HasUlids;
+use App\Enums\MitraStatus;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Mitra extends Model
 {
-    use HasFactory, HasUlids;
+    use HasFactory;
+
+    protected $table = 'mitra';
 
     protected $fillable = [
-        'user_id',
         'name_company',
         'phone_number',
         'address',
         'status',
     ];
 
-    public function user()
+
+    public function users()
     {
-        return $this->belongsTo(User::class);
+        return $this->hasMany(User::class);
     }
 }

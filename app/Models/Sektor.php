@@ -9,7 +9,11 @@ class Sektor extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['image', 'name', 'description'];
+    protected $fillable = [
+        'image', 
+        'name', 
+        'description'
+    ];
 
     public function project()
     {
