@@ -4,6 +4,7 @@ use App\Http\Controllers\KegiatanController;
 use App\Http\Controllers\LaporanController;
 use App\Http\Controllers\MitraController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\SektorController;
 use App\Http\Controllers\TagController;
 use Illuminate\Foundation\Application;
@@ -18,9 +19,11 @@ Route::get('/', function () {
         'phpVersion' => PHP_VERSION,
     ]);
 });
+
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
+
 
 // === Sektor Routes Public ===
 Route::controller(SektorController::class)->prefix('sektor')->name('sektor.')->middleware('guest')->group(function () {
@@ -32,6 +35,12 @@ Route::controller(SektorController::class)->prefix('sektor')->name('sektor.')->m
 Route::controller(KegiatanController::class)->prefix('kegiatan')->name('mitra.')->middleware('guest')->group(function () {
     Route::get('/', 'index')->name('index');
     Route::get('/{kegiatan}', 'show')->name('show');
+});
+
+// === Projects Routes Public ===
+Route::controller(ProjectController::class)->prefix('project')->name('project.')->middleware('guest')->group(function () {
+    Route::get('/', 'index')->name('index');
+    Route::get('/{project}', 'show')->name('show');
 });
 
 // === Profile Routes === 
@@ -81,6 +90,15 @@ Route::controller(LaporanController::class)->prefix('laporan')->name('laporan.')
     Route::get('/{laporan}/edit', 'edit')->name('edit');
     Route::put('/{laporan}', 'update')->name('update');
     Route::delete('/{laporan}', 'delete')->name('delete');
+});
+
+// === Projects Routes ===
+Route::controller(ProjectController::class)->prefix('project')->name('project.')->middleware('auth', 'verified', 'role:Admin')->group(function () {
+    Route::get('/create', 'create')->name('create');
+    Route::post('/', 'store')->name('store');
+    Route::get('/{project}/edit', 'edit')->name('edit');
+    Route::put('/{project}', 'update')->name('update');
+    Route::delete('/{project}', 'delete')->name('delete');
 });
 
 require __DIR__ . '/auth.php';

@@ -14,9 +14,13 @@ return new class extends Migration
         Schema::create('projects', function (Blueprint $table) {
             $table->ulid('id')->primary();
             $table->string('title', 255);
-            $table->text('description');
+            $table->text('description')->nullable();
             $table->string('image', 255);
-            
+            $table->string('lokasi_kecamatan', 255);
+            $table->timestamp('tanggal_awal');
+            $table->timestamp('tanggal_akhir');
+            $table->timestamp('tanggal_diterbitkan');
+            $table->foreignUlid('sektor_id')->constrained('sektors')->onDelete('cascade');
             $table->timestamps();
         });
     }
