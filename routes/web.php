@@ -18,67 +18,69 @@ Route::get('/', function () {
         'phpVersion' => PHP_VERSION,
     ]);
 });
-
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
-//Public routes
-
-
-Route::middleware(['auth', 'verified'])->group(function () {
-
-    // sektor 
-    Route::get('sektor', [SektorController::class, 'index'])->name('sektor.index');
-    Route::get('sektor/{sektor}', [SektorController::class, 'show'])->name('sektor.show');
-
-    // kegiatan
-    Route::get('kegiatan', [KegiatanController::class, 'index'])->name('kegiatan.index');
-    Route::get('kegiatan/{kegiatan}', [KegiatanController::class, 'show'])->name('kegiatan.show');
-
-    // Profile routes
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-
-    Route::middleware('role:Admin')->group(function() {
-        Route::get('sektor/{sektor}', [SektorController::class, 'show'])->name('sektor.show');
-        Route::get('sektor/create', [SektorController::class, 'create'])->name('sektor.create');
-        Route::post('sektor', [SektorController::class, 'store'])->name('sektor.store');  
-        Route::put('sektor/{sektor}', [SektorController::class, 'update'])->name('sektor.update');
-        Route::get('sektor/{sektor}/edit', [SektorController::class, 'edit'])->name('sektor.edit');
-        Route::delete('sektor/{sektor}', [SektorController::class, 'destroy'])->name('sektor.destroy');
-        
-        Route::get('kegiatan/{kegiatan}', [KegiatanController::class, 'show'])->name('kegiatan.show');
-        Route::get('kegiatan/create', [KegiatanController::class, 'create'])->name('kegiatan.create');
-        Route::post('kegiatan', [KegiatanController::class, 'store'])->name('kegiatan.store');
-        Route::get('kegiatan/{kegiatan}/edit', [KegiatanController::class, 'edit'])->name('kegiatan.edit');
-        Route::put('kegiatan/{kegiatan}', [KegiatanController::class, 'update'])->name('kegiatan.update');
-        Route::delete('kegiatan/{kegiatan}', [KegiatanController::class, 'destroy'])->name('kegiatan.destroy');
-    });
-  
-    // Mitra routes
-    Route::middleware('role:Mitra')->group(function () {
-        Route::get('/mitra', [MitraController::class, 'index'])->name('mitra.index');
-        Route::get('/mitra/create', [MitraController::class, 'create'])->name('mitra.create');
-        Route::post('/mitra', [MitraController::class, 'store'])->name('mitra.store');
-        Route::get('/mitra/{mitra}', [MitraController::class, 'show'])->name('mitra.show');
-        Route::get('/mitra/{mitra}/edit', [MitraController::class, 'edit'])->name('mitra.edit');
-        Route::put('/mitra/{mitra}', [MitraController::class, 'update'])->name('mitra.update');
-        Route::delete('/mitra/{mitra}', [MitraController::class, 'destroy'])->name('mitra.destroy');
-    });
-  
-    // Mitra And Admin
-    Route::middleware(['role:Admin|Mitra'])->group(function() {
-        Route::get('/laporan', [LaporanController::class, 'index'])->name('laporan.index');
-        Route::get('/laporan/create', [LaporanController::class, 'create'])->name('laporan.create');
-        Route::post('/laporan', [LaporanController::class, 'store'])->name('laporan.store');
-        Route::get('/laporan/{laporan}', [LaporanController::class, 'show'])->name('laporan.show');
-        Route::get('/laporan/{laporan}/edit', [LaporanController::class, 'edit'])->name('laporan.edit');
-        Route::put('/laporan/{laporan}', [LaporanController::class, 'update'])->name('laporan.update');
-        Route::delete('/laporan/{laporan}', [LaporanController::class, 'destroy'])->name('laporan.destroy');
-    });
+// === Sektor Routes Public ===
+Route::controller(SektorController::class)->prefix('sektor')->name('sektor.')->middleware('guest')->group(function () {
+    Route::get('/', 'index')->name('index');
+    Route::get('/{sektor}', 'show')->name('show');
 });
 
+// === Kegiatan Routes Public ===
+Route::controller(KegiatanController::class)->prefix('kegiatan')->name('mitra.')->middleware('guest')->group(function () {
+    Route::get('/', 'index')->name('index');
+    Route::get('/{kegiatan}', 'show')->name('show');
+});
+
+// === Profile Routes === 
+Route::controller(ProfileController::class)->prefix('profile')->name('profile.')->middleware('auth', 'verified')->group(function () {
+    Route::get('/', 'edit')->name('edit');
+    Route::patch('/', 'update')->name('update');
+    Route::delete('/', 'delete')->name('delete');
+});
+
+// === Mitra Routes ===
+Route::controller(MitraController::class)->prefix('mitra')->name('mitra.')->middleware(['auth', 'verified', 'role:Mitra'])->group(function () {
+    Route::get('/', 'index')->name('index');
+    Route::get('/create', 'create')->name('create');
+    Route::post('/', 'store')->name('store');
+    Route::get('/{mitra}', 'show')->name('show');
+    Route::get('/{mitra}/edit', 'edit')->name('edit');
+    Route::put('/{mitra}', 'update')->name('update');
+    Route::delete('/{mitra}', 'delete')->name('delete');
+});
+
+// === Sektor Routes ===
+Route::controller(SektorController::class)->prefix('sektor')->name('sektor.')->middleware(['auth', 'verified', 'role:Admin'])->group(function () {
+    Route::get('/', 'index')->name('index');
+    Route::get('/create', 'create')->name('create');
+    Route::post('/', 'store')->name('store');
+    Route::get('/{sektor}', 'show')->name('show');
+    Route::get('/{sektor}/edit', 'edit')->name('edit');
+    Route::put('/{sektor}', 'update')->name('update');
+    Route::delete('/{sektor}', 'delete')->name('delete');
+});
+
+// === Kegiatan Routes ===
+Route::controller(KegiatanController::class)->prefix('kegiatan')->name('kegiatan.')->middleware(['auth', 'verified', 'role:Admin'])->group(function () {
+    Route::get('/create', 'create')->name('create');
+    Route::post('/', 'store')->name('store');
+    Route::get('/{kegiatan}/edit', 'edit')->name('edit');
+    Route::put('/{kegiatan}', 'update')->name('update');
+    Route::delete('/{kegiatan}', 'delete')->name('delete');
+});
+
+// === Laporan Routes ===
+Route::controller(LaporanController::class)->prefix('laporan')->name('laporan.')->middleware('auth', 'verified', 'role:Admin,Mitra')->group(function () {
+    Route::get('/', 'index')->name('index');
+    Route::get('/create', 'create')->name('create');
+    Route::post('/', 'store')->name('store');
+    Route::get('/{laporan}', 'show')->name('show');
+    Route::get('/{laporan}/edit', 'edit')->name('edit');
+    Route::put('/{laporan}', 'update')->name('update');
+    Route::delete('/{laporan}', 'delete')->name('delete');
+});
 
 require __DIR__ . '/auth.php';
