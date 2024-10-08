@@ -10,4 +10,9 @@ class Sektor extends Model
     use HasFactory;
 
     protected $fillable = ['image', 'name', 'description'];
+
+    public function project()
+    {
+        return $this->hasMany(Project::class, 'sektor_id');
+    }
 }
