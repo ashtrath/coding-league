@@ -47,6 +47,15 @@ class ProjectController extends Controller
         return redirect()->route('project.index')->with('success', 'Project Berhasil Dibuat.');
     }
 
+    public function show(Project $project)
+    {
+        $project->load('sektor');
+
+        return Inertia::render('Project/Show', [
+            'project' => $project
+        ]);
+    }
+
     public function edit(Project $project)
     {
         $sektors = Sektor::all();
