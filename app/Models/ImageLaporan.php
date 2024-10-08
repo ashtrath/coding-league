@@ -11,5 +11,8 @@ class ImageLaporan extends Model
 
     protected $table = 'image_laporans';
 
-    protected $fillable = ['image'];
+    protected $fillable = [
+        'image', 
+        'laporan_id'
+    ];
 }

@@ -11,5 +11,9 @@ class Sektor extends Model
     
     protected $table = 'sektors';
 
-    protected $fillable = ['image', 'name', 'description'];
+    protected $fillable = [
+        'image', 
+        'name', 
+        'description'
+    ];
 }
