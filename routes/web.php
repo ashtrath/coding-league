@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\Dashboard\DashboardController;
 use App\Http\Controllers\KegiatanController;
 use App\Http\Controllers\LaporanController;
 use App\Http\Controllers\MitraController;
@@ -20,7 +20,7 @@ Route::get('/', function () {
     ]);
 });
 
-// === Sektor Routes Public ===
+// === Dashboard Routes Public ===
 Route::controller(DashboardController::class)->prefix('dashboard')->name('dashboard.')->middleware(['auth', 'role:Admin,Mitra'])->group(function () {
     Route::get('/', 'index')->name('index');
     Route::get('/export-all', 'exportAllData')->name('export.all');
