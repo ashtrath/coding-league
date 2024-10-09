@@ -24,9 +24,9 @@ class DashboardExport implements WithMultipleSheets
     public function sheets(): array
     {
         return [
-            new StatisticsSheet($this->totalProjectCount, $this->projectTerealisasiCount, $this->totalRealisasi),
-            new SektorRealisasiSheet($this->sektorRealisasi),
-            new LokasiRealisasiSheet($this->realisasiLokasi),
+            new DashboardStatisticsSheet($this->totalProjectCount, $this->projectTerealisasiCount, $this->totalRealisasi),
+            new DashboardSektorRealisasiSheet($this->sektorRealisasi),
+            new DashboardLokasiRealisasiSheet($this->realisasiLokasi),
         ];
     }
 }

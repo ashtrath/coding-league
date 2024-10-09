@@ -5,7 +5,7 @@ namespace App\Exports;
 use Maatwebsite\Excel\Concerns\FromArray;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 
-class StatisticsSheet implements FromArray, WithHeadings
+class DashboardStatisticsSheet implements FromArray, WithHeadings
 {
     protected $totalProjectCount;
     protected $projectTerealisasiCount;

@@ -5,7 +5,7 @@ namespace App\Exports;
 use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 
-class LokasiRealisasiSheet implements FromCollection, WithHeadings
+class DashboardLokasiRealisasiSheet implements FromCollection, WithHeadings
 {
     protected $realisasiLokasi;
 
