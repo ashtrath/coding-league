@@ -75,7 +75,6 @@ class DashboardController extends Controller
             ->groupBy('lokasi_kecamatan')
             ->get();
 
-
         return Excel::download(new AdminDashboardExport($totalAdminProjectCount, $adminProjectTerealisasiCount, $adminTotalMitra, $totalAdminRealisasi, $adminSektorRealisasi, $adminRealisasiMitra, $adminRealisasiLokasi), 'admin_dashboard_data.xlsx');
     }
 }

@@ -2,30 +2,34 @@
 
 namespace App\Exports;
 
-use Maatwebsite\Excel\Concerns\FromCollection;
+use Maatwebsite\Excel\Concerns\FromArray;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 
-class DashboardLokasiRealisasiSheet implements FromCollection, WithHeadings
+class DashboardLokasiRealisasiSheet implements FromArray, WithHeadings
 {
-    protected $realisasiLokasi;
+    protected $adminRealisasiLokasi;
 
-    public function __construct($realisasiLokasi)
+    public function __construct($adminRealisasiLokasi)
     {
-        $this->realisasiLokasi = $realisasiLokasi;
+        $this->adminRealisasiLokasi = $adminRealisasiLokasi;
     }
 
-    public function collection()
+    public function array(): array
     {
-        return $this->realisasiLokasi->map(function ($item) {
-            return [
-                'Lokasi' => $item->lokasi_kecamatan,
-                'Total Realisasi' => $item->total_realisasi,
+        $data = [];
+
+        foreach ($this->adminRealisasiLokasi as $lokasi) {
+            $data[] = [
+                'Kecamantan' => $lokasi->lokasi_kecamatan,
+                'Total Realisasi' => $lokasi->total_realisasi,
             ];
-        });
+        }
+
+        return $data;
     }
 
     public function headings(): array
     {
-        return ['Lokasi', 'Total Realisasi'];
+        return ['Kecamantan', 'Total Realisasi'];
     }
 }
