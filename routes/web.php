@@ -23,6 +23,7 @@ Route::get('/', function () {
 Route::controller(DashboardController::class)->prefix('dashboard')->name('dashboard.')->middleware(['auth', 'role:Admin,Mitra'])->group(function () {
     Route::get('/', 'index')->name('index');
     Route::get('/export-all', 'exportAllData')->name('export.all');
+    Route::get('/export-admin')->name('export.admin');
 });
 
 
