@@ -9,7 +9,7 @@ const Navbar = () => {
     const navItem = getNavItem();
 
     return (
-        <nav className="fixed left-0 top-0 flex w-full items-center justify-between border-b border-b-gray-300 bg-white px-24 py-[18px] shadow-sm">
+        <nav className="fixed left-0 top-0 z-40 flex w-full items-center justify-between border-b border-b-gray-300 bg-white px-24 py-[18px] shadow-sm">
             <Link href="/">
                 <ApplicationLogo className="h-10" />
             </Link>
