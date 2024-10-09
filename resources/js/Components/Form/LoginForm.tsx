@@ -70,8 +70,8 @@ const LoginForm = ({ className }: { className?: string }) => {
                 />
             </FormField>
             <FormField name="remember" className="flex items-center gap-2">
-                <Checkbox id="radix-:r2:" />
-                <InputLabel>Ingat Saya</InputLabel>
+                <Checkbox id="remember_me" />
+                <InputLabel htmlFor="remember_me">Ingat Saya</InputLabel>
             </FormField>
             <FormSubmit asChild>
                 <Button
