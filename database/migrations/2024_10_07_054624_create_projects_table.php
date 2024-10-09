@@ -20,7 +20,7 @@ return new class extends Migration
             $table->string('lokasi_kecamatan', 255);
             $table->timestamp('tanggal_awal');
             $table->timestamp('tanggal_akhir');
-            $table->timestamp('tanggal_diterbitkan');
+            $table->timestamp('tanggal_diterbitkan')->nullable();
             $table->enum('status', array_column(ProjectStatus::cases(), 'value'))->default(ProjectStatus::Draft->value);
             $table->foreignUlid('sektor_id')->constrained('sektors')->onDelete('cascade');
             $table->timestamps();

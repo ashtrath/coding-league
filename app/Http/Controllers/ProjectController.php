@@ -105,4 +105,13 @@ class ProjectController extends Controller
         $project = Project::select('id', 'title', 'description', 'image', 'lokasi_kecamatan', 'tanggal_awal', 'tanggal_akhir', 'tanggal_diterbitkan', 'status')->get();
         return Excel::download(new ProjectExport($project), 'project.csv');
     }
+
+    public function updateProjectStatus(Request $request, $id)
+    {
+        $project = Project::findOrFail($id);
+        $project->status = $request->status;
+        $project->save();
+
+        return redirect()->back()->with('success', 'Status Project Berhasil Diupdate.');
+    }
 }
