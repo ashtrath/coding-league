@@ -29,9 +29,12 @@ class DashboardController extends Controller
 
         $totalProjectCount = Project::count();
 
+        $mitras = Mitra::select('id', 'name_mitra', 'name_company')->get();
+        $sektors = Sektor::select('id', 'name')->get();
+
         return Inertia::render('Dashboard/index', [
-            'mitra' => Mitra::all(),
-            'sektor' => Sektor::all(),
+            'mitras' => $mitras,
+            'sektors' => $sektors,
             'laporans' => $laporanData,
             'mitraCount' => Mitra::count(),
             'laporanCount' => Laporan::count(),
