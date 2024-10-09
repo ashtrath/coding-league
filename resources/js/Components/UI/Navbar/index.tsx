@@ -9,7 +9,7 @@ const Navbar = () => {
     const navItem = getNavItem();
 
     return (
-        <nav className="flex items-center justify-between px-24 py-[18px]">
+        <nav className="fixed left-0 top-0 flex w-full items-center justify-between border-b border-b-gray-300 bg-white px-24 py-[18px] shadow-sm">
             <Link href="/">
                 <ApplicationLogo className="h-10" />
             </Link>
