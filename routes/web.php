@@ -25,6 +25,13 @@ Route::get('/', function () {
     ]);
 });
 
+Route::controller(DashboardController::class)->prefix('dashboard')->name('dashboard.')->middleware(['auth', 'role:Admin,Mitra'])->group(function () {
+    Route::get('/', 'index')->name('index');
+    Route::get('/export-all', 'exportAllData')->name('export.all');
+    Route::get('/export-admin')->name('export.admin');
+});
+
+
 // === Sektor Routes Public ===
 Route::controller(SektorController::class)->prefix('sektor')->name('sektor.')->middleware('guest')->group(function () {
     Route::get('/', 'index')->name('index');

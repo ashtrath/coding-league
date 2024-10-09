@@ -5,7 +5,7 @@ namespace App\Exports;
 use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 
-class SektorRealisasiSheet implements FromCollection, WithHeadings
+class DashboardSektorRealisasiSheet implements FromCollection, WithHeadings
 {
     protected $sektorRealisasi;
 
