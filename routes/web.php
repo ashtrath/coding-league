@@ -82,8 +82,8 @@ Route::controller(ProfileController::class)->prefix('profile')->name('profile.')
 
 
 // === Dashboard Routes ===
-Route::prefix('dashboard')->name('dashboard.')->middleware(['auth', 'role:Admin,Mitra'])->group(function () {
-    
+Route::prefix('dashboard')->name('dashboard.')->middleware(['auth', 'verified', 'role:Admin,Mitra'])->group(function () {
+
     // === Main Dashboard Route ===
     Route::controller(DashboardController::class)->group(function () {
         Route::get('/', 'index')->name('index');
