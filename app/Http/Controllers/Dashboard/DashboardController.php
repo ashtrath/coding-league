@@ -7,6 +7,7 @@ use App\Enums\LaporanStatus;
 use App\Models\Mitra;
 use App\Models\Laporan;
 use App\Models\Project;
+use App\Models\Sektor;
 use Inertia\Inertia;
 use Illuminate\Support\Facades\DB;
 use Maatwebsite\Excel\Facades\Excel;
@@ -30,6 +31,7 @@ class DashboardController extends Controller
 
         return Inertia::render('Dashboard/index', [
             'mitra' => Mitra::all(),
+            'sektor' => Sektor::all(),
             'laporans' => $laporanData,
             'mitraCount' => Mitra::count(),
             'laporanCount' => Laporan::count(),
