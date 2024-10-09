@@ -36,7 +36,7 @@ class AuthenticatedSessionController extends Controller
         $user = Auth::user();
 
         if ($user->role === 'Admin') {
-            return redirect()->route('admin.dashboard');
+            return redirect()->route('dashboard.index');
         }
 
         if ($user->role === 'Mitra') {
@@ -44,7 +44,7 @@ class AuthenticatedSessionController extends Controller
                 return redirect()->route('profile.edit');
             }
 
-            return redirect()->route('mitra.dashboard');
+            return redirect()->route('dashboard.index');
         }
     }
 
