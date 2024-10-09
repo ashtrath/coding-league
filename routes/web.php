@@ -20,11 +20,11 @@ Route::get('/', function () {
     ]);
 });
 
+// === Sektor Routes Public ===
 Route::controller(DashboardController::class)->prefix('dashboard')->name('dashboard.')->middleware(['auth', 'role:Admin,Mitra'])->group(function () {
     Route::get('/', 'index')->name('index');
     Route::get('/export-all', 'exportAllData')->name('export.all');
 });
-
 
 // === Sektor Routes Public ===
 Route::controller(SektorController::class)->prefix('sektor')->name('sektor.')->middleware('guest')->group(function () {
@@ -91,12 +91,8 @@ Route::controller(LaporanController::class)->prefix('laporan')->name('laporan.')
     Route::get('/{laporan}/edit', 'edit')->name('edit');
     Route::put('/{laporan}', 'update')->name('update');
     Route::delete('/{laporan}', 'delete')->name('delete');
+    Route::post('/{laporan}/status', [LaporanController::class, 'updateStatus'])->name('laporan.updateStatus')->middleware(['role:Admin']);
     Route::get('/export-csv', 'exportCSV')->name('export.csv');
-});
-
-// === Laporan Update Status Routes ===
-Route::controller(LaporanController::class)->prefix('laporan')->name('laporan.')->middleware('auth', 'verified', 'role:Admin')->group(function () {
-    Route::post('/{laporan}/status', [LaporanController::class, 'updateStatus'])->name('laporan.updateStatus');
 });
 
 // === Projects Routes ===
