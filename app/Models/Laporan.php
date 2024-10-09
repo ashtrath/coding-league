@@ -2,12 +2,13 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Concerns\HasUlids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Laporan extends Model
 {
-    use HasFactory;
+    use HasFactory, HasUlids;
 
     protected $fillable = [
         'title',
@@ -22,16 +23,16 @@ class Laporan extends Model
 
     public function mitra()
     {
-        return $this->belongsTo(Mitra::class);
+        return $this->belongsTo(Mitra::class, 'mitra_id');
     }
 
     public function sektor()
     {
-        return $this->belongsTo(Sektor::class);
+        return $this->belongsTo(Sektor::class, 'sektor_id');
     }
 
     public function project()
     {
-        return $this->belongsTo(Project::class);
+        return $this->belongsTo(Project::class, 'project_id');
     }
 }
