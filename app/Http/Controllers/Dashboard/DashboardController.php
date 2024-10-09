@@ -28,7 +28,7 @@ class DashboardController extends Controller
 
         $totalProjectCount = Project::count();
 
-        return Inertia::render('Dashboard/Index', [
+        return Inertia::render('Dashboard/index', [
             'mitra' => Mitra::all(),
             'laporans' => $laporanData,
             'mitraCount' => Mitra::count(),
