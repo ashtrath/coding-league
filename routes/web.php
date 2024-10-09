@@ -108,7 +108,7 @@ Route::prefix('dashboard')->name('dashboard.')->middleware(['auth', 'verified', 
         Route::get('/{laporan}/edit', 'edit')->name('edit');
         Route::put('/{laporan}', 'update')->name('update');
         Route::delete('/{laporan}', 'delete')->name('delete');
-        Route::post('/{laporan}/status', [DashboardLaporanController::class, 'updateStatus'])->name('laporan.updateStatus')->middleware(['role:Admin']);
+        Route::post('/{laporan}/status', 'updateStatus')->name('laporan.updateStatus')->middleware(['role:Admin']);
         Route::get('/export-csv', 'exportCSV')->name('export.csv');
     });
 
