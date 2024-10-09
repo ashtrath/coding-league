@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enums\ProjectStatus;
 use Illuminate\Database\Eloquent\Concerns\HasUlids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -36,5 +37,16 @@ class Project extends Model
     public function laporans(): HasMany
     {
         return $this->hasMany(Laporan::class, 'project_id');
+    }
+
+    public function setStatusAttribute($value) 
+    {
+        $this->attributes['status'] = $value;
+
+        if ($value === ProjectStatus::Terbit->value) {
+            $this->attributes['tanggal_diterbitkan'] = now();
+        } else {
+            $this->attributes['tanggal_diterbitkan'] = null;
+        }
     }
 }
