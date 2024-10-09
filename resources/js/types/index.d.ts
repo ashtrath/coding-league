@@ -1,8 +1,10 @@
 export interface User {
-    id: number;
-    name: string;
+    id: string;
+    full_name?: string;
     email: string;
     email_verified_at?: string;
+    image?: string;
+    role: 'Admin' | 'Mitra';
 }
 
 export type PageProps<
