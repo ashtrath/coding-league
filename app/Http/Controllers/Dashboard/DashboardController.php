@@ -9,6 +9,7 @@ use Inertia\Inertia;
 use Illuminate\Support\Facades\DB;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Exports\DashboardExport;
+use App\Models\Sektor;
 
 class DashboardController extends Controller
 {
@@ -26,6 +27,7 @@ class DashboardController extends Controller
         
         return Inertia::render('Dashboard', [
             'mitra' => Mitra::all(),
+            'sektor' => Sektor::all(),
             'laporans' => $laporanData,
             'mitraCount' => Mitra::count(),
             'laporanCount' => Laporan::count(),
