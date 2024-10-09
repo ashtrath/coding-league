@@ -1,7 +1,14 @@
+import StatisticsCard from '@/Components/Card/StatisticsCard';
 import Button from '@/Components/UI/Button';
 import MainDashboardLayout from '@/Layouts/MainDashboardLayout';
 import { Head } from '@inertiajs/react';
-import { RiDownloadLine } from '@remixicon/react';
+import {
+    RiDashboardLine,
+    RiDownloadLine,
+    RiMoneyDollarCircleLine,
+    RiUser3Line,
+    RiVerifiedBadgeLine,
+} from '@remixicon/react';
 
 export default function Dashboard({
     totalAnggaranRealisasi,
@@ -42,6 +49,32 @@ export default function Dashboard({
                 <h2 className="text-[28px] font-semibold leading-[44px] tracking-tight text-gray-900">
                     Data Statistik
                 </h2>
+                <div className="flex items-baseline gap-6">
+                    <StatisticsCard
+                        icon={RiDashboardLine}
+                        title="Total Proyek CSR"
+                        value={1000}
+                        color="orange"
+                    />
+                    <StatisticsCard
+                        icon={RiVerifiedBadgeLine}
+                        title="Proyek Terealisasi"
+                        value={1000}
+                        color="purple"
+                    />
+                    <StatisticsCard
+                        icon={RiUser3Line}
+                        title="Mitra Bergabung"
+                        value={1000}
+                        color="blue"
+                    />
+                    <StatisticsCard
+                        icon={RiMoneyDollarCircleLine}
+                        title="Total Dana Realisasi"
+                        value={1000}
+                        color="green"
+                    />
+                </div>
             </section>
         </MainDashboardLayout>
     );
