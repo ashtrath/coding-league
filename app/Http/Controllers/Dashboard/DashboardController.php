@@ -66,7 +66,7 @@ class DashboardController extends Controller
                 'name' => 'Lainnya',
                 'total_anggaran' => $remainingSectorsTotal,
                 'percentage' => ($remainingSectorsTotal / $totalAnggaran) * 100,
-                'fill' => 'var(--charts-7)'
+                'fill' => 'var(--chart-7)'
             ]);
         }
 
@@ -95,7 +95,7 @@ class DashboardController extends Controller
             $anggaranMitrasCSR->push([
                 'name' => 'Lainnya',
                 'total_anggaran' => $remainingMitraTotal,
-                'fill' => 'var(--charts-9)'
+                'fill' => 'var(--chart-9)'
             ]);
         }
 
@@ -125,7 +125,7 @@ class DashboardController extends Controller
             $anggaranKecamatansCSR->push([
                 'name' => 'Lainnya',
                 'total_anggaran' => $remainingKecamatanTotal,
-                'fill' => 'var(--charts-9)'
+                'fill' => 'var(--chart-9)'
             ]);
         }
 
