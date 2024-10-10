@@ -14,6 +14,6 @@ class ImageLaporan extends Model
 
     public function laporan() 
     {
-        return $this->belongsTo(Laporan::class);
+        return $this->belongsTo(Laporan::class, 'laporan_id');
     }
 }
