@@ -16,8 +16,13 @@ class Sektor extends Model
         'description'
     ];
 
-    public function project()
+    public function projects()
     {
-        return $this->hasMany(Project::class, 'sektor_id');
+        return $this->hasMany(Project::class);
+    }
+
+    public function laporans()
+    {
+        return $this->hasMany(Laporan::class);
     }
 }
