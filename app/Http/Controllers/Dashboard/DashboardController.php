@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Dashboard;
 
 use App\Http\Controllers\Controller;
 use App\Enums\LaporanStatus;
+use App\Enums\MitraStatus;
+use App\Enums\ProjectStatus;
 use App\Models\Mitra;
 use App\Models\Laporan;
 use App\Models\Project;
@@ -13,35 +15,31 @@ use Illuminate\Support\Facades\DB;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Exports\DashboardExport;
 use App\Exports\AdminDashboardExport;
+use Illuminate\Support\Facades\Auth;
 
 class DashboardController extends Controller
 {
     // Data Statistik
     public function index()
     {
-        $projectsWithLaporan = Project::whereHas('laporans')->with('laporans')->get();
+        $total_project = Project::where('status', ProjectStatus::Terbit->value)->count();
+        $total_project_terealisasi = Project::whereHas('laporans')->count();
+        $total_anggaran_realisasi = Laporan::where('status', LaporanStatus::Diterima->value)->sum('anggaran_realisasi');
 
-        $totalAnggaranRealisasi = Laporan::where('status', LaporanStatus::Diterima->value)->sum('anggaran_realisasi');
+        $analytics = collect([
+            'total_project' => $total_project,
+            'total_project_terealisasi' => $total_project_terealisasi,
+            'total_anggaran_realisasi' => $total_anggaran_realisasi,
+        ]);
 
-        $laporanData = Laporan::select('id', 'title', 'status', 'anggaran_realisasi', 'tanggal_realisasi')
-            ->with(['mitra:id,nama', 'sektor:id,nama', 'project:id,nama'])
-            ->get();
-
-        $totalProjectCount = Project::count();
+        if (Auth::user()->role === 'Admin') {
+            $analytics->put('total_mitra', Mitra::where('status', MitraStatus::Active->value)->count());
+        }
 
         $mitras = Mitra::select('id', 'name_mitra', 'name_company')->get();
         $sektors = Sektor::select('id', 'name')->get();
 
-        return Inertia::render('Dashboard/index', [
-            'mitras' => $mitras,
-            'sektors' => $sektors,
-            'laporans' => $laporanData,
-            'mitraCount' => Mitra::count(),
-            'laporanCount' => Laporan::count(),
-            'projectCount' => $projectsWithLaporan->count(),
-            'totalProjectCount' => $totalProjectCount,
-            'totalAnggaranRealisasi' => $totalAnggaranRealisasi,
-        ]);
+        return Inertia::render('Dashboard/index', compact('mitras', 'sektors', 'analytics'));
     }
 
     public function exportAllData()
