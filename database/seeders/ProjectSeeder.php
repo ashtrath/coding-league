@@ -15,7 +15,7 @@ class ProjectSeeder extends Seeder
      */
     public function run(): void
     {
-        $sektors = Sektor::all();
+            $sektors = Sektor::all();
         if ($sektors->isEmpty()) {
             $this->command->info('Tidak Ada Data Sektor Yang Tersedia');
             return;

@@ -23,7 +23,43 @@ class TagSeeder extends Seeder
 
         foreach ($kegiatans as $kegiatan) {
             Tag::create([
-                'name' => 'Tag Sosial',
+                'name' => 'Sosial',
+                'kegiatan_id' => $kegiatan->id,
+            ]);
+            Tag::create([
+                'name' => 'Lingkungan',
+                'kegiatan_id' => $kegiatan->id,
+            ]);
+            Tag::create([
+                'name' => 'Kerja Bakti',
+                'kegiatan_id' => $kegiatan->id,
+            ]);
+            Tag::create([
+                'name' => 'Penggalangan Dana',
+                'kegiatan_id' => $kegiatan->id,
+            ]);
+            Tag::create([
+                'name' => 'Sedekah',
+                'kegiatan_id' => $kegiatan->id,
+            ]);
+            Tag::create([
+                'name' => 'Peduli Sosial',
+                'kegiatan_id' => $kegiatan->id,
+            ]);
+            Tag::create([
+                'name' => 'Peduli Palestine',
+                'kegiatan_id' => $kegiatan->id,
+            ]);
+            Tag::create([
+                'name' => 'Kominfo',
+                'kegiatan_id' => $kegiatan->id,
+            ]);
+            Tag::create([
+                'name' => 'Pemerintah',
+                'kegiatan_id' => $kegiatan->id,
+            ]);
+            Tag::create([
+                'name' => 'Teknologi',
                 'kegiatan_id' => $kegiatan->id,
             ]);
         }

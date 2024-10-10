@@ -12,18 +12,53 @@ class SektorSeeder extends Seeder
     {
         $sektors = [
             [
-                'name' => 'Infrastruktur',
-                'image' => 'infrastruktur.jpg',
+                'name' => 'Sosial',
+                'image' => 'sosial.jpg',
                 'description' => 'Sektor yang fokus pada pembangunan infrastruktur.'
-            ],
-            [
-                'name' => 'Teknologi',
-                'image' => 'teknologi.jpg',
-                'description' => 'Sektor yang berkaitan dengan pengembangan teknologi.'
             ],
             [
                 'name' => 'Pendidikan',
                 'image' => 'pendidikan.jpg',
+                'description' => 'Sektor yang berkaitan dengan pengembangan teknologi.'
+            ],
+            [
+                'name' => 'Lingkungan',
+                'image' => 'lingkungan.jpg',
+                'description' => 'Sektor yang berfokus pada peningkatan kualitas pendidikan.'
+            ],
+            [
+                'name' => 'Kesehatan',
+                'image' => 'kesehatan.jpg',
+                'description' => 'Sektor yang berfokus pada peningkatan kualitas pendidikan.'
+            ],
+            [
+                'name' => 'Infarastruktur dan sanitasi lingkungan',
+                'image' => 'infarastruktur dan sanitasi lingkungan.jpg',
+                'description' => 'Sektor yang berfokus pada peningkatan kualitas pendidikan.'
+            ],
+            [
+                'name' => 'Sarana dan prasarana keagamaan',
+                'image' => 'sarana dan prasarana keagamaan.jpg',
+                'description' => 'Sektor yang berfokus pada peningkatan kualitas pendidikan.'
+            ],
+            [
+                'name' => 'Kerapihan',
+                'image' => 'lingkungan.jpg',
+                'description' => 'Sektor yang berfokus pada peningkatan kualitas pendidikan.'
+            ],
+            [
+                'name' => 'Kedisiplinan',
+                'image' => 'kedisiplinan.jpg',
+                'description' => 'Sektor yang berfokus pada peningkatan kualitas pendidikan.'
+            ],
+            [
+                'name' => 'Keasrian',
+                'image' => 'keasrian.jpg',
+                'description' => 'Sektor yang berfokus pada peningkatan kualitas pendidikan.'
+            ],
+            [
+                'name' => 'Kebersihan',
+                'image' => 'kebersihan.jpg',
                 'description' => 'Sektor yang berfokus pada peningkatan kualitas pendidikan.'
             ],
         ];
