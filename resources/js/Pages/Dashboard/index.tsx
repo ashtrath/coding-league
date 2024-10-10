@@ -1,6 +1,7 @@
 import StatisticsCard from '@/Components/Card/StatisticsCard';
 import DashboardFilter from '@/Components/Select/DashboardFilter';
 import MainDashboardLayout from '@/Layouts/MainDashboardLayout';
+import { PageProps } from '@/types';
 import { Head } from '@inertiajs/react';
 import {
     RiDashboardLine,
@@ -9,11 +10,7 @@ import {
     RiVerifiedBadgeLine,
 } from '@remixicon/react';
 
-export default function Dashboard({
-    totalAnggaranRealisasi,
-}: {
-    totalAnggaranRealisasi: number;
-}) {
+export default function Dashboard({ analytics }: PageProps) {
     return (
         <MainDashboardLayout>
             <Head title="Dashboard" />
@@ -27,25 +24,25 @@ export default function Dashboard({
                     <StatisticsCard
                         icon={RiDashboardLine}
                         title="Total Proyek CSR"
-                        value={1000}
+                        value={analytics.total_project}
                         color="orange"
                     />
                     <StatisticsCard
                         icon={RiVerifiedBadgeLine}
                         title="Proyek Terealisasi"
-                        value={1000}
+                        value={analytics.total_project_terealisasi}
                         color="purple"
                     />
                     <StatisticsCard
                         icon={RiUser3Line}
                         title="Mitra Bergabung"
-                        value={1000}
+                        value={analytics.total_mitra}
                         color="blue"
                     />
                     <StatisticsCard
                         icon={RiMoneyDollarCircleLine}
                         title="Total Dana Realisasi"
-                        value={1000}
+                        value={`Rp. ${analytics.total_anggaran_realisasi}`}
                         color="green"
                     />
                 </div>

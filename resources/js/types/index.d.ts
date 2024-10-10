@@ -24,6 +24,13 @@ export interface Sektor {
     description?: string;
 }
 
+export interface Analytics {
+    total_project: number;
+    total_project_terealisasi: number;
+    total_anggaran_realisasi: number;
+    total_mitra: number;
+}
+
 export type PageProps<
     T extends Record<string, unknown> = Record<string, unknown>,
 > = T & {
@@ -32,4 +39,5 @@ export type PageProps<
     };
     mitras: Mitra[];
     sektors: Sektor[];
+    analytics: Analytics;
 };
