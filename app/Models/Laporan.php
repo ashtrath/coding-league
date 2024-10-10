@@ -35,4 +35,9 @@ class Laporan extends Model
     {
         return $this->belongsTo(Project::class, 'project_id');
     }
+
+    public function images()
+    {
+        return $this->hasMany(ImageLaporan::class);
+    }
 }
