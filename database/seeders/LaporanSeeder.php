@@ -18,11 +18,11 @@ class LaporanSeeder extends Seeder
      */
     public function run(): void
     {
-        $mitra = Mitra::first();
-        $sektor = Sektor::first();
-        $project = Project::first();
+        $mitras = Mitra::all();
+        $sektors = Sektor::all();
+        $projects = Project::all();
 
-        if (!$mitra || !$sektor || !$project) {
+        if (!$mitras || !$sektors || !$projects) {
             $this->command->info('Tidak Ada Mitra, Sektor, Atau Project Yang Tersedia');
             return;
         }
@@ -34,9 +34,9 @@ class LaporanSeeder extends Seeder
             'description' => 'Deskripsi laporan untuk proyek PPLG 1.',
             'anggaran_realisasi' => 5000000.00,
             'tanggal_realisasi' => now(),
-            'mitra_id' => $mitra->id,
-            'sektor_id' => $sektor->id,
-            'project_id' => $project->id,
+            'mitra_id' => $mitras[0]->id,
+            'sektor_id' => $sektors[0]->id,
+            'project_id' => $projects[0]->id,
         ]);
         ImageLaporan::create([
             'image' => 'laporan_image_1_1.jpg',
@@ -50,9 +50,9 @@ class LaporanSeeder extends Seeder
             'description' => 'Deskripsi laporan untuk proyek PPLG 2.',
             'anggaran_realisasi' => 6000000.00,
             'tanggal_realisasi' => now(),
-            'mitra_id' => $mitra->id,
-            'sektor_id' => $sektor->id,
-            'project_id' => $project->id,
+            'mitra_id' => $mitras[1]->id,
+            'sektor_id' => $sektors[1]->id,
+            'project_id' => $projects[1]->id,
         ]);
         ImageLaporan::create([
             'image' => 'laporan_image_2_1.jpg',
@@ -66,9 +66,9 @@ class LaporanSeeder extends Seeder
             'description' => 'Deskripsi laporan untuk proyek PPLG 3.',
             'anggaran_realisasi' => 7000000.00,
             'tanggal_realisasi' => now(),
-            'mitra_id' => $mitra->id,
-            'sektor_id' => $sektor->id,
-            'project_id' => $project->id,
+            'mitra_id' => $mitras[2]->id,
+            'sektor_id' => $sektors[2]->id,
+            'project_id' => $projects[2]->id,
         ]);
         ImageLaporan::create([
             'image' => 'laporan_image_3_1.jpg',
@@ -82,9 +82,9 @@ class LaporanSeeder extends Seeder
             'description' => 'Deskripsi laporan untuk proyek PPLG 4.',
             'anggaran_realisasi' => 8000000.00,
             'tanggal_realisasi' => now(),
-            'mitra_id' => $mitra->id,
-            'sektor_id' => $sektor->id,
-            'project_id' => $project->id,
+            'mitra_id' => $mitras[3]->id,
+            'sektor_id' => $sektors[3]->id,
+            'project_id' => $projects[1]->id,
         ]);
         ImageLaporan::create([
             'image' => 'laporan_image_4_1.jpg',
@@ -98,9 +98,9 @@ class LaporanSeeder extends Seeder
             'description' => 'Deskripsi laporan untuk proyek PPLG 5.',
             'anggaran_realisasi' => 9000000.00,
             'tanggal_realisasi' => now(),
-            'mitra_id' => $mitra->id,
-            'sektor_id' => $sektor->id,
-            'project_id' => $project->id,
+            'mitra_id' => $mitras[4]->id,
+            'sektor_id' => $sektors[4]->id,
+            'project_id' => $projects[2]->id,
         ]);
         ImageLaporan::create([
             'image' => 'laporan_image_5_1.jpg',
@@ -114,9 +114,9 @@ class LaporanSeeder extends Seeder
             'description' => 'Deskripsi laporan untuk proyek PPLG 6.',
             'anggaran_realisasi' => 10000000.00,
             'tanggal_realisasi' => now(),
-            'mitra_id' => $mitra->id,
-            'sektor_id' => $sektor->id,
-            'project_id' => $project->id,
+            'mitra_id' => $mitras[5]->id,
+            'sektor_id' => $sektors[5]->id,
+            'project_id' => $projects[0]->id,
         ]);
         ImageLaporan::create([
             'image' => 'laporan_image_6_1.jpg',
@@ -130,9 +130,9 @@ class LaporanSeeder extends Seeder
             'description' => 'Deskripsi laporan untuk proyek PPLG 7.',
             'anggaran_realisasi' => 11000000.00,
             'tanggal_realisasi' => now(),
-            'mitra_id' => $mitra->id,
-            'sektor_id' => $sektor->id,
-            'project_id' => $project->id,
+            'mitra_id' => $mitras[6]->id,
+            'sektor_id' => $sektors[6]->id,
+            'project_id' => $projects[2]->id,
         ]);
         ImageLaporan::create([
             'image' => 'laporan_image_7_1.jpg',
@@ -146,9 +146,9 @@ class LaporanSeeder extends Seeder
             'description' => 'Deskripsi laporan untuk proyek PPLG 8.',
             'anggaran_realisasi' => 12000000.00,
             'tanggal_realisasi' => now(),
-            'mitra_id' => $mitra->id,
-            'sektor_id' => $sektor->id,
-            'project_id' => $project->id,
+            'mitra_id' => $mitras[7]->id,
+            'sektor_id' => $sektors[7]->id,
+            'project_id' => $projects[0]->id,
         ]);
         ImageLaporan::create([
             'image' => 'laporan_image_8_1.jpg',
@@ -162,9 +162,9 @@ class LaporanSeeder extends Seeder
             'description' => 'Deskripsi laporan untuk proyek PPLG 9.',
             'anggaran_realisasi' => 13000000.00,
             'tanggal_realisasi' => now(),
-            'mitra_id' => $mitra->id,
-            'sektor_id' => $sektor->id,
-            'project_id' => $project->id,
+            'mitra_id' => $mitras[8]->id,
+            'sektor_id' => $sektors[8]->id,
+            'project_id' => $projects[1]->id,
         ]);
         ImageLaporan::create([
             'image' => 'laporan_image_9_1.jpg',
@@ -178,9 +178,9 @@ class LaporanSeeder extends Seeder
             'description' => 'Deskripsi laporan untuk proyek PPLG 10.',
             'anggaran_realisasi' => 14000000.00,
             'tanggal_realisasi' => now(),
-            'mitra_id' => $mitra->id,
-            'sektor_id' => $sektor->id,
-            'project_id' => $project->id,
+            'mitra_id' => $mitras[1]->id,
+            'sektor_id' => $sektors[1]->id,
+            'project_id' => $projects[0]->id,
         ]);
         ImageLaporan::create([
             'image' => 'laporan_image_10_1.jpg',
