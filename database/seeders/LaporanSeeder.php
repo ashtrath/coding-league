@@ -36,7 +36,7 @@ class LaporanSeeder extends Seeder
             'tanggal_realisasi' => now(),
             'mitra_id' => $mitra->id,
             'sektor_id' => $sektor->id,
-            'proyek_id' => $project->id,
+            'project_id' => $project->id,
         ]);
         ImageLaporan::create([
             'image' => 'laporan_image_1_1.jpg',
@@ -52,7 +52,7 @@ class LaporanSeeder extends Seeder
             'tanggal_realisasi' => now(),
             'mitra_id' => $mitra->id,
             'sektor_id' => $sektor->id,
-            'proyek_id' => $project->id,
+            'project_id' => $project->id,
         ]);
         ImageLaporan::create([
             'image' => 'laporan_image_2_1.jpg',
@@ -68,7 +68,7 @@ class LaporanSeeder extends Seeder
             'tanggal_realisasi' => now(),
             'mitra_id' => $mitra->id,
             'sektor_id' => $sektor->id,
-            'proyek_id' => $project->id,
+            'project_id' => $project->id,
         ]);
         ImageLaporan::create([
             'image' => 'laporan_image_3_1.jpg',
@@ -84,7 +84,7 @@ class LaporanSeeder extends Seeder
             'tanggal_realisasi' => now(),
             'mitra_id' => $mitra->id,
             'sektor_id' => $sektor->id,
-            'proyek_id' => $project->id,
+            'project_id' => $project->id,
         ]);
         ImageLaporan::create([
             'image' => 'laporan_image_4_1.jpg',
@@ -100,7 +100,7 @@ class LaporanSeeder extends Seeder
             'tanggal_realisasi' => now(),
             'mitra_id' => $mitra->id,
             'sektor_id' => $sektor->id,
-            'proyek_id' => $project->id,
+            'project_id' => $project->id,
         ]);
         ImageLaporan::create([
             'image' => 'laporan_image_5_1.jpg',
@@ -116,7 +116,7 @@ class LaporanSeeder extends Seeder
             'tanggal_realisasi' => now(),
             'mitra_id' => $mitra->id,
             'sektor_id' => $sektor->id,
-            'proyek_id' => $project->id,
+            'project_id' => $project->id,
         ]);
         ImageLaporan::create([
             'image' => 'laporan_image_6_1.jpg',
@@ -132,7 +132,7 @@ class LaporanSeeder extends Seeder
             'tanggal_realisasi' => now(),
             'mitra_id' => $mitra->id,
             'sektor_id' => $sektor->id,
-            'proyek_id' => $project->id,
+            'project_id' => $project->id,
         ]);
         ImageLaporan::create([
             'image' => 'laporan_image_7_1.jpg',
@@ -148,7 +148,7 @@ class LaporanSeeder extends Seeder
             'tanggal_realisasi' => now(),
             'mitra_id' => $mitra->id,
             'sektor_id' => $sektor->id,
-            'proyek_id' => $project->id,
+            'project_id' => $project->id,
         ]);
         ImageLaporan::create([
             'image' => 'laporan_image_8_1.jpg',
@@ -164,7 +164,7 @@ class LaporanSeeder extends Seeder
             'tanggal_realisasi' => now(),
             'mitra_id' => $mitra->id,
             'sektor_id' => $sektor->id,
-            'proyek_id' => $project->id,
+            'project_id' => $project->id,
         ]);
         ImageLaporan::create([
             'image' => 'laporan_image_9_1.jpg',
@@ -180,7 +180,7 @@ class LaporanSeeder extends Seeder
             'tanggal_realisasi' => now(),
             'mitra_id' => $mitra->id,
             'sektor_id' => $sektor->id,
-            'proyek_id' => $project->id,
+            'project_id' => $project->id,
         ]);
         ImageLaporan::create([
             'image' => 'laporan_image_10_1.jpg',

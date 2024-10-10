@@ -15,12 +15,13 @@ class UserSeeder extends Seeder
     public function run(): void
     {
         User::create([
-            'full_name' => 'SMKN 1 CIOMAS',
-            'email' => 'smkn1ciomas@example.com',
-            'password' => Hash::make('smkn1ciomas'),
+            'full_name' => 'Ardhiya Febrian Radit',
+            'email' => 'admin@test.mail',
+            'password' => Hash::make('12345678'),
             'description' => 'Testing',
             'image' => 'smkn1ciomas.jpg',
-            'first_time_user' => true,
+            'role' => 'Admin',
+            'first_time_user' => false,
             'email_verified_at' => now(),
         ]);
         User::create([
@@ -29,7 +30,7 @@ class UserSeeder extends Seeder
             'password' => Hash::make('rahadian123'),
             'description' => 'Testing',
             'image' => 'rahadian.jpg',
-            'first_time_user' => true,
+            'first_time_user' => false,
             'email_verified_at' => now(),
         ]);
         User::create([
