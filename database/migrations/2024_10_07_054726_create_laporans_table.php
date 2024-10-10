@@ -19,7 +19,7 @@ return new class extends Migration
             $table->text('description');
             $table->decimal('anggaran_realisasi', 10,2);
             $table->timestamp('tanggal_realisasi');
-            $table->foreignUlid('user_id')->constrained('users')->onDelete('cascade');
+            $table->foreignUlid('mitra_id')->constrained('mitras')->onDelete('cascade');
             $table->foreignUlid('sektor_id')->constrained('sektors')->onDelete('cascade');
             $table->foreignUlid('project_id')->constrained('projects')->onDelete('cascade');
             $table->timestamps();

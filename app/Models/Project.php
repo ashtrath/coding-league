@@ -23,7 +23,7 @@ class Project extends Model
         'tanggal_diterbitkan',
         'sektor_id',
     ];
-    
+
     protected $casts = [
         'tanggal_awal' => 'date',
         'tanggal_akhir' => 'date'
@@ -39,7 +39,7 @@ class Project extends Model
         return $this->hasMany(Laporan::class, 'project_id');
     }
 
-    public function setStatusAttribute($value) 
+    public function setStatusAttribute($value)
     {
         $this->attributes['status'] = $value;
 
