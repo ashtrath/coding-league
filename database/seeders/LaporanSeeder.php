@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Enums\LaporanStatus;
+use App\Models\ImageLaporan;
 use App\Models\Laporan;
 use App\Models\Mitra;
 use App\Models\Project;
@@ -22,11 +23,11 @@ class LaporanSeeder extends Seeder
         $project = Project::first();
 
         if (!$mitra || !$sektor || !$project) {
-            $this->command->info('Tidak Ada Mitra,Sektor, Atau Project Yang Tersedia');
+            $this->command->info('Tidak Ada Mitra, Sektor, Atau Project Yang Tersedia');
             return;
         }
 
-        Laporan::create([
+        $laporan = Laporan::create([
             'title' => 'Laporan Proyek PPLG',
             'status' => LaporanStatus::Diterima->value,
             'description' => 'Deskripsi laporan untuk proyek PPLG.',
@@ -37,15 +38,9 @@ class LaporanSeeder extends Seeder
             'project_id' => $project->id,
         ]);
 
-        Laporan::create([
-            'title' => 'Laporan Proyek SMKN 1 CIOMAS',
-            'status' => LaporanStatus::Diterima->value,
-            'description' => 'Deskripsi laporan untuk proyek SMKN 1 CIOMAS.',
-            'anggaran_realisasi' => '7000000.00',
-            'tanggal_realisasi' => now(),
-            'mitra_id' => $mitra->id,
-            'sektor_id' => $sektor->id,
-            'project_id' => $project->id,
+        ImageLaporan::create([
+            'image' => 'laporan_image_1.jpg',
+            'laporan_id' => $laporan->id,
         ]);
     }
 }
