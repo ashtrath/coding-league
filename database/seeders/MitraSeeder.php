@@ -5,9 +5,7 @@ namespace Database\Seeders;
 use App\Enums\MitraStatus;
 use App\Models\Mitra;
 use App\Models\User;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\Hash;
 
 class MitraSeeder extends Seeder
 {
@@ -24,104 +22,94 @@ class MitraSeeder extends Seeder
         }
 
         foreach ($users as $user) {
-            User::create([
-                'full_name' => 'Aldo Siregar',
-                'email' => 'aldogantengjelek@pm.me',
-                'password' => Hash::make('AldoSecurePass!101'),
-                'description' => 'Description for Aldo Siregar',
-                'image' => 'aldo_siregar.jpg',
-                'first_time_user' => true,
-                'email_verified_at' => now(),
+            Mitra::create([
+                'user_id' => $user->id,
+                'name_mitra' => 'Siregar',
+                'name_company' => 'PT Aldo',
+                'phone_number' => 1234563535423,
+                'address' => 'address for Aldo Siregar',
+                'status' => MitraStatus::Active->value,
             ]);
     
-            User::create([
-                'full_name' => 'Budi Santoso',
-                'email' => 'budisantoso@test.com',
-                'password' => Hash::make('BudiSecurePass!202'),
-                'description' => 'Description for Budi Santoso',
-                'image' => 'budi_santoso.jpg',
-                'first_time_user' => true,
-                'email_verified_at' => now(),
+            Mitra::create([
+                'user_id' => $user->id,
+                'name_mitra' => 'Santoso',
+                'name_company' => 'PT Budi',
+                'phone_number' => 1234563535223,
+                'address' => 'address for Budi Santoso',
+                'status' => MitraStatus::Active->value,
             ]);
     
-            User::create([
-                'full_name' => 'Citra Dewi',
-                'email' => 'citradewi9@gmail.com',
-                'password' => Hash::make('CitraSecurePass!303'),
-                'description' => 'Description for Citra Dewi',
-                'image' => 'citra_dewi.jpg',
-                'first_time_user' => true,
-                'email_verified_at' => now(),
+            Mitra::create([
+                'user_id' => $user->id,
+                'name_mitra' => 'Dewi Fashion',
+                'name_company' => 'PT Citra',
+                'phone_number' => 12345635354342,
+                'address' => 'address for Citra Dewi',
+                'status' => MitraStatus::Active->value,
             ]);
     
-            User::create([
-                'full_name' => 'Dika Prasetya',
-                'email' => 'dikaprasetya@mail.com',
-                'password' => Hash::make('DikaSecurePass!404'),
-                'description' => 'Description for Dika Prasetya',
-                'image' => 'dika_prasetya.jpg',
-                'first_time_user' => true,
-                'email_verified_at' => now(),
+            Mitra::create([
+                'user_id' => $user->id,
+                'name_mitra' => 'Prasetya',
+                'name_company' => 'PT Dika',
+                'phone_number' => 12345635353323,
+                'address' => 'address for Dika Prasetya',
+                'status' => MitraStatus::Active->value,
             ]);
     
-            User::create([
-                'full_name' => 'Eka Sari',
-                'email' => 'ekasari921@gg.com',
-                'password' => Hash::make('EkaSecurePass!505'),
-                'description' => 'Description for Eka Sari',
-                'image' => 'eka_sari.jpg',
-                'first_time_user' => true,
-                'email_verified_at' => now(),
+            Mitra::create([
+                'user_id' => $user->id,
+                'name_mitra' => 'EkaloSari',
+                'name_company' => 'PT Eka',
+                'phone_number' => 1124563535423,
+                'address' => 'address for Eka Sari',
+                'status' => MitraStatus::Active->value,
             ]);
     
-            User::create([
-                'full_name' => 'Fajar Nugraha',
-                'email' => 'fajarnugraha158@proton.com',
-                'password' => Hash::make('FajarSecurePass!606'),
-                'description' => 'Description for Fajar Nugraha',
-                'image' => 'fajar_nugraha.jpg',
-                'first_time_user' => true,
-                'email_verified_at' => now(),
+            Mitra::create([
+                'user_id' => $user->id,
+                'name_mitra' => 'Nugraha Citra',
+                'name_company' => 'PT Fajar',
+                'phone_number' => 12322263535423,
+                'address' => 'address for Fajar Nugraha',
+                'status' => MitraStatus::Active->value,
             ]);
     
-            User::create([
-                'full_name' => 'Gina Lestari',
-                'email' => 'ginalestari707@pm.com',
-                'password' => Hash::make('GinaSecurePass!707'),
-                'description' => 'Description for Gina Lestari',
-                'image' => 'gina_lestari.jpg',
-                'first_time_user' => true,
-                'email_verified_at' => now(),
+            Mitra::create([
+                'user_id' => $user->id,
+                'name_mitra' => 'Lestari Makmur',
+                'name_company' => 'PT Gina',
+                'phone_number' => 1234563735223,
+                'address' => 'address for Gina Lestari',
+                'status' => MitraStatus::Active->value,
             ]);
     
-            User::create([
-                'full_name' => 'Hendra Kurniawan',
-                'email' => 'hendrakurniawan@mailto.com',
-                'password' => Hash::make('HendraSecurePass!808'),
-                'description' => 'Description for Hendra Kurniawan',
-                'image' => 'hendra_kurniawan.jpg',
-                'first_time_user' => true,
-                'email_verified_at' => now(),
+            Mitra::create([
+                'user_id' => $user->id,
+                'name_mitra' => 'Kurniawan Datman',
+                'name_company' => 'PT Hendra',
+                'phone_number' => 123456353512,
+                'address' => 'address for Hendra Kurniawan',
+                'status' => MitraStatus::Active->value,
             ]);
     
-            User::create([
-                'full_name' => 'Indah Permatasari',
-                'email' => 'indahpermatasari@mailtooo.com',
-                'password' => Hash::make('IndahSecurePass!909'),
-                'description' => 'Description for Indah Permatasari',
-                'image' => 'indah_permatasari.jpg',
-                'first_time_user' => true,
-                'email_verified_at' => now(),
+            Mitra::create([
+                'user_id' => $user->id,
+                'name_mitra' => 'Permatasari',
+                'name_company' => 'PT Indah',
+                'phone_number' => 1234585535423,
+                'address' => 'address for Indah Permatasari',
+                'status' => MitraStatus::Inactive->value,
             ]);
     
-            User::create([
-                'full_name' => 'Joko Widodo',
-                'email' => 'joko.widodo@protons.com',
-                'password' => Hash::make('JokoSecurePass!1010'),
-                'description' => 'Description for Joko Widodo',
-                'image' => 'joko_widodo.jpg',
-                'first_time_user' => true, // Satu pengguna dengan first_time_user false
-                'email_verified_at' => now(),
+            Mitra::create([
+                'user_id' => $user->id,
+                'name_mitra' => 'Widodo Garam',
+                'name_company' => 'PDI',
+                'phone_number' => 99234563535423,
+                'address' => 'address for Joko Widodo',
+                'status' => MitraStatus::Inactive->value,
             ]);
         }
     }
