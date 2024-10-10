@@ -1,5 +1,10 @@
 import StatisticsCard from '@/Components/Card/StatisticsCard';
+import PersentasiAnggaranSektorCSRChart from '@/Components/Chart/PersentasiAnggaranSektorCSRChart';
+import RealisasiKecamatanCSR from '@/Components/Chart/RealisasiKecamatanCSR';
+import RealisasiPTCSR from '@/Components/Chart/RealisasiPTCSR';
+import RealisasiSektorCSR from '@/Components/Chart/RealisasiSektorCSR';
 import DashboardFilter from '@/Components/Select/DashboardFilter';
+import { Card, CardContent } from '@/Components/UI/Card';
 import MainDashboardLayout from '@/Layouts/MainDashboardLayout';
 import { PageProps } from '@/types';
 import { Head } from '@inertiajs/react';
@@ -10,7 +15,12 @@ import {
     RiVerifiedBadgeLine,
 } from '@remixicon/react';
 
-export default function Dashboard({ analytics }: PageProps) {
+export default function Dashboard({
+    analytics,
+    anggaranSektorCSR,
+    anggaranMitrasCSR,
+    anggaranKecamatansCSR,
+}: PageProps) {
     return (
         <MainDashboardLayout>
             <Head title="Dashboard" />
@@ -46,6 +56,44 @@ export default function Dashboard({ analytics }: PageProps) {
                         color="green"
                     />
                 </div>
+            </section>
+            <section className="mt-[60px] space-y-6">
+                <h2 className="text-[28px] font-semibold leading-[44px] tracking-tight text-gray-900">
+                    Realisasi Proyek CSR
+                </h2>
+                <Card>
+                    <CardContent className="grid grid-cols-2 gap-5 gap-y-8 p-10">
+                        <div className="space-y-5">
+                            <h3 className="whitespace-nowrap text-[22px] font-semibold leading-none tracking-tight">
+                                Persentase Total Realisasi Berdasarkan Sektor
+                                CSR
+                            </h3>
+                            <PersentasiAnggaranSektorCSRChart
+                                chartData={anggaranSektorCSR}
+                            />
+                        </div>
+                        <div className="space-y-5">
+                            <h3 className="whitespace-nowrap text-[22px] font-semibold leading-none tracking-tight">
+                                Total Realisasi Sektor CSR
+                            </h3>
+                            <RealisasiSektorCSR chartData={anggaranSektorCSR} />
+                        </div>
+                        <div className="space-y-5">
+                            <h3 className="whitespace-nowrap text-[22px] font-semibold leading-none tracking-tight">
+                                Persentase Total Realisasi Berdasarkan PT
+                            </h3>
+                            <RealisasiPTCSR chartData={anggaranMitrasCSR} />
+                        </div>
+                        <div className="space-y-5">
+                            <h3 className="whitespace-nowrap text-[22px] font-semibold leading-none tracking-tight">
+                                Persentase Total Realisasi Berdasarkan Kecamatan
+                            </h3>
+                            <RealisasiKecamatanCSR
+                                chartData={anggaranKecamatansCSR}
+                            />
+                        </div>
+                    </CardContent>
+                </Card>
             </section>
         </MainDashboardLayout>
     );

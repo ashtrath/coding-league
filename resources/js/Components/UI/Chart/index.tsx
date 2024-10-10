@@ -45,7 +45,7 @@ const ChartContainer = React.forwardRef<
                 data-chart={chartId}
                 ref={ref}
                 className={cn(
-                    "flex aspect-video justify-center text-xs [&_.recharts-cartesian-axis-tick_text]:fill-gray-500 [&_.recharts-cartesian-grid_line[stroke='#ccc']]:stroke-gray-300/50 [&_.recharts-curve.recharts-tooltip-cursor]:stroke-gray-300 [&_.recharts-dot[stroke='#fff']]:stroke-transparent [&_.recharts-layer]:outline-none [&_.recharts-polar-grid_[stroke='#ccc']]:stroke-gray-300 [&_.recharts-radial-bar-background-sector]:fill-gray-500 [&_.recharts-rectangle.recharts-tooltip-cursor]:fill-gray-500 [&_.recharts-reference-line_[stroke='#ccc']]:stroke-gray-300 [&_.recharts-sector[stroke='#fff']]:stroke-transparent [&_.recharts-sector]:outline-none [&_.recharts-surface]:outline-none",
+                    "flex aspect-video justify-center text-xs [&_.recharts-cartesian-axis-tick_text]:fill-gray-500 [&_.recharts-cartesian-grid_line[stroke='#ccc']]:stroke-gray-300 [&_.recharts-curve.recharts-tooltip-cursor]:stroke-gray-300 [&_.recharts-dot[stroke='#fff']]:stroke-transparent [&_.recharts-layer]:outline-none [&_.recharts-polar-grid_[stroke='#ccc']]:stroke-gray-300 [&_.recharts-radial-bar-background-sector]:fill-gray-500 [&_.recharts-rectangle.recharts-tooltip-cursor]:fill-gray-500 [&_.recharts-reference-line_[stroke='#ccc']]:stroke-gray-300 [&_.recharts-sector[stroke='#fff']]:stroke-transparent [&_.recharts-sector]:outline-none [&_.recharts-surface]:outline-none",
                     className,
                 )}
                 {...props}

@@ -31,6 +31,15 @@ export interface Analytics {
     total_mitra: number;
 }
 
+export interface BaseAnggaranCSR {
+    name: string;
+    total_anggaran: number;
+}
+
+export interface AnggaranSektorCSR extends BaseAnggaranCSR {
+    percentage: number;
+}
+
 export type PageProps<
     T extends Record<string, unknown> = Record<string, unknown>,
 > = T & {
@@ -40,4 +49,7 @@ export type PageProps<
     mitras: Mitra[];
     sektors: Sektor[];
     analytics: Analytics;
+    anggaranSektorCSR: AnggaranSektorCSR[];
+    anggaranMitrasCSR: BaseAnggaranCSR[];
+    anggaranKecamatansCSR: BaseAnggaranCSR[];
 };
