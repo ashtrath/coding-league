@@ -8,12 +8,8 @@ use Illuminate\Database\Seeder;
 
 class KegiatanSeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     */
     public function run(): void
     {
-        // Kegiatan 1
         Kegiatan::create([
             'title' => 'Kegiatan Berbagi Sembako',
             'content' => 'Konten kegiatan berbagi sembako.',
@@ -22,7 +18,6 @@ class KegiatanSeeder extends Seeder
             'status' => KegiatanStatus::Terbit->value,
         ]);
 
-        // Kegiatan 2
         Kegiatan::create([
             'title' => 'Pelatihan Keterampilan Muda',
             'content' => 'Konten pelatihan keterampilan untuk anak muda.',
@@ -31,7 +26,6 @@ class KegiatanSeeder extends Seeder
             'status' => KegiatanStatus::Terbit->value,
         ]);
 
-        // Kegiatan 3
         Kegiatan::create([
             'title' => 'Aksi Lingkungan Bersih',
             'content' => 'Konten aksi bersih-bersih lingkungan.',
@@ -40,7 +34,6 @@ class KegiatanSeeder extends Seeder
             'status' => KegiatanStatus::Terbit->value,
         ]);
 
-        // Kegiatan 4
         Kegiatan::create([
             'title' => 'Festival Seni Budaya',
             'content' => 'Konten festival seni budaya lokal.',
@@ -49,7 +42,6 @@ class KegiatanSeeder extends Seeder
             'status' => KegiatanStatus::Terbit->value,
         ]);
 
-        // Kegiatan 5
         Kegiatan::create([
             'title' => 'Pendidikan Anak Usia Dini',
             'content' => 'Konten pendidikan untuk anak usia dini.',
@@ -58,7 +50,6 @@ class KegiatanSeeder extends Seeder
             'status' => KegiatanStatus::Terbit->value,
         ]);
 
-        // Kegiatan 6
         Kegiatan::create([
             'title' => 'Lomba Olahraga Tradisional',
             'content' => 'Konten lomba olahraga tradisional.',
@@ -67,7 +58,6 @@ class KegiatanSeeder extends Seeder
             'status' => KegiatanStatus::Terbit->value,
         ]);
 
-        // Kegiatan 7
         Kegiatan::create([
             'title' => 'Kunjungan ke Panti Asuhan',
             'content' => 'Konten kunjungan ke panti asuhan.',
@@ -76,7 +66,6 @@ class KegiatanSeeder extends Seeder
             'status' => KegiatanStatus::Terbit->value,
         ]);
 
-        // Kegiatan 8
         Kegiatan::create([
             'title' => 'Bakti Sosial ke Desa Tertinggal',
             'content' => 'Konten bakti sosial ke desa tertinggal.',
@@ -85,7 +74,6 @@ class KegiatanSeeder extends Seeder
             'status' => KegiatanStatus::Terbit->value,
         ]);
 
-        // Kegiatan 9
         Kegiatan::create([
             'title' => 'Pemberdayaan Perempuan',
             'content' => 'Konten pemberdayaan perempuan dalam komunitas.',
@@ -94,7 +82,6 @@ class KegiatanSeeder extends Seeder
             'status' => KegiatanStatus::Terbit->value,
         ]);
 
-        // Kegiatan 10
         Kegiatan::create([
             'title' => 'Seminar Kesehatan Mental',
             'content' => 'Konten seminar tentang kesehatan mental.',
