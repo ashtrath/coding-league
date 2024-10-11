@@ -5,7 +5,6 @@ namespace Database\Seeders;
 use App\Enums\ProjectStatus;
 use App\Models\Project;
 use App\Models\Sektor;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class ProjectSeeder extends Seeder

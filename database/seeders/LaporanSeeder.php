@@ -8,7 +8,6 @@ use App\Models\Laporan;
 use App\Models\Mitra;
 use App\Models\Project;
 use App\Models\Sektor;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class LaporanSeeder extends Seeder

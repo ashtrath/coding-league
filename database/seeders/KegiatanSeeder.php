@@ -4,7 +4,6 @@ namespace Database\Seeders;
 
 use App\Enums\KegiatanStatus;
 use App\Models\Kegiatan;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class KegiatanSeeder extends Seeder
