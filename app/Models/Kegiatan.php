@@ -17,4 +17,9 @@ class Kegiatan extends Model
         'image',
         'status'
     ];
+
+    public function tags()
+    {
+        return $this->belongsToMany(Tag::class);
+    }
 }
