@@ -14,4 +14,9 @@ class Tag extends Model
         'name', 
         'kegiatan_id'
     ];
+
+    public function kegiatans() 
+    {
+        return $this->belongsToMany(Kegiatan::class);
+    }
 }
