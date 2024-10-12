@@ -12,14 +12,14 @@ class DashboardSektorController extends Controller
     public function index()
     {
         $sektors = Sektor::all();
-        return Inertia::render('Dashboard/Sektor/Index', [
+        return Inertia::render('Dashboard/Sektor/index', [
             'sektor' => $sektors
         ]);
     }
 
     public function create()
     {
-        return Inertia::render('Dashboard/Sektor/Create');
+        return Inertia::render('Dashboard/Sektor/create');
     }
 
     public function store(Request $request)
@@ -37,14 +37,14 @@ class DashboardSektorController extends Controller
 
     public function show(Sektor $sektors)
     {
-        return Inertia::render('Dashboard/Sektor/Show', [
+        return Inertia::render('Dashboard/Sektor/show', [
             'sektor' => $sektors
         ]);
     }
 
     public function edit(Sektor $sektors)
     {
-        return Inertia::render('Dashboard/Sektor/Edit', [
+        return Inertia::render('Dashboard/Sektor/edit', [
             'sektor' => $sektors
         ]);
     }
