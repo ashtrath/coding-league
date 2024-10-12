@@ -10,7 +10,8 @@ interface BreadcrumbItem {
 
 const Breadcrumbs = () => {
     const { url } = usePage();
-    const segments = url.split('/').filter(Boolean);
+    const path = url.split('?')[0];
+    const segments = path.split('/').filter(Boolean);
 
     const breadcrumbs: BreadcrumbItem[] = segments.map((segment, index) => {
         const href = `/${segments.slice(0, index + 1).join('/')}`;
