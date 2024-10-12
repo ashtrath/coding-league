@@ -100,6 +100,7 @@ Route::prefix('dashboard')->name('dashboard.')->middleware(['auth', 'verified', 
     // === Dashboard Mitra Routes
     Route::controller(DashboardMitraController::class)->middleware('role:Admin')->prefix('mitra')->name('mitra.')->group(function () {
         Route::get('/', 'index')->name('index');
+        Route::get('/{mitra}', 'show')->name('show');
         Route::get('/create', 'create')->name('create');
         Route::post('/', 'store')->name('store');
         Route::get('/{mitra}/edit', 'edit')->name('edit');
@@ -110,6 +111,7 @@ Route::prefix('dashboard')->name('dashboard.')->middleware(['auth', 'verified', 
     // === Dashboard Laporan Routes
     Route::controller(DashboardLaporanController::class)->middleware('role:Admin,Mitra')->prefix('laporan')->name('laporan.')->group(function () {
         Route::get('/', 'index')->name('index');
+        Route::get('/{laporan}', 'show')->name('show');
         Route::get('/create', 'create')->name('create');
         Route::post('/', 'store')->name('store');
         Route::get('/{laporan}/edit', 'edit')->name('edit');
@@ -122,6 +124,7 @@ Route::prefix('dashboard')->name('dashboard.')->middleware(['auth', 'verified', 
     // === Dashboard Kegiatan Routes ===
     Route::controller(DashboardKegiatanController::class)->middleware('role:Admin')->prefix('kegiatan')->name('kegiatan.')->group(function () {
         Route::get('/', 'index')->name('index');
+        Route::get('/{kegiatan}', 'show')->name('show');
         Route::get('/create', 'create')->name('create');
         Route::post('/', 'store')->name('store');
         Route::get('/{kegiatan}/edit', 'edit')->name('edit');
@@ -130,8 +133,9 @@ Route::prefix('dashboard')->name('dashboard.')->middleware(['auth', 'verified', 
     });
 
     // === Dashboard Project Routes === 
-    Route::controller(DashboardProjectController::class)->middleware('role:Admin')->prefix('project')->name('project.')->group(function () {
+    Route::controller(DashboardProjectController::class)->middleware('role:Admin')->prefix('proyek')->name('proyek.')->group(function () {
         Route::get('/', 'index')->name('index');
+        Route::get('/{project}', 'show')->name('show');
         Route::get('/create', 'create')->name('create');
         Route::post('/', 'store')->name('store');
         Route::get('/{project}/edit', 'edit')->name('edit');
@@ -144,6 +148,7 @@ Route::prefix('dashboard')->name('dashboard.')->middleware(['auth', 'verified', 
     // === Dashboard Sektor Routes ===
     Route::controller(DashboardSektorController::class)->middleware('role:Admin')->prefix('sektor')->name('sektor.')->group(function () {
         Route::get('/', 'index')->name('index');
+        Route::get('/{sektor}', 'show')->name('show');
         Route::get('/create', 'create')->name('create');
         Route::post('/', 'store')->name('store');
         Route::get('/{sektor}/edit', 'edit')->name('edit');
