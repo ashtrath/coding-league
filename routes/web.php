@@ -34,7 +34,7 @@ Route::controller(DashboardController::class)->prefix('dashboard')->name('dashbo
 });
 
 Route::get('/email/verify', function () {
-    return Inertia::render('Pages/VerifyEmail');
+    return Inertia::render('Auth/VerifyEmail');
 })->middleware('auth')->name('verification.notice');
 
 Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $request) {
