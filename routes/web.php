@@ -13,6 +13,8 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\SektorController;
 use Illuminate\Foundation\Application;
+use Illuminate\Foundation\Auth\EmailVerificationRequest;
+use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -30,6 +32,20 @@ Route::controller(DashboardController::class)->prefix('dashboard')->name('dashbo
     Route::get('/export-all', 'exportAllData')->name('export.all');
     Route::get('/export-admin', 'exportAdminData')->name('export.admin');
 });
+
+Route::get('/email/verify', function () {
+    return Inertia::render('Pages/VerifyEmail');
+})->middleware('auth')->name('verification.notice');
+
+Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $request) {
+    $request->fulfill();
+    return redirect()->route('dashboard.index');
+})->middleware(['auth', 'signed'])->name('verification.verify');
+
+Route::post('/email/verification-notification', function (Request $request) {
+    $request->user()->sendEmailVerificationNotification();
+    return back()->with('message', 'Link verifikasi telah dikirim!');
+})->middleware(['auth', 'throttle:6,1'])->name('verification.send');
 
 
 // === Sektor Routes Public ===
