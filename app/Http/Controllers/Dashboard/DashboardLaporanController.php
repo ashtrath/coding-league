@@ -76,9 +76,8 @@ class DashboardLaporanController extends Controller
             case LaporanStatus::Diterima:
                 $user->notify(new LaporanDiterimaNotification($laporan));
                 break;
+
             case LaporanStatus::Ditolak:
-                $user->notify(new LaporanDitolakNotification($laporan, $message));
-                break;
             case LaporanStatus::Revisi:
                 $user->notify(new LaporanDitolakNotification($laporan, $message));
                 break;
