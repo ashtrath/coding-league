@@ -6,6 +6,7 @@ use App\Http\Controllers\Dashboard\DashboardLaporanController;
 use App\Http\Controllers\Dashboard\DashboardMitraController;
 use App\Http\Controllers\Dashboard\DashboardProjectController;
 use App\Http\Controllers\Dashboard\DashboardSektorController;
+use App\Http\Controllers\DashboardNotificationController;
 use App\Http\Controllers\KegiatanController;
 use App\Http\Controllers\LaporanController;
 use App\Http\Controllers\MitraController;
@@ -170,6 +171,11 @@ Route::prefix('dashboard')->name('dashboard.')->middleware(['auth', 'verified', 
         Route::get('/{sektor}/edit', 'edit')->name('edit');
         Route::put('/{sektor}', 'update')->name('update');
         Route::delete('/{sektor}', 'delete')->name('delete');
+    });
+
+    Route::controller(DashboardNotificationController::class)->middleware('role:Admin,Mitra')->prefix('notifications')->name('notifications.')->group(function () {
+        Route::get('/', 'index')->name('index');
+        Route::post('/read', 'markAsRead')->name('read');
     });
 });
 
