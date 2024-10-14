@@ -1,10 +1,11 @@
+import SektorDataTable from '@/Components/DataTable/SektorDataTable';
 import Button from '@/Components/UI/Button';
 import DashboardLayout from '@/Layouts/DashboardLayout';
-import { PageProps } from '@/types';
+import { PageProps, Sektor } from '@/types';
 import { Head, Link } from '@inertiajs/react';
 import { RiAddLine } from '@remixicon/react';
 
-const DashboardSektor = ({ sektors }: PageProps) => {
+const DashboardSektor = ({ data, pagination }: PageProps<Sektor[]>) => {
     return (
         <DashboardLayout>
             <Head title="Sektor" />
@@ -23,7 +24,9 @@ const DashboardSektor = ({ sektors }: PageProps) => {
                     </Link>
                 </Button>
             </header>
-            <div className="container mx-auto">Disini ada Table</div>
+            <div className="container mx-auto">
+                <SektorDataTable data={data} pagination={pagination} />
+            </div>
         </DashboardLayout>
     );
 };
