@@ -15,18 +15,36 @@ use Maatwebsite\Excel\Facades\Excel;
 
 class DashboardProjectController extends Controller
 {
-    private $projectImageFolder = 'project_images';
 
-    public function index()
+    public function index(Request $request)
     {
-        $projects = Project::with('sektor')->get();
-        return Inertia::render('Dashboard/Project/Index', ['project' => $projects]);
+        $perPage = $request->input('perPage', 5);
+        $page = $request->input('page', 1);
+        $query = Project::select(['id', 'title', 'description', 'image', 'lokasi_kecamatan', 'tanggal_awal', 'tanggal_akhir', 'tanggal_diterbitkan', 'status', 'sektor_id',]);
+
+        $projects = $query->paginate($perPage, ['*'], 'page', $page);
+
+        return Inertia::render('Dashboard/Project/index', [
+            'data' => $projects->items(),
+            'pagination' => [
+                'total' => $projects->total(),
+                'per_page' => $projects->perPage(),
+                'current_page' => $projects->currentPage(),
+                'last_page' => $projects->lastPage(),
+                'from' => $projects->firstItem(),
+                'to' => $projects->lastItem(),
+                'next_page_url' => $projects->nextPageUrl(),
+                'prev_page_url' => $projects->previousPageUrl(),
+            ],
+        ]);
     }
 
     public function create()
     {
         $sektors = Sektor::all();
-        return Inertia::render('Dashboard/Project/Create', ['sektor' => $sektors]);
+        return Inertia::render('Dashboard/Project/create', [
+            'sektor' => $sektors,
+        ]);
     }
 
     public function store(Request $request)
@@ -64,7 +82,7 @@ class DashboardProjectController extends Controller
     {
         $project->load('sektor');
 
-        return Inertia::render('Dashboard/Project/Show', [
+        return Inertia::render('Dashboard/Project/show', [
             'project' => $project
         ]);
     }
@@ -72,7 +90,7 @@ class DashboardProjectController extends Controller
     public function edit(Project $project)
     {
         $sektors = Sektor::all();
-        return Inertia::render('Dashboard/Project/Edit', [
+        return Inertia::render('Dashboard/Project/edit', [
             'project' => $project,
             'sektors' => $sektors
         ]);
@@ -129,12 +147,5 @@ class DashboardProjectController extends Controller
         $project->save();
 
         return redirect()->back()->with('success', 'Status Project Berhasil Diupdate.');
-    }
-
-    private function ensureProjectImageFolderExists()
-    {
-        if (!Storage::disk('public')->exists($this->projectImageFolder)) {
-            Storage::disk('public')->makeDirectory($this->projectImageFolder);
-        }
     }
 }
