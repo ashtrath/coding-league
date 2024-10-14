@@ -40,16 +40,23 @@ export interface AnggaranSektorCSR extends BaseAnggaranCSR {
     percentage: number;
 }
 
+export interface Pagination {
+    total: number;
+    per_page: number;
+    current_page: number;
+    last_page: number;
+    from: number;
+    to: number;
+    next_page_url: string | null;
+    prev_page_url: string | null;
+}
+
 export type PageProps<
-    T extends Record<string, unknown> = Record<string, unknown>,
+    TData extends Record<string, unknown> = Record<string, unknown>,
 > = T & {
     auth: {
         user: User;
     };
-    mitras: Mitra[];
-    sektors: Sektor[];
-    analytics: Analytics;
-    anggaranSektorCSR: AnggaranSektorCSR[];
-    anggaranMitrasCSR: BaseAnggaranCSR[];
-    anggaranKecamatansCSR: BaseAnggaranCSR[];
+    data: TData;
+    pagination: Pagination;
 };
