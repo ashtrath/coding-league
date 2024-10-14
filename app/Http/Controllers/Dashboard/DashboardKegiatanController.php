@@ -14,18 +14,32 @@ class DashboardKegiatanController extends Controller
 {
     private $kegiatanImageFolder = 'kegiatan_images';
 
-    public function index()
+    public function index(Request $request)
     {
-        $kegiatans = Kegiatan::with('tags')->paginate(10);
+        $perPage = $request->input('perPage', 5);
+        $page = $request->input('page', 1);
+        $query = Kegiatan::select(['id', 'title', 'content', 'description', 'image', 'tanggal_diterbitkan', 'status'])->with('tags');
 
-        return Inertia::render('Dashboard/Kegiatan/Index', [
-            'kegiatans' => $kegiatans
+        $kegiatans = $query->paginate($perPage, ['*'], 'page', $page);
+
+        return Inertia::render('Dashboard/Kegiatan/index', [
+            'data' => $kegiatans->items(),
+            'pagination' => [
+                'total' => $kegiatans->total(),
+                'per_page' => $kegiatans->perPage(),
+                'current_page' => $kegiatans->currentPage(),
+                'last_page' => $kegiatans->lastPage(),
+                'from' => $kegiatans->firstItem(),
+                'to' => $kegiatans->lastItem(),
+                'next_page_url' => $kegiatans->nextPageUrl(),
+                'prev_page_url' => $kegiatans->previousPageUrl(),
+            ],
         ]);
     }
 
     public function create()
     {
-        return Inertia::render('Dashboard/Kegiatan/Create');
+        return Inertia::render('Dashboard/Kegiatan/create');
     }
 
     public function store(Request $request)
@@ -85,8 +99,8 @@ class DashboardKegiatanController extends Controller
     {
         $kegiatan->load('tags');
 
-        return Inertia::render('Dashboard/Kegiatan/Show', [
-            'kegiatan' => $kegiatan
+        return Inertia::render('Dashboard/Kegiatan/show', [
+            'data' => $kegiatan
         ]);
     }
 
@@ -94,7 +108,7 @@ class DashboardKegiatanController extends Controller
     {
         $kegiatan->load('tags');
 
-        return Inertia::render('Dashboard/Kegiatan/Edit', [
+        return Inertia::render('Dashboard/Kegiatan/edit', [
             'kegiatan' => $kegiatan,
             'tags' => $kegiatan->tags->pluck('name')
         ]);
