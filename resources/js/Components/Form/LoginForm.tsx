@@ -1,6 +1,7 @@
 import { cn } from '@/lib/utils';
 import { useForm } from '@inertiajs/react';
 import { Form, FormField, FormSubmit } from '@radix-ui/react-form';
+import { RiLoader5Line } from '@remixicon/react';
 import { FormEventHandler } from 'react';
 import Button from '../UI/Button';
 import { Input, InputLabel, InputMessage } from '../UI/Input';
@@ -78,6 +79,9 @@ const LoginForm = ({ className }: { className?: string }) => {
                     disabled={processing}
                     className="mt-2.5 w-[300px] place-self-end"
                 >
+                    {processing && (
+                        <RiLoader5Line className="size-5 animate-spin" />
+                    )}
                     Masuk
                 </Button>
             </FormSubmit>
