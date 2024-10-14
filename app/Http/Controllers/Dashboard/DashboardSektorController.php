@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Dashboard;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Sektor;
+use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
 use Illuminate\Support\Str;
 
@@ -43,7 +44,7 @@ class DashboardSektorController extends Controller
         $validatedData = $request->validate([
             'image' => 'required|image|mimes:png,jpg,jpeg|max:10240',
             'name' => 'required|string|max:255',
-            'description' => 'required',
+            'description' => 'nullable|string',
         ]);
 
         if ($request->hasFile('image')) {
@@ -59,29 +60,46 @@ class DashboardSektorController extends Controller
         return redirect()->route('dashboard.sektor.index')->with('success', 'Sektor berhasil dibuat');
     }
 
-    public function show(Sektor $sektors)
+    public function show(string $id)
     {
+        $sektors = Sektor::findOrFail($id);
         return Inertia::render('Dashboard/Sektor/show', [
-            'sektor' => $sektors
+            'data' => $sektors
         ]);
     }
 
-    public function edit(Sektor $sektors)
+    public function edit(string $id)
     {
+        $sektors = Sektor::findOrFail($id);
         return Inertia::render('Dashboard/Sektor/edit', [
-            'sektor' => $sektors
+            'data' => $sektors
         ]);
     }
 
-    public function update(Request $request, Sektor $sektors)
+    public function update(Request $request, string $id)
     {
         $validatedData = $request->validate([
-            'image' => 'required|string|max:255',
             'name' => 'required|string|max:255',
-            'description' => 'nullable',
+            'description' => 'nullable|string',
+            'image' => 'nullable|image|mimes:png,jpg,jpeg|max:10240',
         ]);
 
-        $sektors->update($validatedData);
+        $sektor = Sektor::findOrFail($id);
+        $sektor->name = $validatedData['name'];
+        $sektor->description = $validatedData['description'];
+
+        if ($request->hasFile('image')) {
+            if ($sektor->image) {
+                Storage::delete($sektor->image);
+            }
+
+            $image = $request->file('image');
+            $imageName = Str::ulid() . "." . $image->getClientOriginalExtension();
+            $imagePath = $image->storeAs('images/sektor_images', $imageName, 'public');
+            $sektor->image = $imagePath;
+        }
+
+        $sektor->save();
 
         return redirect()->route('dashboard.sektor.index')->with('success', 'Sektor berhasil diperbarui');
     }
