@@ -71,13 +71,21 @@ const SektorDataTable = ({ data, pagination }: PageProps) => {
                     return (
                         <div className="flex items-center justify-center gap-1">
                             <Button variant="ghost" size="icon" asChild>
-                                <Link href={`/dashboard/sektor/${sektor.id}`}>
+                                <Link
+                                    href={route(
+                                        'dashboard.sektor.show',
+                                        sektor.id,
+                                    )}
+                                >
                                     <RiEyeLine className="size-6" />
                                 </Link>
                             </Button>
                             <Button variant="ghost" size="icon" asChild>
                                 <Link
-                                    href={`/dashboard/sektor/${sektor.id}/edit`}
+                                    href={route(
+                                        'dashboard.sektor.edit',
+                                        sektor.id,
+                                    )}
                                 >
                                     <RiPencilLine className="size-6" />
                                 </Link>
