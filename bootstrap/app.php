@@ -19,6 +19,7 @@ return Application::configure(basePath: dirname(__DIR__))
         ])
         ->alias([
             'role' => \App\Http\Middleware\RoleMiddleware::class,
+            'breadcrumbs' => \App\Http\Middleware\GenerateBreadcrumbsMiddleware::class,
         ]);
 
     })

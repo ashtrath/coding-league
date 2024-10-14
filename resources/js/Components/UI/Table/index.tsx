@@ -32,7 +32,7 @@ const TableBody = ({
     return (
         <tbody
             className={cn(
-                '[&_tr:last-child]:border-0 odd:[&_tr]:bg-gray-50/70',
+                'text-base [&_tr:last-child]:border-0 odd:[&_tr]:bg-gray-50/70',
                 className,
             )}
             {...props}
@@ -72,7 +72,7 @@ const TableHead = ({
 }: ThHTMLAttributes<HTMLTableCellElement>) => (
     <th
         className={cn(
-            'h-12 px-4 text-left align-middle font-medium text-gray-500 [&:has([role=checkbox])]:pr-0',
+            'h-12 px-4 text-left align-middle text-sm font-semibold text-gray-900 [&:has([role=checkbox])]:pr-0',
             className,
         )}
         {...props}
@@ -99,6 +99,5 @@ export {
     TableFooter,
     TableHead,
     TableHeader,
-    TableRow
+    TableRow,
 };
-

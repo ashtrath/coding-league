@@ -5,85 +5,102 @@ namespace App\Http\Controllers\Dashboard;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Sektor;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
+use Illuminate\Support\Str;
 
 class DashboardSektorController extends Controller
 {
-    private $sektorImageFolder = 'sektor_images';
-    public function index()
+    public function index(Request $request)
     {
-        $sektors = Sektor::all();
-        return Inertia::render('Dashboard/Sektor/Index', [
-            'sektor' => $sektors
+        $perPage = $request->input('per_page', 5);
+        $page = $request->input('page', 1);
+        $query = Sektor::select(['id', 'name', 'description']);
+
+        $sektors = $query->paginate($perPage, ['*'], 'page', $page);
+
+        return Inertia::render('Dashboard/Sektor/index', [
+            'data' => $sektors->items(),
+            'pagination' => [
+                'total' => $sektors->total(),
+                'per_page' => $sektors->perPage(),
+                'current_page' => $sektors->currentPage(),
+                'last_page' => $sektors->lastPage(),
+                'from' => $sektors->firstItem(),
+                'to' => $sektors->lastItem(),
+                'next_page_url' => $sektors->nextPageUrl(),
+                'prev_page_url' => $sektors->previousPageUrl(),
+            ],
         ]);
     }
 
     public function create()
     {
-        return Inertia::render('Dashboard/Sektor/Create');
+        return Inertia::render('Dashboard/Sektor/create');
     }
 
     public function store(Request $request)
     {
         $validatedData = $request->validate([
-            'image' => 'nullable|string|max:255',
+            'image' => 'required|image|mimes:png,jpg,jpeg|max:10240',
             'name' => 'required|string|max:255',
-            'description' => 'required',
+            'description' => 'nullable|string',
         ]);
 
-        DB::transaction(function () use ($request) {
-            $this->ensureSektorImageFolderExists();
+        if ($request->hasFile('image')) {
+            $image = $request->file('image');
 
-            $imagePath = $request->file('image')->store($this->sektorImageFolder, 'public');
-            Sektor::create([
-                'image' => $imagePath,
-            ]);
-        });
+            $imageName = Str::ulid() . "." . $image->getClientOriginalExtension();
+            $imagePath = $image->storeAs('images/sektor_images', $imageName, 'public');
+            $validatedData['image'] = "$imagePath";
+        }
 
         Sektor::create($validatedData);
 
         return redirect()->route('dashboard.sektor.index')->with('success', 'Sektor berhasil dibuat');
     }
 
-    public function show(Sektor $sektors)
+    public function show(string $id)
     {
-        return Inertia::render('Dashboard/Sektor/Show', [
-            'sektor' => $sektors
+        $sektors = Sektor::with('projects:id,sektor_id,title,description')->findOrFail($id);
+        return Inertia::render('Dashboard/Sektor/show', [
+            'data' => $sektors
         ]);
     }
 
-    public function edit(Sektor $sektors)
+    public function edit(string $id)
     {
-        return Inertia::render('Dashboard/Sektor/Edit', [
-            'sektor' => $sektors
+        $sektors = Sektor::findOrFail($id);
+        return Inertia::render('Dashboard/Sektor/edit', [
+            'data' => $sektors
         ]);
     }
 
-    public function update(Request $request, Sektor $sektors)
+    public function update(Request $request, string $id)
     {
-        $request->validate([
-            'image' => 'required|string|max:255',
+        $validatedData = $request->validate([
             'name' => 'required|string|max:255',
-            'description' => 'nullable',
+            'description' => 'nullable|string',
+            'image' => 'nullable|image|mimes:png,jpg,jpeg|max:10240',
         ]);
 
-        DB::transaction(function () use ($request, $sektors) {
-            $data = $request->except('image');
+        $sektor = Sektor::findOrFail($id);
+        $sektor->name = $validatedData['name'];
+        $sektor->description = $validatedData['description'];
 
-            if ($request->hasFile('image')) {
-                $this->ensureSektorImageFolderExists();
-
-                if ($sektors->image) {
-                    Storage::disk('public')->delete($sektors->image);
-                }
-
-                $imagePath = $request->file('image')->store($this->sektorImageFolder, 'public');
-                $data['image'] = $imagePath;
+        if ($request->hasFile('image')) {
+            if ($sektor->image) {
+                Storage::delete($sektor->image);
             }
-            $sektors->update($data);
-        });
+
+            $image = $request->file('image');
+            $imageName = Str::ulid() . "." . $image->getClientOriginalExtension();
+            $imagePath = $image->storeAs('images/sektor_images', $imageName, 'public');
+            $sektor->image = $imagePath;
+        }
+
+        $sektor->save();
+
         return redirect()->route('dashboard.sektor.index')->with('success', 'Sektor berhasil diperbarui');
     }
 
@@ -92,12 +109,5 @@ class DashboardSektorController extends Controller
         $sektors->delete();
 
         return redirect()->route('dashboard.sektor.index')->with('success', 'Sektor berhasil dihapus');
-    }
-
-    private function ensureSektorImageFolderExists()
-    {
-        if (!Storage::disk('public')->exists($this->sektorImageFolder)) {
-            Storage::disk('public')->makeDirectory($this->sektorImageFolder);
-        }
     }
 }
