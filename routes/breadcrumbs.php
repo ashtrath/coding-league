@@ -15,7 +15,7 @@ Breadcrumbs::for('dashboard.sektor.index', function (BreadcrumbTrail $trail) {
 
 Breadcrumbs::for('dashboard.sektor.show', function (BreadcrumbTrail $trail, $sektor) {
     $trail->parent('dashboard.sektor.index');
-    $trail->push($sektor->name, route('dashboard.sektor.show', $sektor));
+    $trail->push('Detail', route('dashboard.sektor.show', $sektor));
 });
 
 Breadcrumbs::for('dashboard.sektor.create', function (BreadcrumbTrail $trail) {
@@ -36,7 +36,7 @@ Breadcrumbs::for('dashboard.project.index', function (BreadcrumbTrail $trail) {
 
 Breadcrumbs::for('dashboard.project.show', function (BreadcrumbTrail $trail, $project) {
     $trail->parent('dashboard.project.index');
-    $trail->push($project->name, route('dashboard.project.show', $project));
+    $trail->push('Detail', route('dashboard.project.show', $project));
 });
 
 Breadcrumbs::for('dashboard.project.create', function (BreadcrumbTrail $trail) {
@@ -57,7 +57,7 @@ Breadcrumbs::for('dashboard.mitra.index', function (BreadcrumbTrail $trail) {
 
 Breadcrumbs::for('dashboard.mitra.show', function (BreadcrumbTrail $trail, $mitra) {
     $trail->parent('dashboard.mitra.index');
-    $trail->push($mitra->name, route('dashboard.mitra.show', $mitra));
+    $trail->push('Detail', route('dashboard.mitra.show', $mitra));
 });
 
 Breadcrumbs::for('dashboard.mitra.create', function (BreadcrumbTrail $trail) {
@@ -78,7 +78,7 @@ Breadcrumbs::for('dashboard.kegiatan.index', function (BreadcrumbTrail $trail) {
 
 Breadcrumbs::for('dashboard.kegiatan.show', function (BreadcrumbTrail $trail, $kegiatan) {
     $trail->parent('dashboard.kegiatan.index');
-    $trail->push($kegiatan->name, route('dashboard.kegiatan.show', $kegiatan));
+    $trail->push('Detail', route('dashboard.kegiatan.show', $kegiatan));
 });
 
 Breadcrumbs::for('dashboard.kegiatan.create', function (BreadcrumbTrail $trail) {
@@ -99,7 +99,7 @@ Breadcrumbs::for('dashboard.laporan.index', function (BreadcrumbTrail $trail) {
 
 Breadcrumbs::for('dashboard.laporan.show', function (BreadcrumbTrail $trail, $laporan) {
     $trail->parent('dashboard.laporan.index');
-    $trail->push($laporan->name, route('dashboard.laporan.show', $laporan));
+    $trail->push('Detail', route('dashboard.laporan.show', $laporan));
 });
 
 Breadcrumbs::for('dashboard.laporan.create', function (BreadcrumbTrail $trail) {
