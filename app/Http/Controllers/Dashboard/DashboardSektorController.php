@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Sektor;
 use Inertia\Inertia;
+use Illuminate\Support\Str;
 
 class DashboardSektorController extends Controller
 {
@@ -25,10 +26,18 @@ class DashboardSektorController extends Controller
     public function store(Request $request)
     {
         $validatedData = $request->validate([
-            'image' => 'nullable|string|max:255',
+            'image' => 'required|image|mimes:png,jpg,jpeg|max:10240',
             'name' => 'required|string|max:255',
             'description' => 'required',
         ]);
+
+        if ($request->hasFile('image')) {
+            $image = $request->file('image');
+
+            $imageName = Str::ulid() . "." . $image->getClientOriginalExtension();
+            $imagePath = $image->storeAs('images/sektor_images', $imageName, 'public');
+            $validatedData['image'] = "$imagePath";
+        }
 
         Sektor::create($validatedData);
 
