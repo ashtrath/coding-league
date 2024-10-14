@@ -173,6 +173,7 @@ Route::prefix('dashboard')->name('dashboard.')->middleware(['auth', 'verified', 
         Route::delete('/{sektor}', 'delete')->name('delete');
     });
 
+    // === Dashboard Notification Routes ===
     Route::controller(DashboardNotificationController::class)->middleware('role:Admin,Mitra')->prefix('notifications')->name('notifications.')->group(function () {
         Route::get('/', 'index')->name('index');
         Route::post('/read', 'markAsRead')->name('read');
