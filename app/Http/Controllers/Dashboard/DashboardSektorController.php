@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Dashboard;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Sektor;
+use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
 
 class DashboardSektorController extends Controller
@@ -22,13 +23,19 @@ class DashboardSektorController extends Controller
         return Inertia::render('Dashboard/Sektor/Create');
     }
 
-    public function store(Request $request)
+    public function store(Request $request, Sektor $sektor)
     {
         $validatedData = $request->validate([
             'image' => 'nullable|string|max:255',
             'name' => 'required|string|max:255',
             'description' => 'required',
         ]);
+
+        if ($request->hasFile('image')) {
+            Storage::disk('public')->delete($sektor->image);
+            $imagePath = $request->file('image')->store('sektor_images', 'public');
+            $data['image'] = $imagePath;
+        }
 
         Sektor::create($validatedData);
 
