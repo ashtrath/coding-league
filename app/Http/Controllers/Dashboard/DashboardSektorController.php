@@ -5,11 +5,13 @@ namespace App\Http\Controllers\Dashboard;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Sektor;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
 
 class DashboardSektorController extends Controller
 {
+    private $sektorImageFolder = 'sektor_images';
     public function index()
     {
         $sektors = Sektor::all();
@@ -23,7 +25,7 @@ class DashboardSektorController extends Controller
         return Inertia::render('Dashboard/Sektor/Create');
     }
 
-    public function store(Request $request, Sektor $sektor)
+    public function store(Request $request)
     {
         $validatedData = $request->validate([
             'image' => 'nullable|string|max:255',
@@ -31,11 +33,14 @@ class DashboardSektorController extends Controller
             'description' => 'required',
         ]);
 
-        if ($request->hasFile('image')) {
-            Storage::disk('public')->delete($sektor->image);
-            $imagePath = $request->file('image')->store('sektor_images', 'public');
-            $data['image'] = $imagePath;
-        }
+        DB::transaction(function () use ($request) {
+            $this->ensureSektorImageFolderExists();
+
+            $imagePath = $request->file('image')->store($this->sektorImageFolder, 'public');
+            Sektor::create([
+                'image' => $imagePath,
+            ]);
+        });
 
         Sektor::create($validatedData);
 
@@ -58,14 +63,27 @@ class DashboardSektorController extends Controller
 
     public function update(Request $request, Sektor $sektors)
     {
-        $validatedData = $request->validate([
+        $request->validate([
             'image' => 'required|string|max:255',
             'name' => 'required|string|max:255',
             'description' => 'nullable',
         ]);
 
-        $sektors->update($validatedData);
+        DB::transaction(function () use ($request, $sektors) {
+            $data = $request->except('image');
 
+            if ($request->hasFile('image')) {
+                $this->ensureSektorImageFolderExists();
+
+                if ($sektors->image) {
+                    Storage::disk('public')->delete($sektors->image);
+                }
+
+                $imagePath = $request->file('image')->store($this->sektorImageFolder, 'public');
+                $data['image'] = $imagePath;
+            }
+            $sektors->update($data);
+        });
         return redirect()->route('dashboard.sektor.index')->with('success', 'Sektor berhasil diperbarui');
     }
 
@@ -74,5 +92,12 @@ class DashboardSektorController extends Controller
         $sektors->delete();
 
         return redirect()->route('dashboard.sektor.index')->with('success', 'Sektor berhasil dihapus');
+    }
+
+    private function ensureSektorImageFolderExists()
+    {
+        if (!Storage::disk('public')->exists($this->sektorImageFolder)) {
+            Storage::disk('public')->makeDirectory($this->sektorImageFolder);
+        }
     }
 }

@@ -82,6 +82,10 @@ class DashboardMitraController extends Controller
 
         $mitra->update($validate);
 
+        $statusMessage = $mitra->status === MitraStatus::Active
+        ? 'Mitra Berhasil Diaktifkan.'
+        : 'Mitra Berhasil Dinonaktifkan.';
+
         return redirect()->route('dashboard.mitra.show', $mitra)->with('success', 'Mitra Berhasil Diupdate.');
     }
 
