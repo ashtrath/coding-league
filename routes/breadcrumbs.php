@@ -2,7 +2,7 @@
 use Diglactic\Breadcrumbs\Breadcrumbs;
 use Diglactic\Breadcrumbs\Generator as BreadcrumbTrail;
 
-// Home
+// Dashboard
 Breadcrumbs::for('dashboard.index', function (BreadcrumbTrail $trail) {
     $trail->push('Dashboard', route('dashboard.index'));
 });
@@ -29,24 +29,24 @@ Breadcrumbs::for('dashboard.sektor.edit', function (BreadcrumbTrail $trail, $sek
 });
 
 // Project
-Breadcrumbs::for('dashboard.project.index', function (BreadcrumbTrail $trail) {
+Breadcrumbs::for('dashboard.proyek.index', function (BreadcrumbTrail $trail) {
     $trail->parent('dashboard.index');
-    $trail->push('Project', route('dashboard.project.index'));
+    $trail->push('Project', route('dashboard.proyek.index'));
 });
 
-Breadcrumbs::for('dashboard.project.show', function (BreadcrumbTrail $trail, $project) {
-    $trail->parent('dashboard.project.index');
-    $trail->push('Detail', route('dashboard.project.show', $project));
+Breadcrumbs::for('dashboard.proyek.show', function (BreadcrumbTrail $trail, $project) {
+    $trail->parent('dashboard.proyek.index');
+    $trail->push('Detail', route('dashboard.proyek.show', $project));
 });
 
-Breadcrumbs::for('dashboard.project.create', function (BreadcrumbTrail $trail) {
-    $trail->parent('dashboard.project.index');
-    $trail->push('Buat Project Baru', route('dashboard.project.create'));
+Breadcrumbs::for('dashboard.proyek.create', function (BreadcrumbTrail $trail) {
+    $trail->parent('dashboard.proyek.index');
+    $trail->push('Buat Project Baru', route('dashboard.proyek.create'));
 });
 
-Breadcrumbs::for('dashboard.project.edit', function (BreadcrumbTrail $trail, $project) {
-    $trail->parent('dashboard.project.index', $project);
-    $trail->push('Ubah Data Project', route('dashboard.project.edit', $project));
+Breadcrumbs::for('dashboard.proyek.edit', function (BreadcrumbTrail $trail, $project) {
+    $trail->parent('dashboard.proyek.index', $project);
+    $trail->push('Ubah Data Project', route('dashboard.proyek.edit', $project));
 });
 
 // Mitra

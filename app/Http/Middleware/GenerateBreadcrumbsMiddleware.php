@@ -18,6 +18,11 @@ class GenerateBreadcrumbsMiddleware
     public function handle(Request $request, Closure $next): Response
     {
         $breadcrumbs = Breadcrumbs::generate();
+
+        if (!empty($breadcrumbs)) {
+            $breadcrumbs[count($breadcrumbs) - 1]->current = true;
+        }
+
         Inertia::share('breadcrumbs', $breadcrumbs);
 
         return $next($request);
