@@ -62,7 +62,7 @@ class DashboardSektorController extends Controller
 
     public function show(string $id)
     {
-        $sektors = Sektor::findOrFail($id);
+        $sektors = Sektor::with('projects:id,sektor_id,title,description')->findOrFail($id);
         return Inertia::render('Dashboard/Sektor/show', [
             'data' => $sektors
         ]);
