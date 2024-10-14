@@ -19,7 +19,7 @@ const ProfileDropdown = () => {
             <DropdownMenuTrigger asChild>
                 <div className="flex items-center gap-1">
                     <ProfileImage
-                        src={`profile_image/${user.image}`}
+                        src={`storage/${user.image}`}
                         className="peer order-2"
                     />
                     <Button
@@ -43,7 +43,10 @@ const ProfileDropdown = () => {
                 </DropdownMenuLabel>
                 <DropdownMenuSeparator />
                 <DropdownMenuItem asChild>
-                    <Link href={route('profile.edit')} className="w-full">
+                    <Link
+                        href={route('profile.index', user.id)}
+                        className="w-full"
+                    >
                         <RiUser3Line className="mr-2 size-4" />
                         Profile
                     </Link>
