@@ -12,15 +12,32 @@ use Inertia\Inertia;
 
 class DashboardMitraController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $mitras = Mitra::all();
-        return Inertia::render('Dashboard/Mitra/Index', ['mitras' => $mitras]);
+        $perPage = $request->input('perPage', 5);
+        $page = $request->input('page', 1);
+        $query = Mitra::select(['user_id', 'name_mitra', 'name_company', 'phone_number', 'address', 'status',]);
+
+        $mitras = $query->paginate($perPage, ['*'], 'page', $page);
+
+        return Inertia::render('Dashboard/Mitra/index', [
+            'data' => $mitras->items(),
+            'pagination' => [
+                'total' => $mitras->total(),
+                'per_page' => $mitras->perPage(),
+                'current_page' => $mitras->currentPage(),
+                'last_page' => $mitras->lastPage(),
+                'from' => $mitras->firstItem(),
+                'to' => $mitras->lastItem(),
+                'next_page_url' => $mitras->nextPageUrl(),
+                'prev_page_url' => $mitras->previousPageUrl(),
+            ],
+        ]);
     }
 
     public function create()
     {
-        return Inertia::render('Dashboard/Mitra/Create');
+        return Inertia::render('Dashboard/Mitra/create');
     }
 
     public function store(Request $request, User $user)
@@ -49,12 +66,12 @@ class DashboardMitraController extends Controller
 
     public function edit(Mitra $mitra)
     {
-        return Inertia::render('Dashboard/Mitra/Edit', ['mitra' => $mitra]);
+        return Inertia::render('Dashboard/Mitra/edit', ['mitra' => $mitra]);
     }
 
     public function show(Mitra $mitra)
     {
-        return Inertia::render('Dashboard/Mitra/Show', ['mitra' => $mitra]);
+        return Inertia::render('Dashboard/Mitra/show', ['mitra' => $mitra]);
     }
 
     public function update(Request $request, Mitra $mitra)
