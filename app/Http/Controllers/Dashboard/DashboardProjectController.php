@@ -87,7 +87,7 @@ class DashboardProjectController extends Controller
 
         if ($request->hasFile('image')) {
             Storage::disk('public')->delete($project->image);
-            $imagePath = $request->file('image')->store('image_project', 'public');
+            $imagePath = $request->file('image')->store('project_images', 'public');
             $data['image'] = $imagePath;
         }
 
