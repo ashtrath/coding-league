@@ -4,13 +4,13 @@ use App\Http\Controllers\Dashboard\DashboardController;
 use App\Http\Controllers\Dashboard\DashboardKegiatanController;
 use App\Http\Controllers\Dashboard\DashboardLaporanController;
 use App\Http\Controllers\Dashboard\DashboardMitraController;
+use App\Http\Controllers\Dashboard\DashboardProfileController;
 use App\Http\Controllers\Dashboard\DashboardProjectController;
 use App\Http\Controllers\Dashboard\DashboardSektorController;
 use App\Http\Controllers\DashboardNotificationController;
 use App\Http\Controllers\KegiatanController;
 use App\Http\Controllers\LaporanController;
 use App\Http\Controllers\MitraController;
-use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\SektorController;
 use Illuminate\Foundation\Application;
@@ -59,7 +59,7 @@ Route::controller(LaporanController::class)->prefix('laporan')->name('laporan.')
 });
 
 // === Profile Routes === 
-Route::controller(ProfileController::class)->prefix('profile')->name('profile.')->middleware(['auth', 'verified', 'role:Admin,Mitra'])->group(function () {
+Route::controller(DashboardProfileController::class)->prefix('profile')->name('profile.')->middleware(['auth', 'verified', 'role:Admin,Mitra'])->group(function () {
     Route::get('/', 'edit')->name('edit');
     Route::patch('/', 'update')->name('update');
     Route::delete('/', 'destroy')->name('destroy');
