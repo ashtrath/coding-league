@@ -16,6 +16,7 @@ class Laporan extends Model
         'description',
         'anggaran_realisasi',
         'tanggal_realisasi',
+        'lokasi_kecamatan',
         'mitra_id',
         'sektor_id',
         'project_id',

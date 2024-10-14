@@ -26,7 +26,8 @@ class Project extends Model
 
     protected $casts = [
         'tanggal_awal' => 'date',
-        'tanggal_akhir' => 'date'
+        'tanggal_akhir' => 'date',
+        'tanggal_diterbitkan' => 'date'
     ];
 
     public function sektor(): BelongsTo
@@ -37,16 +38,5 @@ class Project extends Model
     public function laporans(): HasMany
     {
         return $this->hasMany(Laporan::class, 'project_id');
-    }
-
-    public function setStatusAttribute($value)
-    {
-        $this->attributes['status'] = $value;
-
-        if ($value === ProjectStatus::Terbit->value) {
-            $this->attributes['tanggal_diterbitkan'] = now();
-        } else {
-            $this->attributes['tanggal_diterbitkan'] = null;
-        }
     }
 }
