@@ -1,3 +1,4 @@
+import { cn } from '@/lib/utils';
 import { PageProps } from '@/types';
 import { Link, usePage } from '@inertiajs/react';
 import { RiArrowRightSLine, RiHome6Line } from '@remixicon/react';
@@ -9,7 +10,11 @@ export interface BreadcrumbItem {
     current?: boolean;
 }
 
-const Breadcrumbs = () => {
+interface BreadcrumbsProps {
+    color?: string;
+}
+
+const Breadcrumbs = ({ color }: BreadcrumbsProps) => {
     const { breadcrumbs }: PageProps = usePage().props;
 
     return (
@@ -24,10 +29,18 @@ const Breadcrumbs = () => {
                         ) : (
                             <Link
                                 href={breadcrumb.url || '#'}
-                                className="text-gray-500 hover:underline"
+                                className={cn(
+                                    'text-gray-500 hover:underline',
+                                    color,
+                                )}
                             >
                                 {index === 0 ? (
-                                    <RiHome6Line className="size-5 text-gray-500" />
+                                    <RiHome6Line
+                                        className={cn(
+                                            'size-5 text-gray-500',
+                                            color,
+                                        )}
+                                    />
                                 ) : (
                                     breadcrumb.title
                                 )}
@@ -35,7 +48,9 @@ const Breadcrumbs = () => {
                         )}
                     </li>
                     {index < breadcrumbs.length - 1 && (
-                        <RiArrowRightSLine className="size-4 text-gray-500" />
+                        <RiArrowRightSLine
+                            className={cn('size-4 text-gray-500', color)}
+                        />
                     )}
                 </Fragment>
             ))}
