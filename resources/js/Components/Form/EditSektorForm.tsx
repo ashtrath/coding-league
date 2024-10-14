@@ -1,4 +1,5 @@
-import { FileUploadFileChangeDetails } from '@ark-ui/react/file-upload';
+import { Sektor } from '@/types';
+import { FileUploadFileChangeDetails } from '@ark-ui/react';
 import { useForm } from '@inertiajs/react';
 import { Form, FormField, FormSubmit } from '@radix-ui/react-form';
 import { RiLoader5Line, RiSendPlaneLine } from '@remixicon/react';
@@ -9,11 +10,16 @@ import { Card, CardContent } from '../UI/Card';
 import { Input, InputLabel, InputMessage, Textarea } from '../UI/Input';
 import { showToast } from '../UI/Toast';
 
-const CreateSektorForm = () => {
+interface EditSektorFormProps {
+    initialData: Sektor;
+}
+
+const EditSektorForm = ({ initialData }: EditSektorFormProps) => {
     const { data, setData, post, processing, errors } = useForm({
+        _method: 'put',
+        name: initialData.name,
+        description: initialData.description,
         image: null as File | null,
-        name: '',
-        description: '',
     });
 
     const handleFileChanges = ({
@@ -27,9 +33,10 @@ const CreateSektorForm = () => {
     const handleSubmit: FormEventHandler = (e) => {
         e.preventDefault();
 
-        post(route('dashboard.sektor.store'), {
+        post(route('dashboard.sektor.update', initialData.id), {
             forceFormData: true,
-            onSuccess: () => showToast('Berhasil Membuat Sektor!', 'success'),
+            onSuccess: () =>
+                showToast('Berhasil Mengubah Data Sektor!', 'success'),
             onError: (error) => {
                 showToast(
                     'Terjadi kesalahan, silakan coba lagi.',
@@ -46,10 +53,7 @@ const CreateSektorForm = () => {
                 <CardContent className="space-y-6 p-6">
                     <FormField name="image" className="space-y-2">
                         <div className="flex items-baseline justify-between">
-                            <InputLabel required>Foto Thumbnail</InputLabel>
-                            <InputMessage match="valueMissing">
-                                Foto thumbnail tidak boleh kosong.
-                            </InputMessage>
+                            <InputLabel>Foto Thumbnail</InputLabel>
                             <InputMessage>{errors.image}</InputMessage>
                         </div>
                         <FileUploadBasic
@@ -113,4 +117,4 @@ const CreateSektorForm = () => {
     );
 };
 
-export default CreateSektorForm;
+export default EditSektorForm;

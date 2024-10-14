@@ -60,8 +60,6 @@ export function DataTable<TData, TValue>({
         getSortedRowModel: getSortedRowModel(),
     });
 
-    console.log(window.location.href);
-
     return (
         <div>
             <div className="overflow-hidden rounded-xl rounded-b-none border border-gray-300 bg-white shadow-md">

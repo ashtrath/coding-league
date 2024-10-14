@@ -26,8 +26,6 @@ export function DataTablePagination<TData>({
     const startIndex = pageIndex * pageSize + 1;
     const endIndex = Math.min((pageIndex + 1) * pageSize, rowCount);
 
-    console.log(table.getState().pagination.pageSize);
-
     return (
         <div className="flex items-center justify-between rounded-xl rounded-t-none border border-gray-300 bg-white px-6 pb-4 pt-3 text-gray-900 shadow-md">
             <div className="flex items-center gap-4">
