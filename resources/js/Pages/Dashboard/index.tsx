@@ -6,6 +6,7 @@ import RealisasiSektorCSR from '@/Components/Chart/RealisasiSektorCSR';
 import DashboardFilter from '@/Components/Select/DashboardFilter';
 import { Card, CardContent } from '@/Components/UI/Card';
 import MainDashboardLayout from '@/Layouts/MainDashboardLayout';
+import { formatCurrency } from '@/lib/utils';
 import { PageProps } from '@/types';
 import { Head } from '@inertiajs/react';
 import {
@@ -52,7 +53,11 @@ export default function Dashboard({
                     <StatisticsCard
                         icon={RiMoneyDollarCircleLine}
                         title="Total Dana Realisasi"
-                        value={`Rp. ${analytics.total_anggaran_realisasi}`}
+                        value={formatCurrency(
+                            analytics.total_anggaran_realisasi,
+                            'id-ID',
+                            'IDR',
+                        )}
                         color="green"
                     />
                 </div>

@@ -54,7 +54,7 @@ const StatisticsCard = ({
             </header>
             <div className="rounded-lg border border-white/50 bg-white/30 p-4">
                 <p className="text-xl font-bold leading-none text-white">
-                    {value.toLocaleString()}
+                    {value}
                 </p>
             </div>
         </div>
