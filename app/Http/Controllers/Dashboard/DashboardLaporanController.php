@@ -27,7 +27,7 @@ class DashboardLaporanController extends Controller
         $query = Laporan::select(['id', 'title', 'mitra_id', 'lokasi_kecamatan', 'anggaran_realisasi', 'tanggal_realisasi', 'tanggal_diterbitkan', 'created_at', 'status'])->with('tags');
 
         $laporans = $query->paginate($perPage, ['*'], 'page', $page);
-        return Inertia::render('Dashboard/Laporan/z', [
+        return Inertia::render('Dashboard/Laporan/index', [
             'laporan' => $laporans->items(),
             'pagination' => [
                 'total' => $laporans->total(),
