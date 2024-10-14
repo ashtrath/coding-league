@@ -12,18 +12,34 @@ use Illuminate\Support\Facades\Storage;
 
 class DashboardKegiatanController extends Controller
 {
-    public function index()
-    {
-        $kegiatans = Kegiatan::with('tags')->paginate(10);
+    private $kegiatanImageFolder = 'kegiatan_images';
 
-        return Inertia::render('Dashboard/Kegiatan/Index', [
-            'kegiatans' => $kegiatans
+    public function index(Request $request)
+    {
+        $perPage = $request->input('perPage', 5);
+        $page = $request->input('page', 1);
+        $query = Kegiatan::select(['id', 'title', 'content', 'description', 'image', 'tanggal_diterbitkan', 'status'])->with('tags');
+
+        $kegiatans = $query->paginate($perPage, ['*'], 'page', $page);
+
+        return Inertia::render('Dashboard/Kegiatan/index', [
+            'data' => $kegiatans->items(),
+            'pagination' => [
+                'total' => $kegiatans->total(),
+                'per_page' => $kegiatans->perPage(),
+                'current_page' => $kegiatans->currentPage(),
+                'last_page' => $kegiatans->lastPage(),
+                'from' => $kegiatans->firstItem(),
+                'to' => $kegiatans->lastItem(),
+                'next_page_url' => $kegiatans->nextPageUrl(),
+                'prev_page_url' => $kegiatans->previousPageUrl(),
+            ],
         ]);
     }
 
     public function create()
     {
-        return Inertia::render('Dashboard/Kegiatan/Create');
+        return Inertia::render('Dashboard/Kegiatan/create');
     }
 
     public function store(Request $request)
@@ -38,8 +54,24 @@ class DashboardKegiatanController extends Controller
             'tags.*' => 'string|max:20'
         ]);
 
-        DB::transaction(function () use ($request) {
-            $imagePath = $request->file('image')->store('kegiatan_images', 'public');
+        $user = $request->user();
+
+        DB::transaction(function () use ($request, $user, &$validated) {
+            $this->ensureKegiatanImageFolder();
+
+            $imagePath = $request->file('image')->store($this->kegiatanImageFolder, 'public');
+
+            if ($user->image) {
+                Storage::disk('public')->delete($user->image);
+            }
+
+            $folderPath = 'kegiatan_images';
+            if (!Storage::disk('public')->exists($folderPath)) {
+                Storage::disk('public')->makeDirectory($folderPath);
+            }
+
+            $imagePath = $request->file('image')->store($folderPath, 'public');
+            $validated['image'] = $imagePath;
 
             // Membuat data kegiatan
             $kegiatan = Kegiatan::create([
@@ -67,8 +99,8 @@ class DashboardKegiatanController extends Controller
     {
         $kegiatan->load('tags');
 
-        return Inertia::render('Dashboard/Kegiatan/Show', [
-            'kegiatan' => $kegiatan
+        return Inertia::render('Dashboard/Kegiatan/show', [
+            'data' => $kegiatan
         ]);
     }
 
@@ -76,7 +108,7 @@ class DashboardKegiatanController extends Controller
     {
         $kegiatan->load('tags');
 
-        return Inertia::render('Dashboard/Kegiatan/Edit', [
+        return Inertia::render('Dashboard/Kegiatan/edit', [
             'kegiatan' => $kegiatan,
             'tags' => $kegiatan->tags->pluck('name')
         ]);
@@ -147,5 +179,12 @@ class DashboardKegiatanController extends Controller
         $tags = Tag::where('name', 'like', "%{$query}%")->limit(10)->get();
 
         return response()->json($tags);
+    }
+
+    private function ensureKegiatanImageFolder()
+    {
+        if (!Storage::disk('public')->exists($this->kegiatanImageFolder)) {
+            Storage::disk('public')->makeDirectory($this->kegiatanImageFolder);
+        }
     }
 }

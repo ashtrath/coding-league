@@ -6,6 +6,7 @@ use App\Http\Controllers\Dashboard\DashboardLaporanController;
 use App\Http\Controllers\Dashboard\DashboardMitraController;
 use App\Http\Controllers\Dashboard\DashboardProjectController;
 use App\Http\Controllers\Dashboard\DashboardSektorController;
+use App\Http\Controllers\DashboardNotificationController;
 use App\Http\Controllers\KegiatanController;
 use App\Http\Controllers\LaporanController;
 use App\Http\Controllers\MitraController;
@@ -13,6 +14,8 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\SektorController;
 use Illuminate\Foundation\Application;
+use Illuminate\Foundation\Auth\EmailVerificationRequest;
+use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -30,7 +33,6 @@ Route::controller(DashboardController::class)->prefix('dashboard')->name('dashbo
     Route::get('/export-all', 'exportAllData')->name('export.all');
     Route::get('/export-admin', 'exportAdminData')->name('export.admin');
 });
-
 
 // === Sektor Routes Public ===
 Route::controller(SektorController::class)->prefix('sektor')->name('sektor.')->middleware('guest')->group(function () {
@@ -155,6 +157,27 @@ Route::prefix('dashboard')->name('dashboard.')->middleware(['auth', 'verified', 
         Route::put('/{sektor}', 'update')->name('update');
         Route::delete('/{sektor}', 'delete')->name('delete');
     });
+
+    // === Dashboard Notification Routes ===
+    Route::controller(DashboardNotificationController::class)->middleware('role:Admin,Mitra')->prefix('notifications')->name('notifications.')->group(function () {
+        Route::get('/', 'index')->name('index');
+        Route::post('/read', 'markAsRead')->name('read');
+    });
+
+    // === Dashboard Email Routes ===
+    Route::get('/email/verify', function () {
+        return Inertia::render('Auth/VerifyEmail');
+    })->middleware('auth')->name('verification.notice');
+
+    Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $request) {
+        $request->fulfill();
+        return redirect()->route('dashboard.index');
+    })->middleware(['auth', 'signed'])->name('verification.verify');
+
+    Route::post('/email/verification-notification', function (Request $request) {
+        $request->user()->sendEmailVerificationNotification();
+        return back()->with('message', 'Link verifikasi telah dikirim!');
+    })->middleware(['auth', 'throttle:6,1'])->name('verification.send');
 });
 
 require __DIR__ . '/auth.php';

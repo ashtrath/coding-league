@@ -8,14 +8,10 @@ use App\Models\Laporan;
 use App\Models\Mitra;
 use App\Models\Project;
 use App\Models\Sektor;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class LaporanSeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     */
     public function run(): void
     {
         $mitras = Mitra::all();
@@ -27,7 +23,6 @@ class LaporanSeeder extends Seeder
             return;
         }
 
-        // Laporan 1
         $laporan1 = Laporan::create([
             'title' => 'Laporan Proyek PPLG 1',
             'status' => LaporanStatus::Diterima->value,
@@ -43,7 +38,6 @@ class LaporanSeeder extends Seeder
             'laporan_id' => $laporan1->id,
         ]);
 
-        // Laporan 2
         $laporan2 = Laporan::create([
             'title' => 'Laporan Proyek PPLG 2',
             'status' => LaporanStatus::Diterima->value,
@@ -59,7 +53,6 @@ class LaporanSeeder extends Seeder
             'laporan_id' => $laporan2->id,
         ]);
 
-        // Laporan 3
         $laporan3 = Laporan::create([
             'title' => 'Laporan Proyek PPLG 3',
             'status' => LaporanStatus::Diterima->value,
@@ -75,7 +68,6 @@ class LaporanSeeder extends Seeder
             'laporan_id' => $laporan3->id,
         ]);
 
-        // Laporan 4
         $laporan4 = Laporan::create([
             'title' => 'Laporan Proyek PPLG 4',
             'status' => LaporanStatus::Diterima->value,
@@ -91,7 +83,6 @@ class LaporanSeeder extends Seeder
             'laporan_id' => $laporan4->id,
         ]);
 
-        // Laporan 5
         $laporan5 = Laporan::create([
             'title' => 'Laporan Proyek PPLG 5',
             'status' => LaporanStatus::Diterima->value,
@@ -107,7 +98,6 @@ class LaporanSeeder extends Seeder
             'laporan_id' => $laporan5->id,
         ]);
 
-        // Laporan 6
         $laporan6 = Laporan::create([
             'title' => 'Laporan Proyek PPLG 6',
             'status' => LaporanStatus::Diterima->value,
@@ -123,7 +113,6 @@ class LaporanSeeder extends Seeder
             'laporan_id' => $laporan6->id,
         ]);
 
-        // Laporan 7
         $laporan7 = Laporan::create([
             'title' => 'Laporan Proyek PPLG 7',
             'status' => LaporanStatus::Diterima->value,
@@ -139,7 +128,6 @@ class LaporanSeeder extends Seeder
             'laporan_id' => $laporan7->id,
         ]);
 
-        // Laporan 8
         $laporan8 = Laporan::create([
             'title' => 'Laporan Proyek PPLG 8',
             'status' => LaporanStatus::Diterima->value,
@@ -155,7 +143,6 @@ class LaporanSeeder extends Seeder
             'laporan_id' => $laporan8->id,
         ]);
 
-        // Laporan 9
         $laporan9 = Laporan::create([
             'title' => 'Laporan Proyek PPLG 9',
             'status' => LaporanStatus::Diterima->value,
@@ -170,8 +157,7 @@ class LaporanSeeder extends Seeder
             'image' => 'laporan_image_9_1.jpg',
             'laporan_id' => $laporan9->id,
         ]);
-
-        // Laporan 10
+        
         $laporan10 = Laporan::create([
             'title' => 'Laporan Proyek PPLG 10',
             'status' => LaporanStatus::Diterima->value,

@@ -19,6 +19,7 @@ return new class extends Migration
             $table->text('content')->nullable();
             $table->text('description')->nullable();
             $table->string('image', 255)->nullable();
+            $table->timestamp('tanggal_diterbitkan')->nullable();
             $table->enum('status', array_column(KegiatanStatus::cases(), 'value'))->default(KegiatanStatus::Draft->value);
             $table->timestamps();
         });

@@ -20,17 +20,33 @@ use Maatwebsite\Excel\Facades\Excel;
 
 class DashboardLaporanController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $laporans = Laporan::all();
-        return Inertia::render('Dashboard/Laporan/Index', ['laporan' => $laporans]);
+        $perPage = $request->input('perPage', 5);
+        $page = $request->input('page', 1);
+        $query = Laporan::select(['id', 'title', 'mitra_id', 'lokasi_kecamatan', 'anggaran_realisasi', 'tanggal_realisasi', 'tanggal_diterbitkan', 'created_at', 'status'])->with('tags');
+
+        $laporans = $query->paginate($perPage, ['*'], 'page', $page);
+        return Inertia::render('Dashboard/Laporan/z', [
+            'laporan' => $laporans->items(),
+            'pagination' => [
+                'total' => $laporans->total(),
+                'per_page' => $laporans->perPage(),
+                'current_page' => $laporans->currentPage(),
+                'last_page' => $laporans->lastPage(),
+                'from' => $laporans->firstItem(),
+                'to' => $laporans->lastItem(),
+                'next_page_url' => $laporans->nextPageUrl(),
+                'prev_page_url' => $laporans->previousPageUrl(),
+            ],
+        ]);
     }
 
     public function create()
     {
         $sektors = Sektor::all();
         $projects = Project::all();
-        return Inertia::render('Dashboard/Laporan/Create', compact('sektors', 'projects'));
+        return Inertia::render('Dashboard/Laporan/create', compact('sektors', 'projects'));
     }
 
     public function store(Request $request)
@@ -76,9 +92,8 @@ class DashboardLaporanController extends Controller
             case LaporanStatus::Diterima:
                 $user->notify(new LaporanDiterimaNotification($laporan));
                 break;
+
             case LaporanStatus::Ditolak:
-                $user->notify(new LaporanDitolakNotification($laporan, $message));
-                break;
             case LaporanStatus::Revisi:
                 $user->notify(new LaporanDitolakNotification($laporan, $message));
                 break;
@@ -90,15 +105,15 @@ class DashboardLaporanController extends Controller
         $sektors = Sektor::all();
         $projects = Project::all();
 
-        return Inertia::render('Dashboard/Laporan/Edit', compact('laporan', 'sektors', 'projects'));
+        return Inertia::render('Dashboard/Laporan/edit', compact('laporan', 'sektors', 'projects'));
     }
 
     public function show(Laporan $laporan)
     {
-        $laporanDetail = $laporan->load(['users', 'sektor', 'project']);
+        $laporanDetail = $laporan->load(['users', 'mitra_id', 'description', 'sektor', 'project']);
 
-        return Inertia::render('Dashboard/Laporan/Show', [
-            'laporan' => $laporanDetail,
+        return Inertia::render('Dashboard/Laporan/show', [
+            'data' => $laporanDetail,
         ]);
     }
 

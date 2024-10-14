@@ -9,11 +9,13 @@ use App\Models\Sektor;
 use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
 use App\Exports\ProjectExport;
+use Illuminate\Support\Facades\DB;
 use Maatwebsite\Excel\Facades\Excel;
 
 
 class DashboardProjectController extends Controller
 {
+
     public function index(Request $request)
     {
         $perPage = $request->input('perPage', 5);
@@ -57,17 +59,21 @@ class DashboardProjectController extends Controller
             'sektor_id' => 'required|exists:sektors.id',
         ]);
 
-        $imagePath = $request->file('image')->store('image_project', 'public');
+        DB::transaction(function () use ($request) {
+            $this->ensureProjectImageFolderExists();
 
-        Project::create([
-            'title' => $request->title,
-            'description' => $request->description,
-            'image' => $imagePath,
-            'lokasi_kecamatan' => $request->lokasi_kecamatan,
-            'tanggal_awal' => $request->tanggal_awal,
-            'tanggal_akhir' => $request->tanggal_akhir,
-            'sektor_id' => $request->sektor_id,
-        ]);
+            $imagePath = $request->file('image')->store($this->projectImageFolder, 'public');
+
+            Project::create([
+                'title' => $request->title,
+                'description' => $request->description,
+                'image' => $imagePath,
+                'lokasi_kecamatan' => $request->lokasi_kecamatan,
+                'tanggal_awal' => $request->tanggal_awal,
+                'tanggal_akhir' => $request->tanggal_akhir,
+                'sektor_id' => $request->sektor_id,
+            ]);
+        });
 
         return redirect()->route('dashboard.project.index')->with('success', 'Project Berhasil Dibuat.');
     }
@@ -101,17 +107,22 @@ class DashboardProjectController extends Controller
             'tanggal_akhir' => 'required|date|after:tanggal_awal',
             'sektor_id' => 'required|exists:sektors.id',
         ]);
+        DB::transaction(function () use ($request, $project) {
+            $data = $request->except('image');
 
-        $data = $request->except('image');
+            if ($request->hasFile('image')) {
+                $this->ensureProjectImageFolderExists();
 
-        if ($request->hasFile('image')) {
-            Storage::disk('public')->delete($project->image);
-            $imagePath = $request->file('image')->store('image_project', 'public');
-            $data['image'] = $imagePath;
-        }
+                if ($project->image) {
+                    Storage::disk('public')->delete($project->image);
+                }
 
-        $project->update($data);
+                $imagePath = $request->file('image')->store($this->projectImageFolder, 'public');
+                $data['image'] = $imagePath;
+            }
 
+            $project->update($data);
+        });
         return redirect()->route('dashboard.project.index')->with('success', 'Project Berhasil Diperbaharui.');
     }
 
