@@ -1,4 +1,4 @@
-import SektorDataTable from '@/Components/DataTable/SektorDataTable';
+import SektorDataTable from '@/Components/DataTable/Sektor/SektorDataTable';
 import Button from '@/Components/UI/Button';
 import DashboardLayout from '@/Layouts/DashboardLayout';
 import { PageProps, Sektor } from '@/types';

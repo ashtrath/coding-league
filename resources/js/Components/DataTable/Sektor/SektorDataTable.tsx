@@ -8,8 +8,8 @@ import {
 } from '@remixicon/react';
 import { ColumnDef } from '@tanstack/react-table';
 import { useMemo } from 'react';
-import Button from '../UI/Button';
-import { DataTable } from '../UI/DataTable';
+import Button from '../../UI/Button';
+import { DataTable } from '../../UI/DataTable';
 
 const SektorDataTable = ({ data, pagination }: PageProps) => {
     const columns = useMemo<ColumnDef<Sektor>[]>(
