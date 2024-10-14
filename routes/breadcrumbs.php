@@ -112,4 +112,15 @@ Breadcrumbs::for('dashboard.laporan.edit', function (BreadcrumbTrail $trail, $la
     $trail->push('Ubah Data Laporan', route('dashboard.laporan.edit', $laporan));
 });
 
+// Profile
+Breadcrumbs::for('profile.index', function (BreadcrumbTrail $trail) {
+    $trail->parent('profile.index');
+    $trail->push('Profile', route('profile.index'));
+});
+
+Breadcrumbs::for('profile.edit', function (BreadcrumbTrail $trail, $laporan) {
+    $trail->parent('profile.index');
+    $trail->push('Ubah Profile', route('profile.edit', $laporan));
+});
+
 ?>

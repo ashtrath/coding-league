@@ -59,14 +59,15 @@ Route::controller(LaporanController::class)->prefix('laporan')->name('laporan.')
 });
 
 // === Profile Routes === 
-Route::controller(DashboardProfileController::class)->prefix('profile')->name('profile.')->middleware(['auth', 'verified', 'role:Admin,Mitra'])->group(function () {
-    Route::get('/', 'edit')->name('edit');
-    Route::patch('/', 'update')->name('update');
+Route::controller(DashboardProfileController::class)->prefix('profile')->name('profile.')->middleware(['auth', 'verified', 'role:Admin,Mitra', 'breadcrumbs'])->group(function () {
+    Route::get('/{user}', 'index')->name('index');
+    Route::get('/{user}/edit', 'edit')->name('edit');
+    Route::patch('/{user}', 'update')->name('update');
     Route::delete('/', 'destroy')->name('destroy');
 });
 
 // === Dashboard Routes ===
-Route::prefix('dashboard')->name('dashboard.')->middleware(['auth', 'verified', 'role:Admin,Mitra', 'breadcrumbs'])->group(function () {
+Route::prefix('dashboard')->name('dashboard.')->middleware(['auth', 'verified', 'role:Admin,Mitra'])->group(function () {
 
     // === Main Dashboard Route ===
     Route::controller(DashboardController::class)->group(function () {
@@ -77,22 +78,22 @@ Route::prefix('dashboard')->name('dashboard.')->middleware(['auth', 'verified', 
 
     // === Dashboard Mitra Routes
     Route::controller(DashboardMitraController::class)->middleware('role:Admin')->prefix('mitra')->name('mitra.')->group(function () {
-        Route::get('/', 'index')->name('index');
-        Route::get('/create', 'create')->name('create');
+        Route::get('/', 'index')->name('index')->middleware(['breadcrumbs']);
+        Route::get('/create', 'create')->name('create')->middleware(['breadcrumbs']);
         Route::post('/', 'store')->name('store');
-        Route::get('/{mitra}', 'show')->name('show');
-        Route::get('/{mitra}/edit', 'edit')->name('edit');
+        Route::get('/{mitra}', 'show')->name('show')->middleware(['breadcrumbs']);
+        Route::get('/{mitra}/edit', 'edit')->name('edit')->middleware(['breadcrumbs']);
         Route::put('/{mitra}', 'update')->name('update');
         Route::delete('/{mitra}', 'destroy')->name('destroy');
     });
 
     // === Dashboard Laporan Routes
     Route::controller(DashboardLaporanController::class)->middleware('role:Admin,Mitra')->prefix('laporan')->name('laporan.')->group(function () {
-        Route::get('/', 'index')->name('index');
-        Route::get('/create', 'create')->name('create');
+        Route::get('/', 'index')->name('index')->middleware(['breadcrumbs']);
+        Route::get('/create', 'create')->name('create')->middleware(['breadcrumbs']);
         Route::post('/', 'store')->name('store');
-        Route::get('/{laporan}', 'show')->name('show');
-        Route::get('/{laporan}/edit', 'edit')->name('edit');
+        Route::get('/{laporan}', 'show')->name('show')->middleware(['breadcrumbs']);
+        Route::get('/{laporan}/edit', 'edit')->name('edit')->middleware(['breadcrumbs']);
         Route::put('/{laporan}', 'update')->name('update');
         Route::delete('/{laporan}', 'destroy')->name('destroy');
         Route::post('/{laporan}/status', 'updateStatus')->name('laporan.updateStatus')->middleware(['role:Admin']);
@@ -101,22 +102,22 @@ Route::prefix('dashboard')->name('dashboard.')->middleware(['auth', 'verified', 
 
     // === Dashboard Kegiatan Routes ===
     Route::controller(DashboardKegiatanController::class)->middleware('role:Admin')->prefix('kegiatan')->name('kegiatan.')->group(function () {
-        Route::get('/', 'index')->name('index');
-        Route::get('/create', 'create')->name('create');
+        Route::get('/', 'index')->name('index')->middleware(['breadcrumbs']);
+        Route::get('/create', 'create')->name('create')->middleware(['breadcrumbs']);
         Route::post('/', 'store')->name('store');
-        Route::get('/{kegiatan}', 'show')->name('show');
-        Route::get('/{kegiatan}/edit', 'edit')->name('edit');
+        Route::get('/{kegiatan}', 'show')->name('show')->middleware(['breadcrumbs']);
+        Route::get('/{kegiatan}/edit', 'edit')->name('edit')->middleware(['breadcrumbs']);
         Route::put('/{kegiatan}', 'update')->name('update');
         Route::delete('/{kegiatan}', 'destroy')->name('destroy');
     });
 
     // === Dashboard Project Routes === 
     Route::controller(DashboardProjectController::class)->middleware('role:Admin')->prefix('proyek')->name('proyek.')->group(function () {
-        Route::get('/', 'index')->name('index');
-        Route::get('/create', 'create')->name('create');
+        Route::get('/', 'index')->name('index')->middleware(['breadcrumbs']);
+        Route::get('/create', 'create')->name('create')->middleware(['breadcrumbs']);
         Route::post('/', 'store')->name('store');
-        Route::get('/{project}', 'show')->name('show');
-        Route::get('/{project}/edit', 'edit')->name('edit');
+        Route::get('/{project}', 'show')->name('show')->middleware(['breadcrumbs']);
+        Route::get('/{project}/edit', 'edit')->name('edit')->middleware(['breadcrumbs']);
         Route::put('/{project}', 'update')->name('update');
         Route::delete('/{project}', 'destroy')->name('destroy');
         Route::post('/{project}/status', 'updateProjectStatus')->name('updateStatus');
@@ -125,11 +126,11 @@ Route::prefix('dashboard')->name('dashboard.')->middleware(['auth', 'verified', 
 
     // === Dashboard Sektor Routes ===
     Route::controller(DashboardSektorController::class)->middleware('role:Admin')->prefix('sektor')->name('sektor.')->group(function () {
-        Route::get('/', 'index')->name('index');
-        Route::get('/create', 'create')->name('create');
+        Route::get('/', 'index')->name('index')->middleware(['breadcrumbs']);
+        Route::get('/create', 'create')->name('create')->middleware(['breadcrumbs']);
         Route::post('/', 'store')->name('store');
-        Route::get('/{sektor}', 'show')->name('show');
-        Route::get('/{sektor}/edit', 'edit')->name('edit');
+        Route::get('/{sektor}', 'show')->name('show')->middleware(['breadcrumbs']);
+        Route::get('/{sektor}/edit', 'edit')->name('edit')->middleware(['breadcrumbs']);
         Route::put('/{sektor}', 'update')->name('update');
         Route::delete('/{sektor}', 'destroy')->name('destroy');
     });
