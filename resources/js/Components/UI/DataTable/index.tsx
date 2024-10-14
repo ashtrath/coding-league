@@ -22,7 +22,7 @@ import { DataTablePagination } from './DataTablePagination';
 interface DataTableProps<TData, TValue> {
     columns: ColumnDef<TData, TValue>[];
     data: TData[];
-    pagination: Pagination;
+    pagination?: Pagination;
 }
 
 export function DataTable<TData, TValue>({
@@ -35,14 +35,16 @@ export function DataTable<TData, TValue>({
     const table = useReactTable({
         data,
         columns,
-        rowCount: pagination.total,
-        manualPagination: true,
+        rowCount: pagination ? pagination.total : data.length,
+        manualPagination: !!pagination,
         state: {
             sorting,
-            pagination: {
-                pageIndex: pagination.current_page - 1,
-                pageSize: pagination.per_page,
-            },
+            pagination: pagination
+                ? {
+                      pageIndex: pagination.current_page - 1,
+                      pageSize: pagination.per_page,
+                  }
+                : undefined,
         },
         onPaginationChange: (updater) => {
             const newPagination =
@@ -115,7 +117,7 @@ export function DataTable<TData, TValue>({
                     </TableBody>
                 </Table>
             </div>
-            <DataTablePagination table={table} />
+            {pagination && <DataTablePagination table={table} />}
         </div>
     );
 }
