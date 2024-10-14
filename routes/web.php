@@ -34,21 +34,6 @@ Route::controller(DashboardController::class)->prefix('dashboard')->name('dashbo
     Route::get('/export-admin', 'exportAdminData')->name('export.admin');
 });
 
-Route::get('/email/verify', function () {
-    return Inertia::render('Auth/VerifyEmail');
-})->middleware('auth')->name('verification.notice');
-
-Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $request) {
-    $request->fulfill();
-    return redirect()->route('dashboard.index');
-})->middleware(['auth', 'signed'])->name('verification.verify');
-
-Route::post('/email/verification-notification', function (Request $request) {
-    $request->user()->sendEmailVerificationNotification();
-    return back()->with('message', 'Link verifikasi telah dikirim!');
-})->middleware(['auth', 'throttle:6,1'])->name('verification.send');
-
-
 // === Sektor Routes Public ===
 Route::controller(SektorController::class)->prefix('sektor')->name('sektor.')->middleware('guest')->group(function () {
     Route::get('/', 'index')->name('index');
@@ -178,6 +163,21 @@ Route::prefix('dashboard')->name('dashboard.')->middleware(['auth', 'verified', 
         Route::get('/', 'index')->name('index');
         Route::post('/read', 'markAsRead')->name('read');
     });
+
+    // === Dashboard Email Routes ===
+    Route::get('/email/verify', function () {
+        return Inertia::render('Auth/VerifyEmail');
+    })->middleware('auth')->name('verification.notice');
+
+    Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $request) {
+        $request->fulfill();
+        return redirect()->route('dashboard.index');
+    })->middleware(['auth', 'signed'])->name('verification.verify');
+
+    Route::post('/email/verification-notification', function (Request $request) {
+        $request->user()->sendEmailVerificationNotification();
+        return back()->with('message', 'Link verifikasi telah dikirim!');
+    })->middleware(['auth', 'throttle:6,1'])->name('verification.send');
 });
 
 require __DIR__ . '/auth.php';
