@@ -10,11 +10,26 @@ use Illuminate\Support\Str;
 
 class DashboardSektorController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $sektors = Sektor::all();
+        $perPage = $request->input('perPage', 5);
+        $page = $request->input('page', 1);
+        $query = Sektor::select(['id', 'name', 'description']);
+
+        $sektors = $query->paginate($perPage, ['*'], 'page', $page);
+
         return Inertia::render('Dashboard/Sektor/index', [
-            'sektor' => $sektors
+            'data' => $sektors->items(),
+            'pagination' => [
+                'total' => $sektors->total(),
+                'per_page' => $sektors->perPage(),
+                'current_page' => $sektors->currentPage(),
+                'last_page' => $sektors->lastPage(),
+                'from' => $sektors->firstItem(),
+                'to' => $sektors->lastItem(),
+                'next_page_url' => $sektors->nextPageUrl(),
+                'prev_page_url' => $sektors->previousPageUrl(),
+            ],
         ]);
     }
 
