@@ -1,3 +1,5 @@
+import { BreadcrumbItem } from '@/Components/UI/Breadcrumbs';
+
 export interface User {
     id: string;
     full_name?: string;
@@ -59,4 +61,5 @@ export type PageProps<
     };
     data: TData;
     pagination: Pagination;
+    breadcrumbs: BreadcrumbItem[];
 };
