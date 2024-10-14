@@ -5,14 +5,10 @@ namespace Database\Seeders;
 use App\Enums\ProjectStatus;
 use App\Models\Project;
 use App\Models\Sektor;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class ProjectSeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     */
     public function run(): void
     {
             $sektors = Sektor::all();
@@ -40,6 +36,42 @@ class ProjectSeeder extends Seeder
                 'image' => 'proyek_pendidikan_c.jpg',
                 'lokasi_kecamatan' => 'Kecamatan C',
             ],
+            [
+                'title' => 'Proyek Pendidikan D',
+                'description' => 'Renovasi dan perluasan sekolah dasar di kecamatan D.',
+                'image' => 'proyek_pendidikan_c.jpg',
+                'lokasi_kecamatan' => 'Kecamatan D',
+            ],
+            [
+                'title' => 'Proyek Pendidikan E',
+                'description' => 'Renovasi dan perluasan sekolah dasar di kecamatan E.',
+                'image' => 'proyek_pendidikan_c.jpg',
+                'lokasi_kecamatan' => 'Kecamatan E',
+            ],
+            [
+                'title' => 'Proyek Pendidikan F',
+                'description' => 'Renovasi dan perluasan sekolah dasar di kecamatan F.',
+                'image' => 'proyek_pendidikan_c.jpg',
+                'lokasi_kecamatan' => 'Kecamatan F',
+            ],
+            [
+                'title' => 'Proyek Pendidikan G',
+                'description' => 'Renovasi dan perluasan sekolah dasar di kecamatan G.',
+                'image' => 'proyek_pendidikan_c.jpg',
+                'lokasi_kecamatan' => 'Kecamatan G',
+            ],
+            [
+                'title' => 'Proyek Pendidikan H',
+                'description' => 'Renovasi dan perluasan sekolah dasar di kecamatan H.',
+                'image' => 'proyek_pendidikan_c.jpg',
+                'lokasi_kecamatan' => 'Kecamatan H',
+            ],
+            [
+                'title' => 'Proyek Pendidikan I',
+                'description' => 'Renovasi dan perluasan sekolah dasar di kecamatan I.',
+                'image' => 'proyek_pendidikan_c.jpg',
+                'lokasi_kecamatan' => 'Kecamatan I',
+            ],
         ];
 
         foreach ($projects as $project) {
@@ -50,7 +82,5 @@ class ProjectSeeder extends Seeder
                 'sektor_id' => $sektors->random()->id,
             ]));
         }
-
-        $this->command->info('Berhasil membuat ' . count($projects) . ' proyek.');
     }
 }

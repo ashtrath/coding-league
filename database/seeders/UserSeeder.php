@@ -3,15 +3,11 @@
 namespace Database\Seeders;
 
 use App\Models\User;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
 
 class UserSeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     */
     public function run(): void
     {
         User::create([
@@ -30,7 +26,16 @@ class UserSeeder extends Seeder
             'password' => Hash::make('rahadian123'),
             'description' => 'Testing',
             'image' => 'rahadian.jpg',
-            'first_time_user' => false,
+            'first_time_user' => true,
+            'email_verified_at' => now(),
+        ]);
+        User::create([
+            'full_name' => 'Muhammad Noval',
+            'email' => 'muhammadnoval@example.com',
+            'password' => Hash::make('noval123'),
+            'description' => 'Testing',
+            'image' => 'noval.jpg',
+            'first_time_user' => true,
             'email_verified_at' => now(),
         ]);
         User::create([
@@ -57,15 +62,6 @@ class UserSeeder extends Seeder
             'password' => Hash::make('agis123'),
             'description' => 'Testing',
             'image' => 'agisseptian.jpg',
-            'first_time_user' => true,
-            'email_verified_at' => now(),
-        ]);
-        User::create([
-            'full_name' => 'Muhammad Noval',
-            'email' => 'muhammadnoval@example.com',
-            'password' => Hash::make('noval123'),
-            'description' => 'Testing',
-            'image' => 'noval.jpg',
             'first_time_user' => true,
             'email_verified_at' => now(),
         ]);

@@ -9,21 +9,42 @@ use App\Models\Sektor;
 use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
 use App\Exports\ProjectExport;
+use Illuminate\Support\Facades\DB;
 use Maatwebsite\Excel\Facades\Excel;
 
 
 class DashboardProjectController extends Controller
 {
-    public function index()
+
+    public function index(Request $request)
     {
-        $projects = Project::with('sektor')->get();
-        return Inertia::render('Dashboard/Project/Index', ['project' => $projects]);
+        $perPage = $request->input('perPage', 5);
+        $page = $request->input('page', 1);
+        $query = Project::select(['id', 'title', 'description', 'image', 'lokasi_kecamatan', 'tanggal_awal', 'tanggal_akhir', 'tanggal_diterbitkan', 'status', 'sektor_id',]);
+
+        $projects = $query->paginate($perPage, ['*'], 'page', $page);
+
+        return Inertia::render('Dashboard/Project/index', [
+            'data' => $projects->items(),
+            'pagination' => [
+                'total' => $projects->total(),
+                'per_page' => $projects->perPage(),
+                'current_page' => $projects->currentPage(),
+                'last_page' => $projects->lastPage(),
+                'from' => $projects->firstItem(),
+                'to' => $projects->lastItem(),
+                'next_page_url' => $projects->nextPageUrl(),
+                'prev_page_url' => $projects->previousPageUrl(),
+            ],
+        ]);
     }
 
     public function create()
     {
         $sektors = Sektor::all();
-        return Inertia::render('Dashboard/Project/Create', ['sektor' => $sektors]);
+        return Inertia::render('Dashboard/Project/create', [
+            'sektor' => $sektors,
+        ]);
     }
 
     public function store(Request $request)
@@ -38,17 +59,21 @@ class DashboardProjectController extends Controller
             'sektor_id' => 'required|exists:sektors.id',
         ]);
 
-        $imagePath = $request->file('image')->store('image_project', 'public');
+        DB::transaction(function () use ($request) {
+            $this->ensureProjectImageFolderExists();
 
-        Project::create([
-            'title' => $request->title,
-            'description' => $request->description,
-            'image' => $imagePath,
-            'lokasi_kecamatan' => $request->lokasi_kecamatan,
-            'tanggal_awal' => $request->tanggal_awal,
-            'tanggal_akhir' => $request->tanggal_akhir,
-            'sektor_id' => $request->sektor_id,
-        ]);
+            $imagePath = $request->file('image')->store($this->projectImageFolder, 'public');
+
+            Project::create([
+                'title' => $request->title,
+                'description' => $request->description,
+                'image' => $imagePath,
+                'lokasi_kecamatan' => $request->lokasi_kecamatan,
+                'tanggal_awal' => $request->tanggal_awal,
+                'tanggal_akhir' => $request->tanggal_akhir,
+                'sektor_id' => $request->sektor_id,
+            ]);
+        });
 
         return redirect()->route('dashboard.project.index')->with('success', 'Project Berhasil Dibuat.');
     }
@@ -57,7 +82,7 @@ class DashboardProjectController extends Controller
     {
         $project->load('sektor');
 
-        return Inertia::render('Dashboard/Project/Show', [
+        return Inertia::render('Dashboard/Project/show', [
             'project' => $project
         ]);
     }
@@ -65,7 +90,7 @@ class DashboardProjectController extends Controller
     public function edit(Project $project)
     {
         $sektors = Sektor::all();
-        return Inertia::render('Dashboard/Project/Edit', [
+        return Inertia::render('Dashboard/Project/edit', [
             'project' => $project,
             'sektors' => $sektors
         ]);
@@ -82,17 +107,22 @@ class DashboardProjectController extends Controller
             'tanggal_akhir' => 'required|date|after:tanggal_awal',
             'sektor_id' => 'required|exists:sektors.id',
         ]);
+        DB::transaction(function () use ($request, $project) {
+            $data = $request->except('image');
 
-        $data = $request->except('image');
+            if ($request->hasFile('image')) {
+                $this->ensureProjectImageFolderExists();
 
-        if ($request->hasFile('image')) {
-            Storage::disk('public')->delete($project->image);
-            $imagePath = $request->file('image')->store('image_project', 'public');
-            $data['image'] = $imagePath;
-        }
+                if ($project->image) {
+                    Storage::disk('public')->delete($project->image);
+                }
 
-        $project->update($data);
+                $imagePath = $request->file('image')->store($this->projectImageFolder, 'public');
+                $data['image'] = $imagePath;
+            }
 
+            $project->update($data);
+        });
         return redirect()->route('dashboard.project.index')->with('success', 'Project Berhasil Diperbaharui.');
     }
 

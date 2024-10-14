@@ -9,9 +9,6 @@ use Illuminate\Database\Seeder;
 
 class MitraSeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     */
     public function run(): void
     {
         $users = User::where('role', 'Mitra')->get();

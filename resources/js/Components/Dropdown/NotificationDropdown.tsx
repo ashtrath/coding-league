@@ -42,7 +42,7 @@ const NotificationDropdown = () => {
                         <h3 className="text-sm font-semibold text-gray-900">
                             Laporan Pengadaan Perkakas Masak untuk Desa
                         </h3>
-                        <p className="text-sm text-gray-500">Mitra KONTOL</p>
+                        <p className="text-sm text-gray-500">Mitra</p>
                     </Link>
                 </section>
             </DropdownMenuContent>

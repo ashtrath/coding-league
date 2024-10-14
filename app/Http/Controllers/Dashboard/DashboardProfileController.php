@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Dashboard;
 
+use App\Http\Controllers\Controller;
 use App\Http\Requests\ProfileUpdateRequest;
-use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
 use Inertia\Response;
 
-class ProfileController extends Controller
+class DashboardProfileController extends Controller
 {
     /**
      * Display the user's profile form.
@@ -33,16 +33,21 @@ class ProfileController extends Controller
 
         $validated = $request->validated();
 
-        if (!file_exists(public_path('profile_image'))) {
-            mkdir(public_path('profile_image'), 0755, true);
+        $folderPath = 'profile_images';
+        if (!Storage::disk('public')->exists($folderPath)) {
+            Storage::disk('public')->makeDirectory($folderPath);
+        }
+
+        if (!file_exists(public_path('profile_images'))) {
+            mkdir(public_path('profile_images'), 0755, true);
         }
 
         if ($request->hasFile('image')) {
             if ($user->image) {
-                Storage::disk('public')->delete('profile_image/', $user->image);
+                Storage::disk('public')->delete('profile_images/', $user->image);
             }
 
-            $imagePath = $request->file('image')->store('profile_image', 'public');
+            $imagePath = $request->file('image')->store('profile_images', 'public');
             $validated['image'] = $imagePath;
         }
 
@@ -70,7 +75,7 @@ class ProfileController extends Controller
 
         Auth::logout();
 
-        if($user->image) {
+        if ($user->image) {
             Storage::disk('public')->delete('profile_image/', $user->image);
         }
 

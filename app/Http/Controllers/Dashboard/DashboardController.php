@@ -166,11 +166,17 @@ class DashboardController extends Controller
             ->with('sektor:id,name')
             ->get();
 
-        $adminRealisasiMitra = Mitra::select('name_company', DB::raw('SUM(anggaran_realisasi) as total_realisasi'))->groupBy('name_company')->get();
+        $adminRealisasiMitra = Laporan::join('mitras', 'laporans.mitra_id', '=', 'mitras.id')
+        ->select('mitras.name_company', DB::raw('SUM(laporans.anggaran_realisasi) as total_realisasi'))
+        ->groupBy('mitras.name_company')
+        ->get();
+        
 
-        $adminRealisasiLokasi = Laporan::select('lokasi_kecamatan', DB::raw('SUM(anggaran_realisasi) as total_realisasi'))
-            ->groupBy('lokasi_kecamatan')
-            ->get();
+        $adminRealisasiLokasi = Laporan::join('projects', 'laporans.project_id', '=', 'projects.id')
+        ->select('projects.lokasi_kecamatan', DB::raw('SUM(laporans.anggaran_realisasi) as total_realisasi'))
+        ->groupBy('projects.lokasi_kecamatan')
+        ->get();
+
 
         return Excel::download(new AdminDashboardExport($totalAdminProjectCount, $adminProjectTerealisasiCount, $adminTotalMitra, $totalAdminRealisasi, $adminSektorRealisasi, $adminRealisasiMitra, $adminRealisasiLokasi), 'admin_dashboard_data.xlsx');
     }
