@@ -12,7 +12,7 @@ class DashboardSektorController extends Controller
 {
     public function index(Request $request)
     {
-        $perPage = $request->input('perPage', 5);
+        $perPage = $request->input('per_page', 5);
         $page = $request->input('page', 1);
         $query = Sektor::select(['id', 'name', 'description']);
 
