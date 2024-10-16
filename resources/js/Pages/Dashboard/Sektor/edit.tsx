@@ -2,8 +2,9 @@ import EditSektorForm from '@/Components/Form/EditSektorForm';
 import DashboardLayout from '@/Layouts/DashboardLayout';
 import { PageProps } from '@/types';
 import { Head } from '@inertiajs/react';
+import { Sektor } from '.';
 
-const EditSektor = ({ data }: PageProps) => {
+const EditSektor = ({ data }: PageProps<{ data: Sektor[] }>) => {
     return (
         <DashboardLayout>
             <Head title="Ubah Data Sektor" />

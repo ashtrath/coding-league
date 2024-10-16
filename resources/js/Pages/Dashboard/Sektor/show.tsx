@@ -3,11 +3,19 @@ import Breadcrumbs from '@/Components/UI/Breadcrumbs';
 import Button from '@/Components/UI/Button';
 import Footer from '@/Components/UI/Footer';
 import Navbar from '@/Components/UI/Navbar';
-import { type PageProps, type Sektor } from '@/types';
+import { type PageProps } from '@/types';
 import { Head, Link } from '@inertiajs/react';
 import { RiPencilLine } from '@remixicon/react';
+import { Sektor } from '.';
 
-const ShowSektor = ({ data }: PageProps<Sektor[]>) => {
+interface SektorDetail extends Sektor {
+    projects: {
+        id: string;
+        title: string;
+        description: string;
+    };
+}
+const ShowSektor = ({ data }: PageProps<{ data: SektorDetail }>) => {
     return (
         <>
             <Head title="Sektor" />

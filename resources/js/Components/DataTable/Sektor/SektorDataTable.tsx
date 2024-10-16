@@ -1,4 +1,5 @@
-import { PageProps, Sektor } from '@/types';
+import { Sektor } from '@/Pages/Dashboard/Sektor';
+import { PageProps, Pagination } from '@/types';
 import { Link } from '@inertiajs/react';
 import {
     RiArrowDownLine,
@@ -11,7 +12,10 @@ import { useMemo } from 'react';
 import Button from '../../UI/Button';
 import { DataTable } from '../../UI/DataTable';
 
-const SektorDataTable = ({ data, pagination }: PageProps) => {
+const SektorDataTable = ({
+    data,
+    pagination,
+}: PageProps<{ data: Sektor[]; pagination: Pagination }>) => {
     const columns = useMemo<ColumnDef<Sektor>[]>(
         () => [
             {

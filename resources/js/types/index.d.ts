@@ -19,13 +19,6 @@ export interface Mitra {
     status: 'Active' | 'Inactive';
 }
 
-export interface Sektor {
-    id: string;
-    image?: string;
-    name: string;
-    description?: string;
-}
-
 export interface Analytics {
     total_project: number;
     total_project_terealisasi: number;
@@ -54,12 +47,10 @@ export interface Pagination {
 }
 
 export type PageProps<
-    TData extends Record<string, unknown> = Record<string, unknown>,
+    T extends Record<string, unknown> = Record<string, unknown>,
 > = T & {
-    auth: {
+    auth?: {
         user: User;
     };
-    data: TData;
-    pagination: Pagination;
-    breadcrumbs: BreadcrumbItem[];
+    breadcrumbs?: BreadcrumbItem[];
 };

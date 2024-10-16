@@ -1,11 +1,21 @@
 import SektorDataTable from '@/Components/DataTable/Sektor/SektorDataTable';
 import Button from '@/Components/UI/Button';
 import DashboardLayout from '@/Layouts/DashboardLayout';
-import { PageProps, Sektor } from '@/types';
+import { PageProps, Pagination } from '@/types';
 import { Head, Link } from '@inertiajs/react';
 import { RiAddLine } from '@remixicon/react';
 
-const DashboardSektor = ({ data, pagination }: PageProps<Sektor[]>) => {
+export interface Sektor {
+    id: string;
+    image?: string;
+    name: string;
+    description?: string;
+}
+
+const DashboardSektor = ({
+    data,
+    pagination,
+}: PageProps<{ data: Sektor[]; pagination?: Pagination }>) => {
     return (
         <DashboardLayout>
             <Head title="Sektor" />

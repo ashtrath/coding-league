@@ -1,5 +1,4 @@
 import { cn } from '@/lib/utils';
-import { PageProps } from '@/types';
 import { Link, usePage } from '@inertiajs/react';
 import { RiArrowRightSLine, RiHome6Line } from '@remixicon/react';
 import { Fragment } from 'react/jsx-runtime';
@@ -15,7 +14,7 @@ interface BreadcrumbsProps {
 }
 
 const Breadcrumbs = ({ color }: BreadcrumbsProps) => {
-    const { breadcrumbs }: PageProps = usePage().props;
+    const { breadcrumbs } = usePage().props;
 
     return (
         <ol className="flex min-w-0 items-center gap-2 whitespace-nowrap text-sm font-medium">
