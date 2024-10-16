@@ -12,14 +12,14 @@ import {
 import ProfileImage from '../UI/ProfileImage';
 
 const ProfileDropdown = () => {
-    const user = usePage().props.auth.user;
+    const user = usePage().props.auth?.user;
 
     return (
         <DropdownMenu>
             <DropdownMenuTrigger asChild>
                 <div className="flex items-center gap-1">
                     <ProfileImage
-                        src={`storage/${user.image}`}
+                        src={`storage/${user?.image}`}
                         className="peer order-2"
                     />
                     <Button
@@ -28,10 +28,10 @@ const ProfileDropdown = () => {
                     >
                         <div className="text-right">
                             <p className="font-medium leading-none text-gray-900">
-                                {user.full_name ?? user.email}
+                                {user?.full_name ?? user?.email}
                             </p>
                             <p className="font-normal text-gray-500">
-                                {user.role}
+                                {user?.role}
                             </p>
                         </div>
                     </Button>
@@ -39,12 +39,12 @@ const ProfileDropdown = () => {
             </DropdownMenuTrigger>
             <DropdownMenuContent className="w-52">
                 <DropdownMenuLabel>
-                    {user.full_name ?? user.email}
+                    {user?.full_name ?? user?.email}
                 </DropdownMenuLabel>
                 <DropdownMenuSeparator />
                 <DropdownMenuItem asChild>
                     <Link
-                        href={route('profile.index', user.id)}
+                        href={route('profile.index', user?.id)}
                         className="w-full"
                     >
                         <RiUser3Line className="mr-2 size-4" />
