@@ -7,15 +7,13 @@ const DropdownMenuTrigger = DropdownPrimitive.Trigger;
 
 const DropdownMenuGroup = DropdownPrimitive.Group;
 
-const DropdownMenuPortal = DropdownPrimitive.Portal;
-
 const DropdownMenuContent = ({
     className,
     sideOffset = 4,
     ...props
 }: DropdownPrimitive.DropdownMenuContentProps) => {
     return (
-        <DropdownMenuPortal>
+        <DropdownPrimitive.Portal>
             <DropdownPrimitive.Content
                 sideOffset={sideOffset}
                 className={cn(
@@ -24,7 +22,7 @@ const DropdownMenuContent = ({
                 )}
                 {...props}
             />
-        </DropdownMenuPortal>
+        </DropdownPrimitive.Portal>
     );
 };
 
@@ -80,8 +78,6 @@ export {
     DropdownMenuGroup,
     DropdownMenuItem,
     DropdownMenuLabel,
-    DropdownMenuPortal,
     DropdownMenuSeparator,
-    DropdownMenuTrigger
+    DropdownMenuTrigger,
 };
-
