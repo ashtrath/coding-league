@@ -1,18 +1,14 @@
 import { Link } from '@inertiajs/react';
+import { PopoverClose } from '@radix-ui/react-popover';
 import { RiCloseLine, RiNotification3Line } from '@remixicon/react';
 import Badge from '../UI/Badge';
 import Button from '../UI/Button';
-import {
-    DropdownMenu,
-    DropdownMenuContent,
-    DropdownMenuLabel,
-    DropdownMenuTrigger,
-} from '../UI/Dropdown';
+import { Popover, PopoverContent, PopoverTrigger } from '../UI/Popover';
 
 const NotificationDropdown = () => {
     return (
-        <DropdownMenu>
-            <DropdownMenuTrigger asChild>
+        <Popover>
+            <PopoverTrigger asChild>
                 <Button variant="ghost" size="icon" className="relative">
                     <RiNotification3Line className="size-6" />
                     <span className="absolute right-0 top-0 -mr-1 -mt-1 flex size-5">
@@ -22,17 +18,19 @@ const NotificationDropdown = () => {
                         </span>
                     </span>
                 </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent
+            </PopoverTrigger>
+            <PopoverContent
                 sideOffset={35}
                 className="mr-24 size-[500px] space-y-4 rounded-xl"
             >
-                <DropdownMenuLabel className="flex items-center justify-between px-5 pt-4 text-xl font-semibold">
+                <div className="flex items-center justify-between px-5 pt-4 text-xl font-semibold">
                     Notifikasi
-                    <Button variant="ghost" size="icon">
-                        <RiCloseLine className="size-6" />
-                    </Button>
-                </DropdownMenuLabel>
+                    <PopoverClose asChild>
+                        <Button variant="ghost" size="icon">
+                            <RiCloseLine className="size-6" />
+                        </Button>
+                    </PopoverClose>
+                </div>
                 <section className="max-h-full space-y-4 overflow-y-auto px-5 pb-24">
                     <Link
                         href="/"
@@ -45,8 +43,8 @@ const NotificationDropdown = () => {
                         <p className="text-sm text-gray-500">Mitra</p>
                     </Link>
                 </section>
-            </DropdownMenuContent>
-        </DropdownMenu>
+            </PopoverContent>
+        </Popover>
     );
 };
 
