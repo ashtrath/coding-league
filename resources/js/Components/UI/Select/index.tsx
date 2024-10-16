@@ -133,6 +133,5 @@ export {
     SelectScrollDownButton,
     SelectScrollUpButton,
     SelectTrigger,
-    SelectValue
+    SelectValue,
 };
-
