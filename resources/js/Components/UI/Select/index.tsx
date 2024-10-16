@@ -1,24 +1,24 @@
 import { cn } from '@/lib/utils';
-import * as RadixUISelect from '@radix-ui/react-select';
+import * as SelectPrimitive from '@radix-ui/react-select';
 import {
     RiArrowDownSLine,
     RiArrowUpSLine,
     RiCheckLine,
 } from '@remixicon/react';
 
-const Select = RadixUISelect.Root;
+const Select = SelectPrimitive.Root;
 
-const SelectGroup = RadixUISelect.Group;
+const SelectGroup = SelectPrimitive.Group;
 
-const SelectValue = RadixUISelect.Value;
+const SelectValue = SelectPrimitive.Value;
 
 const SelectTrigger = ({
     className,
     children,
     ...props
-}: RadixUISelect.SelectTriggerProps) => {
+}: SelectPrimitive.SelectTriggerProps) => {
     return (
-        <RadixUISelect.Trigger
+        <SelectPrimitive.Trigger
             className={cn(
                 'flex h-[44px] w-full items-center justify-between rounded-lg border border-gray-300 bg-white px-4 py-2.5 text-left text-sm font-medium text-gray-900 shadow-sm placeholder:text-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 [&>span]:line-clamp-1',
                 className,
@@ -26,19 +26,19 @@ const SelectTrigger = ({
             {...props}
         >
             {children}
-            <RadixUISelect.Icon asChild>
+            <SelectPrimitive.Icon asChild>
                 <RiArrowDownSLine className="size-6 text-gray-600" />
-            </RadixUISelect.Icon>
-        </RadixUISelect.Trigger>
+            </SelectPrimitive.Icon>
+        </SelectPrimitive.Trigger>
     );
 };
 
 const SelectScrollUpButton = ({
     className,
     ...props
-}: RadixUISelect.SelectScrollUpButtonProps) => {
+}: SelectPrimitive.SelectScrollUpButtonProps) => {
     return (
-        <RadixUISelect.ScrollUpButton
+        <SelectPrimitive.ScrollUpButton
             className={cn(
                 'flex cursor-default items-center justify-center py-1',
                 className,
@@ -46,16 +46,16 @@ const SelectScrollUpButton = ({
             {...props}
         >
             <RiArrowUpSLine className="size-4" />
-        </RadixUISelect.ScrollUpButton>
+        </SelectPrimitive.ScrollUpButton>
     );
 };
 
 const SelectScrollDownButton = ({
     className,
     ...props
-}: RadixUISelect.SelectScrollDownButtonProps) => {
+}: SelectPrimitive.SelectScrollDownButtonProps) => {
     return (
-        <RadixUISelect.ScrollDownButton
+        <SelectPrimitive.ScrollDownButton
             className={cn(
                 'flex cursor-default items-center justify-center py-1',
                 className,
@@ -63,7 +63,7 @@ const SelectScrollDownButton = ({
             {...props}
         >
             <RiArrowDownSLine className="size-4" />
-        </RadixUISelect.ScrollDownButton>
+        </SelectPrimitive.ScrollDownButton>
     );
 };
 
@@ -72,10 +72,10 @@ const SelectContent = ({
     children,
     position = 'popper',
     ...props
-}: RadixUISelect.SelectContentProps) => {
+}: SelectPrimitive.SelectContentProps) => {
     return (
-        <RadixUISelect.Portal>
-            <RadixUISelect.Content
+        <SelectPrimitive.Portal>
+            <SelectPrimitive.Content
                 className={cn(
                     'relative z-50 max-h-96 min-w-[8rem] overflow-hidden rounded-md border border-gray-300 bg-white text-gray-900 shadow-md data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2',
                     position === 'popper' &&
@@ -86,7 +86,7 @@ const SelectContent = ({
                 {...props}
             >
                 <SelectScrollUpButton />
-                <RadixUISelect.Viewport
+                <SelectPrimitive.Viewport
                     className={cn(
                         'p-1',
                         position === 'popper' &&
@@ -94,10 +94,10 @@ const SelectContent = ({
                     )}
                 >
                     {children}
-                </RadixUISelect.Viewport>
+                </SelectPrimitive.Viewport>
                 <SelectScrollDownButton />
-            </RadixUISelect.Content>
-        </RadixUISelect.Portal>
+            </SelectPrimitive.Content>
+        </SelectPrimitive.Portal>
     );
 };
 
@@ -105,9 +105,9 @@ const SelectItem = ({
     className,
     children,
     ...props
-}: RadixUISelect.SelectItemProps) => {
+}: SelectPrimitive.SelectItemProps) => {
     return (
-        <RadixUISelect.Item
+        <SelectPrimitive.Item
             className={cn(
                 'relative flex w-full cursor-default select-none items-center rounded-sm py-1.5 pl-8 pr-2 text-sm outline-none focus:bg-gray-100 focus:text-gray-900 data-[disabled]:pointer-events-none data-[disabled]:opacity-50',
                 className,
@@ -115,13 +115,13 @@ const SelectItem = ({
             {...props}
         >
             <span className="absolute left-2 flex size-3.5 items-center justify-center">
-                <RadixUISelect.ItemIndicator>
+                <SelectPrimitive.ItemIndicator>
                     <RiCheckLine className="size-4" />
-                </RadixUISelect.ItemIndicator>
+                </SelectPrimitive.ItemIndicator>
             </span>
 
-            <RadixUISelect.ItemText>{children}</RadixUISelect.ItemText>
-        </RadixUISelect.Item>
+            <SelectPrimitive.ItemText>{children}</SelectPrimitive.ItemText>
+        </SelectPrimitive.Item>
     );
 };
 
@@ -133,5 +133,6 @@ export {
     SelectScrollDownButton,
     SelectScrollUpButton,
     SelectTrigger,
-    SelectValue,
+    SelectValue
 };
+
