@@ -19,4 +19,9 @@ class Tag extends Model
     {
         return $this->belongsToMany(Kegiatan::class);
     }
+
+    public function laporans()
+    {  
+        return $this->belongsToMany(Laporan::class, 'laporan_tag', 'tag_id', 'laporan_id');
+    }
 }
