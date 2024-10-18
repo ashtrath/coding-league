@@ -16,6 +16,7 @@ class Laporan extends Model
         'description',
         'anggaran_realisasi',
         'tanggal_realisasi',
+        'tanggal_diterbitkan',
         'lokasi_kecamatan',
         'mitra_id',
         'sektor_id',
@@ -40,5 +41,10 @@ class Laporan extends Model
     public function images()
     {
         return $this->hasMany(ImageLaporan::class);
+    }
+
+    public function tags()
+    {
+        return $this->belongsToMany(Tag::class, 'laporan_tag', 'laporan_id', 'tag_id');
     }
 }
