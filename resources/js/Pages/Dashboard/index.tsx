@@ -3,7 +3,6 @@ import PersentasiAnggaranSektorCSRChart from '@/Components/Chart/PersentasiAngga
 import RealisasiKecamatanCSR from '@/Components/Chart/RealisasiKecamatanCSR';
 import RealisasiPTCSR from '@/Components/Chart/RealisasiPTCSR';
 import RealisasiSektorCSR from '@/Components/Chart/RealisasiSektorCSR';
-import DashboardFilter from '@/Components/Select/DashboardFilter';
 import { Card, CardContent } from '@/Components/UI/Card';
 import MainDashboardLayout from '@/Layouts/MainDashboardLayout';
 import { formatCurrency } from '@/lib/utils';
@@ -16,18 +15,43 @@ import {
     RiVerifiedBadgeLine,
 } from '@remixicon/react';
 
+interface DashboardAnalytics {
+    chartData: {
+        sektor: {
+            name: string;
+            total_anggaran: number;
+            persentase: number;
+        }[];
+        mitra: {
+            name: string;
+            total_anggaran: number;
+            persentase: number;
+        }[];
+        kecamatan: {
+            name: string;
+            total_anggaran: number;
+            persentase: number;
+        }[];
+    };
+    analytics: {
+        total_project: number;
+        total_project_terealisasi: number;
+        total_anggaran_realisasi: number;
+        total_mitra?: number;
+    };
+}
+
 export default function Dashboard({
-    analytics,
-    anggaranSektorCSR,
-    anggaranMitrasCSR,
-    anggaranKecamatansCSR,
-}: PageProps) {
+    data,
+}: PageProps<{ data: DashboardAnalytics }>) {
+    console.log(data);
+    const { analytics, chartData } = data;
     return (
         <MainDashboardLayout>
             <Head title="Dashboard" />
 
             <section className="space-y-6">
-                <DashboardFilter />
+                {/* <DashboardFilter /> */}
                 <h2 className="text-[28px] font-semibold leading-[44px] tracking-tight text-gray-900">
                     Data Statistik
                 </h2>
@@ -74,27 +98,27 @@ export default function Dashboard({
                                 CSR
                             </h3>
                             <PersentasiAnggaranSektorCSRChart
-                                chartData={anggaranSektorCSR}
+                                chartData={chartData.sektor}
                             />
                         </div>
                         <div className="space-y-5">
                             <h3 className="whitespace-nowrap text-[22px] font-semibold leading-none tracking-tight">
                                 Total Realisasi Sektor CSR
                             </h3>
-                            <RealisasiSektorCSR chartData={anggaranSektorCSR} />
+                            <RealisasiSektorCSR chartData={chartData.sektor} />
                         </div>
                         <div className="space-y-5">
                             <h3 className="whitespace-nowrap text-[22px] font-semibold leading-none tracking-tight">
                                 Persentase Total Realisasi Berdasarkan PT
                             </h3>
-                            <RealisasiPTCSR chartData={anggaranMitrasCSR} />
+                            <RealisasiPTCSR chartData={chartData.mitra} />
                         </div>
                         <div className="space-y-5">
                             <h3 className="whitespace-nowrap text-[22px] font-semibold leading-none tracking-tight">
                                 Persentase Total Realisasi Berdasarkan Kecamatan
                             </h3>
                             <RealisasiKecamatanCSR
-                                chartData={anggaranKecamatansCSR}
+                                chartData={chartData.kecamatan}
                             />
                         </div>
                     </CardContent>
