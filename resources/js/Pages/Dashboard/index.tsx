@@ -42,6 +42,7 @@ interface DashboardAnalytics {
 }
 
 export default function Dashboard({
+    auth,
     data,
 }: PageProps<{ data: DashboardAnalytics }>) {
     const { analytics, chartData } = data;
@@ -68,12 +69,14 @@ export default function Dashboard({
                         value={analytics.total_project_terealisasi}
                         color="purple"
                     />
-                    <StatisticsCard
-                        icon={RiUser3Line}
-                        title="Mitra Bergabung"
-                        value={analytics.total_mitra}
-                        color="blue"
-                    />
+                    {auth?.user.role === 'Admin' && (
+                        <StatisticsCard
+                            icon={RiUser3Line}
+                            title="Mitra Bergabung"
+                            value={analytics.total_mitra ?? 0}
+                            color="blue"
+                        />
+                    )}
                     <StatisticsCard
                         icon={RiMoneyDollarCircleLine}
                         title="Total Dana Realisasi"
