@@ -4,13 +4,15 @@ namespace App\Repositories;
 
 use App\Enums\LaporanStatus;
 use App\Models\Laporan;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 
 class DashboardRepository
 {
     public function getAnggaranStatistics()
     {
-        $data = Laporan::select(
+        $data = Cache::remember('anggaran_statistics', 60, function () {
+            return Laporan::select(
                 'sektors.name as sektor_name',
                 'mitras.name_company as mitra_name',
                 'projects.lokasi_kecamatan as lokasi_kecamatan',
@@ -23,6 +25,7 @@ class DashboardRepository
             ->where('laporans.status', '=', LaporanStatus::Diterima->value) // Fully qualify the column
             ->groupBy('sektors.name', 'mitras.name_company', 'projects.lokasi_kecamatan')
             ->get();
+        });
 
         return [
             'sektor' => $this->getTopAndOthers($data->groupBy('sektor_name'), 6, 'sektor_name'),
@@ -33,37 +36,36 @@ class DashboardRepository
 
 
     private function getTopAndOthers($items, $topN, $groupKey)
-{
-    $i = 0;
-    $topItems = $items->map(function($group) use ($groupKey, &$i) {
-        $name = $group[0]->{$groupKey};
+    {
+        $topItems = $items->map(function($group) use ($groupKey) {
+            $name = $group[0]->{$groupKey};
 
-        return [
-            'name' => $name,
-            'total_anggaran' => $group->sum('total_anggaran'),
-            'persentase' => $group->sum('percentage'),
-        ];
-    })->sortByDesc('total_anggaran')->take($topN);
+            return [
+                'name' => $name,
+                'total_anggaran' => $group->sum('total_anggaran'),
+                'persentase' => $group->sum('percentage'),
+            ];
+        })->sortByDesc('total_anggaran')->take($topN);
 
-    $others = $items->slice($topN);
-    $totalOthers = $others->sum(function ($group) {
-        return $group->sum('total_anggaran');
-    });
-    $percentageOthers = $others->sum(function ($group) {
-        return $group->sum('percentage');
-    });
+        $others = $items->slice($topN);
+        $totalOthers = $others->sum(function ($group) {
+            return $group->sum('total_anggaran');
+        });
+        $percentageOthers = $others->sum(function ($group) {
+            return $group->sum('percentage');
+        });
 
-    $result = $topItems->values()->toArray();
+        $result = $topItems->values()->toArray();
 
-    if ($totalOthers > 0) {
-        $result[] = [
-            'name' => 'Lainnya',
-            'total_anggaran' => $totalOthers,
-            'persentase' => $percentageOthers,
-        ];
+        if ($totalOthers > 0) {
+            $result[] = [
+                'name' => 'Lainnya',
+                'total_anggaran' => $totalOthers,
+                'persentase' => $percentageOthers,
+            ];
+        }
+
+        return $result;
     }
-
-    return $result;
-}
 
 }
