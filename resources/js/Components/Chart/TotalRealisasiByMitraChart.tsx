@@ -1,6 +1,14 @@
 import { createChartConfig } from '@/lib/chart-helper';
 import { formatCurrency } from '@/lib/utils';
-import { Bar, BarChart, CartesianGrid, Cell, XAxis, YAxis } from 'recharts';
+import {
+    Bar,
+    BarChart,
+    CartesianGrid,
+    Cell,
+    LabelList,
+    XAxis,
+    YAxis,
+} from 'recharts';
 import { ChartContainer, ChartTooltip, ChartTooltipContent } from '../UI/Chart';
 
 interface TotalRealisasiByMitraChartProps {
@@ -20,6 +28,30 @@ const TotalRealisasiByMitraChart = ({
         total_anggaran: {
             label: 'Total Anggaran',
         },
+    };
+
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const CustomBarLabel = (props: any) => {
+        const { y, width, height, value, index } = props;
+
+        const endX = width - 8;
+        const middleY = y + height / 2;
+
+        return (
+            <g>
+                <text
+                    x={endX}
+                    y={middleY}
+                    fill="#fff"
+                    textAnchor="end"
+                    dominantBaseline="middle"
+                    className="text-xs"
+                >
+                    {chartData[index].name}:{' '}
+                    {formatCurrency(value, 'id-ID', 'IDR')}
+                </text>
+            </g>
+        );
     };
 
     return (
@@ -44,17 +76,11 @@ const TotalRealisasiByMitraChart = ({
                         />
                     }
                 />
-                <Bar
-                    dataKey="total_anggaran"
-                    label={{
-                        position: 'insideRight',
-                        formatter: (value: number) =>
-                            formatCurrency(value, 'id-ID', 'IDR'),
-                        fill: 'white',
-                        offset: 16,
-                    }}
-                    minPointSize={2}
-                >
+                <Bar data={chartData} dataKey="total_anggaran" minPointSize={5}>
+                    <LabelList
+                        dataKey="total_anggaran"
+                        content={<CustomBarLabel />}
+                    />
                     {chartData.map((entry, index) => (
                         <Cell
                             key={`cell-${index}`}

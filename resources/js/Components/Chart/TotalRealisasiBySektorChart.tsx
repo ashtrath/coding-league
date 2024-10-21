@@ -30,20 +30,27 @@ const TotalRealisasiBySektorChart = ({
         },
     };
 
-    const renderCustomizedLabel = (props) => {
-        const { x, y, width, height, index, value } = props;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const CustomBarLabel = (props: any) => {
+        const { y, width, height, value, index } = props;
 
-        const fireOffset = value.toString().length < 5;
-        const offset = fireOffset ? -40 : 5;
+        const endX = width - 8;
+        const middleY = y + height / 2;
+
         return (
-            <text
-                x={x + width - offset}
-                y={y + height - 18}
-                fill={fireOffset ? '#285A64' : '#fff'}
-                textAnchor="end"
-            >
-                {`${chartData[index].name}: ${formatCurrency(value, 'id-ID', 'IDR')}`}
-            </text>
+            <g>
+                <text
+                    x={endX}
+                    y={middleY}
+                    fill="#fff"
+                    textAnchor="end"
+                    dominantBaseline="middle"
+                    className="text-xs"
+                >
+                    {chartData[index].name}:{' '}
+                    {formatCurrency(value, 'id-ID', 'IDR')}
+                </text>
+            </g>
         );
     };
 
@@ -79,12 +86,10 @@ const TotalRealisasiBySektorChart = ({
                         />
                     }
                 />
-                <Bar dataKey="total_anggaran" type="number" minPointSize={2}>
+                <Bar data={chartData} dataKey="total_anggaran" minPointSize={5}>
                     <LabelList
                         dataKey="total_anggaran"
-                        position="insideRight"
-                        fill="white"
-                        content={renderCustomizedLabel}
+                        content={<CustomBarLabel />}
                     />
                     {chartData.map((entry, index) => (
                         <Cell
