@@ -3,6 +3,7 @@ import PersentaseAnggaranBySektorChart from '@/Components/Chart/PersentaseAnggar
 import TotalRealisasiByKecamatanChart from '@/Components/Chart/TotalRealisasiByKecamatanChart';
 import TotalRealisasiByMitraChart from '@/Components/Chart/TotalRealisasiByMitraChart';
 import TotalRealisasiBySektorChart from '@/Components/Chart/TotalRealisasiBySektorChart';
+import DashboardFilter from '@/Components/Select/DashboardFilter';
 import { Card, CardContent } from '@/Components/UI/Card';
 import MainDashboardLayout from '@/Layouts/MainDashboardLayout';
 import { formatCurrency } from '@/lib/utils';
@@ -52,7 +53,7 @@ export default function Dashboard({
             <Head title="Dashboard" />
 
             <section className="space-y-6">
-                {/* <DashboardFilter /> */}
+                <DashboardFilter />
                 <h2 className="text-[28px] font-semibold leading-[44px] tracking-tight text-gray-900">
                     Data Statistik
                 </h2>

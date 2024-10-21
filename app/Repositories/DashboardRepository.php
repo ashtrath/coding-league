@@ -4,11 +4,21 @@ namespace App\Repositories;
 
 use App\Enums\LaporanStatus;
 use App\Models\Laporan;
+use App\Models\Mitra;
+use App\Models\Sektor;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 
 class DashboardRepository
 {
+    public function getFilterOption()
+    {
+        $sektor = Sektor::select(['id', 'name'])->get();
+        $mitra = Mitra::select(['id', 'name_mitra', 'name_company'])->get();
+
+        return compact('sektor', 'mitra');
+    }
+
     public function getAnggaranStatistics()
     {
         $data = Cache::remember('anggaran_statistics', 60, function () {

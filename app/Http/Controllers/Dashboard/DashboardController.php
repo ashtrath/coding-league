@@ -36,12 +36,17 @@ class DashboardController extends Controller
             $analytics->put('total_mitra', Mitra::where('status', MitraStatus::Active->value)->count());
         }
 
+        // Chart Data
         $chartData = $dashboardRepository->getAnggaranStatistics();
+
+        // Filter
+        $filter = $dashboardRepository->getFilterOption();
 
         return Inertia::render('Dashboard/index', [
             'data' => [
                 'chartData' => $chartData,
-                'analytics' => $analytics
+                'analytics' => $analytics,
+                'filter' => $filter,
             ]
         ]);
     }
