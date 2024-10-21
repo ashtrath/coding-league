@@ -23,9 +23,7 @@ interface FilterProps {
 }
 
 const DashboardFilter = () => {
-    const { data }: PageProps<{ data: FilterProps }> = usePage().props;
-
-    console.log(data);
+    const { data } = usePage<PageProps<{ data: FilterProps }>>().props;
     const { filter } = data;
 
     const currentYear = new Date().getFullYear();

@@ -4,7 +4,7 @@ import { PageProps } from '@/types';
 import { Head } from '@inertiajs/react';
 import { Sektor } from '.';
 
-const EditSektor = ({ data }: PageProps<{ data: Sektor[] }>) => {
+const EditSektor = ({ data }: PageProps<{ data: Sektor }>) => {
     return (
         <DashboardLayout>
             <Head title="Ubah Data Sektor" />

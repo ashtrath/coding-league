@@ -18,7 +18,7 @@ const Breadcrumbs = ({ color }: BreadcrumbsProps) => {
 
     return (
         <ol className="flex min-w-0 items-center gap-2 whitespace-nowrap text-sm font-medium">
-            {breadcrumbs.map((breadcrumb, index) => (
+            {breadcrumbs?.map((breadcrumb, index) => (
                 <Fragment key={index}>
                     <li key={index}>
                         {breadcrumb.current ? (

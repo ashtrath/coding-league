@@ -15,7 +15,7 @@ export interface Sektor {
 const DashboardSektor = ({
     data,
     pagination,
-}: PageProps<{ data: Sektor[]; pagination?: Pagination }>) => {
+}: PageProps<{ data: Sektor[]; pagination: Pagination }>) => {
     return (
         <DashboardLayout>
             <Head title="Sektor" />
