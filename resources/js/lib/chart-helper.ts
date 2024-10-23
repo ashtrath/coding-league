@@ -7,7 +7,11 @@ export const createChartConfig = <T extends Record<string, any>>(
     const chartConfig: ChartConfig = {};
 
     data.forEach((item, index) => {
-        chartConfig[String(item[nameKey])] = {
+        const formattedKey = String(item[nameKey])
+            .toLowerCase()
+            .replace(/\s+/g, '_');
+
+        chartConfig[formattedKey] = {
             label: String(item[nameKey]),
             color: `var(--chart-${index + 1})`,
         };
