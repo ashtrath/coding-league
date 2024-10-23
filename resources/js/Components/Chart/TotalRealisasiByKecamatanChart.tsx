@@ -25,6 +25,7 @@ const TotalRealisasiByKecamatanChart = ({
     let chartConfig = createChartConfig(chartData, 'name');
 
     chartConfig = {
+        ...chartConfig,
         total_anggaran: {
             label: 'Total Anggaran',
         },
