@@ -34,6 +34,9 @@ export function DataTable<TData>({
                                         <TableHead
                                             key={header.id}
                                             colSpan={header.colSpan}
+                                            style={{
+                                                width: `${header.getSize()}px`,
+                                            }}
                                         >
                                             {header.isPlaceholder
                                                 ? null
