@@ -1,9 +1,15 @@
 import Button from '@/Components/UI/Button';
 import { DataTable } from '@/Components/UI/DataTable';
-import { PageProps } from '@/types';
+import { type PageProps } from '@/types';
 import { RiArrowDownLine, RiArrowUpLine } from '@remixicon/react';
-import { ColumnDef } from '@tanstack/react-table';
-import { useMemo } from 'react';
+import {
+    getCoreRowModel,
+    getSortedRowModel,
+    useReactTable,
+    type ColumnDef,
+    type SortingState,
+} from '@tanstack/react-table';
+import { useMemo, useState } from 'react';
 
 interface Project {
     id: string;
@@ -65,7 +71,21 @@ const ProgramDataTable = ({ data }: PageProps<{ data: Project[] }>) => {
         [],
     );
 
-    return <DataTable columns={columns} data={data} />;
+    const [sorting, setSorting] = useState<SortingState>([]);
+
+    const table = useReactTable({
+        data,
+        columns,
+        rowCount: data.length,
+        state: {
+            sorting,
+        },
+        onSortingChange: setSorting,
+        getCoreRowModel: getCoreRowModel(),
+        getSortedRowModel: getSortedRowModel(),
+    });
+
+    return <DataTable table={table} />;
 };
 
 export default ProgramDataTable;

@@ -27,7 +27,7 @@ export function DataTablePagination<TData>({
     const endIndex = Math.min((pageIndex + 1) * pageSize, rowCount);
 
     return (
-        <div className="flex items-center justify-between rounded-xl rounded-t-none border border-gray-300 bg-white px-6 pb-4 pt-3 text-gray-900 shadow-md">
+        <div className="flex items-center justify-between rounded-xl rounded-t-none border-t-2 border-gray-300 bg-white px-6 pb-4 pt-3 text-gray-900">
             <div className="flex items-center gap-4">
                 <p className="text-sm font-medium text-gray-600">
                     Tampilkan Data

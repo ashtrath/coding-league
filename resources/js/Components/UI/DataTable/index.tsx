@@ -1,14 +1,6 @@
-import { Pagination } from '@/types';
-import { router } from '@inertiajs/react';
-import {
-    ColumnDef,
-    flexRender,
-    getCoreRowModel,
-    getSortedRowModel,
-    SortingState,
-    useReactTable,
-} from '@tanstack/react-table';
-import { useState } from 'react';
+import { cn } from '@/lib/utils';
+import { flexRender, type Table as TanstackTable } from '@tanstack/react-table';
+import { type HTMLAttributes } from 'react';
 import {
     Table,
     TableBody,
@@ -19,59 +11,30 @@ import {
 } from '../Table';
 import { DataTablePagination } from './DataTablePagination';
 
-interface DataTableProps<TData, TValue> {
-    columns: ColumnDef<TData, TValue>[];
-    data: TData[];
-    pagination?: Pagination;
+interface DataTableProps<TData> extends HTMLAttributes<HTMLDivElement> {
+    table: TanstackTable<TData>;
 }
 
-export function DataTable<TData, TValue>({
-    data,
-    columns,
-    pagination,
-}: DataTableProps<TData, TValue>) {
-    const [sorting, setSorting] = useState<SortingState>([]);
-
-    const table = useReactTable({
-        data,
-        columns,
-        rowCount: pagination ? pagination.total : data.length,
-        manualPagination: !!pagination,
-        state: {
-            sorting,
-            pagination: pagination
-                ? {
-                      pageIndex: pagination.current_page - 1,
-                      pageSize: pagination.per_page,
-                  }
-                : undefined,
-        },
-        onPaginationChange: (updater) => {
-            const newPagination =
-                typeof updater === 'function'
-                    ? updater(table.getState().pagination)
-                    : updater;
-
-            router.get(window.location.href, {
-                page: newPagination.pageIndex + 1,
-                per_page: newPagination.pageSize,
-            });
-        },
-        onSortingChange: setSorting,
-        getCoreRowModel: getCoreRowModel(),
-        getSortedRowModel: getSortedRowModel(),
-    });
-
+export function DataTable<TData>({
+    table,
+    children,
+    className,
+    ...props
+}: DataTableProps<TData>) {
     return (
-        <div>
-            <div className="overflow-hidden rounded-xl rounded-b-none border border-gray-300 bg-white shadow-md">
+        <div className={cn('w-full space-y-6', className)} {...props}>
+            {children}
+            <div className="overflow-hidden rounded-xl border border-gray-300 bg-white shadow-md">
                 <Table>
                     <TableHeader>
                         {table.getHeaderGroups().map((headerGroup) => (
                             <TableRow key={headerGroup.id}>
                                 {headerGroup.headers.map((header) => {
                                     return (
-                                        <TableHead key={header.id}>
+                                        <TableHead
+                                            key={header.id}
+                                            colSpan={header.colSpan}
+                                        >
                                             {header.isPlaceholder
                                                 ? null
                                                 : flexRender(
@@ -107,17 +70,19 @@ export function DataTable<TData, TValue>({
                         ) : (
                             <TableRow>
                                 <TableCell
-                                    colSpan={columns.length}
+                                    colSpan={table.getAllColumns().length}
                                     className="h-24 text-center font-medium text-gray-900"
                                 >
-                                    No results.
+                                    Tidak ada data yang ditemukan.
                                 </TableCell>
                             </TableRow>
                         )}
                     </TableBody>
                 </Table>
+                {table.getPageCount() > 1 && (
+                    <DataTablePagination table={table} />
+                )}
             </div>
-            {pagination && <DataTablePagination table={table} />}
         </div>
     );
 }
