@@ -9,18 +9,18 @@ use App\Enums\ProjectStatus;
 use App\Models\Mitra;
 use App\Models\Laporan;
 use App\Models\Project;
-use App\Models\Sektor;
 use Inertia\Inertia;
 use Illuminate\Support\Facades\DB;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Exports\DashboardExport;
 use App\Exports\AdminDashboardExport;
+use App\Repositories\DashboardRepository;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class DashboardController extends Controller
 {
-    // Data Statistik
-    public function index()
+    public function index(Request $request, DashboardRepository $dashboardRepository)
     {
         // Analytics
         $total_project = Project::where('status', ProjectStatus::Terbit->value)->count();
@@ -32,108 +32,23 @@ class DashboardController extends Controller
             'total_project_terealisasi' => $total_project_terealisasi,
             'total_anggaran_realisasi' => $total_anggaran_realisasi,
         ]);
-
         if (Auth::user()->role === 'Admin') {
             $analytics->put('total_mitra', Mitra::where('status', MitraStatus::Active->value)->count());
         }
 
-        // Laporan Anggaran per Sektor
-        $totalAnggaran = Laporan::sum('anggaran_realisasi');
+        // Chart Data
+        $chartData = $dashboardRepository->getAnggaranStatistics();
 
-        $topSectors = Laporan::select('sektor_id', DB::raw('SUM(anggaran_realisasi) as total_realisasi'))
-            ->groupBy('sektor_id')
-            ->with('sektor:id,name')
-            ->orderByDesc('total_realisasi')
-            ->take(6)
-            ->get();
+        // Filter
+        $filter = $dashboardRepository->getFilterOption();
 
-        $remainingSectorsTotal = Laporan::select(DB::raw('SUM(anggaran_realisasi) as total_realisasi'))
-            ->whereNotIn('sektor_id', $topSectors->pluck('sektor_id'))
-            ->first()
-            ->total_realisasi;
-
-        $anggaranSektorCSR = $topSectors->map(function ($item, $index = 1) use ($totalAnggaran) {
-            return [
-                'name' => $item->sektor->name,
-                'total_anggaran' => $item->total_realisasi,
-                'percentage' => ($item->total_realisasi / $totalAnggaran) * 100,
-                'fill' => "var(--chart-" . ($index + 1) . ")",
-            ];
-        });
-
-        if ($remainingSectorsTotal) {
-            $anggaranSektorCSR->push([
-                'name' => 'Lainnya',
-                'total_anggaran' => $remainingSectorsTotal,
-                'percentage' => ($remainingSectorsTotal / $totalAnggaran) * 100,
-                'fill' => 'var(--chart-7)'
-            ]);
-        }
-
-        // Laporan Anggaran per PT
-        $topMitra = Laporan::select('mitra_id', DB::raw('SUM(anggaran_realisasi) as total_realisasi'))
-            ->groupBy('mitra_id')
-            ->with('mitra:id,name_company')
-            ->orderByDesc('total_realisasi')
-            ->take(8)
-            ->get();
-
-        $remainingMitraTotal = Laporan::select(DB::raw('SUM(anggaran_realisasi) as total_realisasi'))
-            ->whereNotIn('mitra_id', $topMitra->pluck('mitra_id'))
-            ->first()
-            ->total_realisasi;
-
-        $anggaranMitrasCSR = $topMitra->map(function ($item, $index = 1) {
-            return [
-                'name' => $item->mitra->name_company,
-                'total_anggaran' => $item->total_realisasi,
-                'fill' => "var(--chart-" . ($index + 1) . ")",
-            ];
-        });
-
-        if ($remainingMitraTotal) {
-            $anggaranMitrasCSR->push([
-                'name' => 'Lainnya',
-                'total_anggaran' => $remainingMitraTotal,
-                'fill' => 'var(--chart-9)'
-            ]);
-        }
-
-        // Laporan Anggaran per Kecamatan
-        $topKecamatan = Laporan::select('projects.lokasi_kecamatan', DB::raw('SUM(anggaran_realisasi) as total_realisasi'))
-            ->join('projects', 'laporans.project_id', '=', 'projects.id')
-            ->groupBy('projects.lokasi_kecamatan')
-            ->orderByDesc('total_realisasi')
-            ->take(8)
-            ->get();
-
-        $remainingKecamatanTotal = Laporan::select(DB::raw('SUM(anggaran_realisasi) as total_realisasi'))
-            ->join('projects', 'laporans.project_id', '=', 'projects.id')
-            ->whereNotIn('projects.lokasi_kecamatan', $topKecamatan->pluck('lokasi_kecamatan'))
-            ->first()
-            ->total_realisasi;
-
-        $anggaranKecamatansCSR = $topKecamatan->map(function ($item, $index = 1) {
-            return [
-                'name' => $item->lokasi_kecamatan,
-                'total_anggaran' => $item->total_realisasi,
-                'fill' => "var(--chart-" . ($index + 1) . ")",
-            ];
-        });
-
-        if ($remainingKecamatanTotal) {
-            $anggaranKecamatansCSR->push([
-                'name' => 'Lainnya',
-                'total_anggaran' => $remainingKecamatanTotal,
-                'fill' => 'var(--chart-9)'
-            ]);
-        }
-
-        // For Filters
-        $mitras = Mitra::select('id', 'name_mitra', 'name_company')->get();
-        $sektors = Sektor::select('id', 'name')->get();
-
-        return Inertia::render('Dashboard/index', compact('mitras', 'sektors', 'analytics', 'anggaranSektorCSR', 'anggaranMitrasCSR', 'anggaranKecamatansCSR'));
+        return Inertia::render('Dashboard/index', [
+            'data' => [
+                'chartData' => $chartData,
+                'analytics' => $analytics,
+                'filter' => $filter,
+            ]
+        ]);
     }
 
     public function exportAllData()

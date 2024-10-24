@@ -12,8 +12,9 @@ interface SektorDetail extends Sektor {
     projects: {
         id: string;
         title: string;
-        description: string;
-    };
+        description?: string;
+        sektor_id: string;
+    }[];
 }
 const ShowSektor = ({ data }: PageProps<{ data: SektorDetail }>) => {
     return (

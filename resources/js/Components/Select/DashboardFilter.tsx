@@ -1,3 +1,5 @@
+import { Sektor } from '@/Pages/Dashboard/Sektor';
+import { PageProps } from '@/types';
 import { Link, usePage } from '@inertiajs/react';
 import { RiDownloadLine } from '@remixicon/react';
 import Button from '../UI/Button';
@@ -9,8 +11,20 @@ import {
     SelectValue,
 } from '../UI/Select';
 
+interface FilterProps {
+    filter: {
+        mitra: {
+            id: string;
+            name_mitra?: string;
+            name_company: string;
+        }[];
+        sektor: Sektor[];
+    };
+}
+
 const DashboardFilter = () => {
-    const { sektors, mitras } = usePage().props;
+    const { data } = usePage<PageProps<{ data: FilterProps }>>().props;
+    const { filter } = data;
 
     const currentYear = new Date().getFullYear();
     const years = Array.from(
@@ -53,11 +67,11 @@ const DashboardFilter = () => {
             </Select>
             <Select>
                 <SelectTrigger>
-                    <SelectValue placeholder="Sektor" />
+                    <SelectValue placeholder="Sektor..." />
                 </SelectTrigger>
                 <SelectContent>
-                    {sektors.length > 0 ? (
-                        sektors.map((sektor) => (
+                    {filter.sektor.length > 0 ? (
+                        filter.sektor.map((sektor) => (
                             <SelectItem key={sektor.id} value={sektor.id}>
                                 {sektor.name}
                             </SelectItem>
@@ -71,11 +85,11 @@ const DashboardFilter = () => {
             </Select>
             <Select>
                 <SelectTrigger>
-                    <SelectValue placeholder="Mitra" />
+                    <SelectValue placeholder="Mitra..." />
                 </SelectTrigger>
                 <SelectContent>
-                    {mitras.length > 0 ? (
-                        mitras.map((mitra) => (
+                    {filter.mitra.length > 0 ? (
+                        filter.mitra.map((mitra) => (
                             <SelectItem key={mitra.id} value={mitra.id}>
                                 {mitra.name_mitra ?? mitra.name_company}
                             </SelectItem>

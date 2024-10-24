@@ -1,12 +1,19 @@
 import Button from '@/Components/UI/Button';
 import { DataTable } from '@/Components/UI/DataTable';
-import { PageProps, Sektor } from '@/types';
+import { PageProps } from '@/types';
 import { RiArrowDownLine, RiArrowUpLine } from '@remixicon/react';
 import { ColumnDef } from '@tanstack/react-table';
 import { useMemo } from 'react';
 
-const ProgramDataTable = ({ data }: PageProps) => {
-    const columns = useMemo<ColumnDef<Sektor>[]>(
+interface Project {
+    id: string;
+    title: string;
+    description?: string;
+    sektor_id: string;
+}
+
+const ProgramDataTable = ({ data }: PageProps<{ data: Project[] }>) => {
+    const columns = useMemo<ColumnDef<Project>[]>(
         () => [
             {
                 accessorKey: 'title',

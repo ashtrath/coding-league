@@ -9,30 +9,11 @@ export interface User {
     role: 'Admin' | 'Mitra';
 }
 
-export interface Mitra {
-    id: string;
-    user_id: string;
-    name_mitra?: string;
-    name_company: string;
-    phone_number?: string;
-    address?: string;
-    status: 'Active' | 'Inactive';
-}
-
 export interface Analytics {
     total_project: number;
     total_project_terealisasi: number;
     total_anggaran_realisasi: number;
     total_mitra: number;
-}
-
-export interface BaseAnggaranCSR {
-    name: string;
-    total_anggaran: number;
-}
-
-export interface AnggaranSektorCSR extends BaseAnggaranCSR {
-    percentage: number;
 }
 
 export interface Pagination {

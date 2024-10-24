@@ -1,4 +1,4 @@
-import { Sektor } from '@/types';
+import { Sektor } from '@/Pages/Dashboard/Sektor';
 import { FileUploadFileChangeDetails } from '@ark-ui/react';
 import { useForm } from '@inertiajs/react';
 import { Form, FormField, FormSubmit } from '@radix-ui/react-form';

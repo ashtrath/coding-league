@@ -1,7 +1,6 @@
+import { cn } from '@/lib/utils';
 import * as React from 'react';
 import * as RechartsPrimitive from 'recharts';
-
-import { cn } from '@/lib/utils';
 
 export type ChartConfig = {
     [k in string]: {
@@ -284,6 +283,7 @@ const ChartLegendContent = React.forwardRef<
             RechartsPrimitive.LegendProps,
             'payload' | 'verticalAlign' | 'align'
         > & {
+            indicatorShape?: 'rounded' | 'circle';
             hideIcon?: boolean;
             nameKey?: string;
         }
@@ -291,6 +291,7 @@ const ChartLegendContent = React.forwardRef<
     (
         {
             className,
+            indicatorShape = 'rounded',
             hideIcon = false,
             payload,
             align = 'center',
@@ -336,7 +337,9 @@ const ChartLegendContent = React.forwardRef<
                             ) : (
                                 <div
                                     className={cn(
-                                        'size-2 rounded-[2px]',
+                                        'size-3 rounded-sm',
+                                        indicatorShape === 'circle' &&
+                                            'rounded-full',
                                         align === 'center' && 'shrink-0',
                                     )}
                                     style={{
