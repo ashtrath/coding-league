@@ -16,9 +16,18 @@ class DashboardMitraController extends Controller
 {
     public function index(Request $request)
     {
-        $perPage = $request->input('perPage', 5);
+        $perPage = $request->input('per_page', 5);
         $page = $request->input('page', 1);
-        $query = Mitra::select(['user_id', 'name_mitra', 'name_company', 'phone_number', 'address', 'status',]);
+        $query = Mitra::select([
+            'mitras.id',
+            'mitras.user_id',
+            'mitras.name_mitra',
+            'mitras.name_company',
+            'mitras.status',
+            'mitras.created_at',
+            'users.description'
+        ])
+        ->join('users', 'mitras.user_id', '=', 'users.id');
 
         $mitras = $query->paginate($perPage, ['*'], 'page', $page);
 
@@ -42,54 +51,54 @@ class DashboardMitraController extends Controller
         return Inertia::render('Dashboard/Mitra/create');
     }
 
-        public function store(Request $request, User $user)
-        {
-            $validate = $request->validate([
-                'name_mitra' => 'required|string|max:255',
-                'name_company' => 'required|string|max:255',
-                'phone_number' => 'required|string|max:50',
-                'address' => 'required|string',
-            ]);
-
-            $validate['status'] = MitraStatus::Active;
-
-            $mitra = Mitra::create($validate);
-
-            if (Auth::check()) {
-                if ($user && $user->first_time_user === 1) {
-                    $user->update(['first_time_user' => 0]);
-                }
-
-                return redirect()->route('dashboard.profile.edit');
-            } else {
-                $this->sendNotification($mitra);
-                return redirect()->route('dashboard.mitra.index')->with('success', 'Mitra Berhasil Dibuat.');
-
-            }
-        }
-
-        private function sendNotification(UserRole $mitra)
-        {
-            $adminUsers = User::where('role', UserRole::Admin)->get();
-
-            foreach ($adminUsers as $admin) {
-                $admin->notify(new MitraBaruNotification($mitra));  
-            }
-        }
-
-    public function edit(Mitra $mitra)
-    {
-        return Inertia::render('Dashboard/Mitra/edit', ['mitra' => $mitra]);
-    }
-
-    public function show(Mitra $mitra)
-    {
-        return Inertia::render('Dashboard/Mitra/show', ['mitra' => $mitra]);
-    }
-
-    public function update(Request $request, Mitra $mitra)
+    public function store(Request $request, User $user)
     {
         $validate = $request->validate([
+            'name_mitra' => 'required|string|max:255',
+            'name_company' => 'required|string|max:255',
+            'phone_number' => 'required|string|max:50',
+            'address' => 'required|string',
+        ]);
+
+        $validate['status'] = MitraStatus::Active;
+
+        $mitra = Mitra::create($validate);
+
+        if (Auth::check()) {
+            if ($user && $user->first_time_user === 1) {
+                $user->update(['first_time_user' => 0]);
+            }
+
+            return redirect()->route('dashboard.profile.edit');
+        } else {
+            $this->sendNotification($mitra);
+            return redirect()->route('dashboard.mitra.index')->with('success', 'Mitra Berhasil Dibuat.');
+
+        }
+    }
+
+    private function sendNotification(UserRole $mitra)
+    {
+        $adminUsers = User::where('role', UserRole::Admin)->get();
+
+        foreach ($adminUsers as $admin) {
+            $admin->notify(new MitraBaruNotification($mitra));  
+        }
+    }
+
+    public function edit(string $id)
+    {
+        return Inertia::render('Dashboard/Mitra/edit', ['mitra' => $id]);
+    }
+
+    public function show(string $id)
+    {
+        return Inertia::render('Dashboard/Mitra/show', ['mitra' => $id]);
+    }
+
+    public function update(Request $request, string $id)
+    {
+        $validatedData = $request->validate([
             'name_mitra' => 'required|string|max:255',
             'name_company' => 'required|string|max:255',
             'phone_number' => 'required|string|max:50',
@@ -97,17 +106,15 @@ class DashboardMitraController extends Controller
             'status' => 'required|in:' . implode(',', array_column(MitraStatus::cases(), 'value')),
         ]);
 
-        $mitra->update($validate);
+        $mitra = Mitra::findOrFail($id);
+        $mitra->update($validatedData);
 
-        $statusMessage = $mitra->status === MitraStatus::Active
-        ? 'Mitra Berhasil Diaktifkan.'
-        : 'Mitra Berhasil Dinonaktifkan.';
-
-        return redirect()->route('dashboard.mitra.show', $mitra)->with('success', 'Mitra Berhasil Diupdate.');
+        return redirect()->route('dashboard.mitra.show', $id)->with('success', 'Mitra Berhasil Diupdate.');
     }
 
-    public function destroy(Mitra $mitra)
+    public function destroy(string $id)
     {
+        $mitra = Mitra::findOrFail($id);
         $mitra->delete();
         return redirect()->route('dashboard.mitra.index')->with('success', 'Mitra Berhasil Dihapus.');
     }
