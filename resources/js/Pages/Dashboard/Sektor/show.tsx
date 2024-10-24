@@ -49,7 +49,7 @@ const ShowSektor = ({ data }: PageProps<{ data: SektorDetail }>) => {
                         alt={`Gambar Sektor ${data.name}`}
                     />
                 </header>
-                <section className="min-w-full space-y-6 overflow-hidden bg-gray-100 px-24 py-[60px]">
+                <section className="min-h-[calc(100vh_-_500px)] space-y-6 overflow-hidden bg-gray-100 px-24 py-[60px]">
                     <h2 className="text-[28px] font-semibold tracking-tight text-gray-900">
                         Program
                     </h2>
