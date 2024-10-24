@@ -34,9 +34,7 @@ const DashboardSektor = ({
                     </Link>
                 </Button>
             </header>
-            <div className="container mx-auto">
-                <SektorDataTable data={data} pagination={pagination} />
-            </div>
+            <SektorDataTable data={data} pagination={pagination} />
         </DashboardLayout>
     );
 };
